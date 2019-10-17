@@ -145,38 +145,50 @@ void WorkSpace::eraseObject(Object * obj){
 }
 
 // Transformations
-void WorkSpace::apply(Object * obj, Matrix * M){
+void WorkSpace::apply(Object * obj, Matrix * M, std::string caption){
+	if (caption == "") caption = "Transformação";
 	eraseObject(obj);
-	obj->apply(M);
+	obj->apply(M, caption);
 	update();
 }
 
 void WorkSpace::translateObject(Object * obj, double tx, double ty){
 	Matrix * M = getTranslationMatrix(tx, ty);
-	apply(obj, M);
+	std::string caption = "Translação(" + to_string(tx) + ", " + to_string(ty) + ")";
+	apply(obj, M, caption);
 }
 
 void WorkSpace::rotateObject(Object * obj, Point2D * ref, double theta){
 	Matrix * M = getRotationMatrix(theta, ref);
-	apply(obj, M);
+	std::string caption = "Rotação(" + to_string(theta) + ")";
+	apply(obj, M, caption);
 }
 
 void WorkSpace::scaleObject(Object * obj, Point2D * ref, double sx, double sy){
 	Matrix * M = getScaleMatrix(sx, sy, ref);
-	apply(obj, M);
+	std::string caption = "Escala(" + to_string(sx) + ", " + to_string(sy) + ")";
+	apply(obj, M, caption);
 }
 
 void WorkSpace::shearObject(Object * obj, Point2D * ref, double shx, double shy){
 	Matrix * M = getShearMatrix(shx, shy, ref);
-	apply(obj, M);
+	std::string caption = "Cisalhamento(" + to_string(shx) + ", " + to_string(shy) + ")";
+	apply(obj, M, caption);
 }
 
 void WorkSpace::reflectObject(Object * obj, int axis){
 	Matrix * M = getReflectionMatrix(axis);
-	apply(obj, M);
+	std::string caption = "Reflexão(Eixo ";
+	if (axis == 0) {
+		caption += "X)";
+	}else{
+		caption += "Y)";
+	}
+	apply(obj, M, caption);
 }
 
 void WorkSpace::reflectObject(Object * obj, double m, double b){
 	Matrix * M = getReflectionMatrix(m, b);
-	apply(obj, M);
+	std::string caption = "Reflexão(Y = " + to_string(m) + "X + " + to_string(b) + ")";
+	apply(obj, M, caption);
 }

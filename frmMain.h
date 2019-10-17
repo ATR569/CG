@@ -24,6 +24,8 @@
 #include <Vcl.ColorGrd.hpp>
 #include <Vcl.Buttons.hpp>
 #include "frmParam.h"
+#include <Vcl.Menus.hpp>
+#include "frmProperties.h"
 
 enum State{st_None, st_DrawCircle, st_DrawLine, st_DrawPolygon};
 const int DEFAULT_SCR_SIZE = 300;
@@ -47,7 +49,7 @@ __published:	// IDE-managed Components
 	TToolButton *btnCircle;
 	TToolButton *ToolButton3;
 	TStatusBar *statusbar;
-	TCoolBar *coolTools;
+	TCoolBar *coolTools2D;
 	TPanel *pnlLayout;
 	TActionMainMenuBar *mainMenu;
 	TImageList *imagelist16;
@@ -81,9 +83,11 @@ __published:	// IDE-managed Components
 	TTreeView *treeObjects;
 	TPanel *Panel2;
 	TPanel *Panel3;
-	TButton *Button1;
 	TAction *actRemove;
 	TAction *actClearScreen;
+	TImageList *imagelist24;
+	TImageList *imagelist24ds;
+	TAction *actCentralize;
 	void __fastcall actPolygonExecute(TObject *Sender);
 	void __fastcall actMoveExecute(TObject *Sender);
 	void __fastcall actScaleExecute(TObject *Sender);
@@ -104,6 +108,7 @@ __published:	// IDE-managed Components
 	void __fastcall actShearExecute(TObject *Sender);
 	void __fastcall actReflectExecute(TObject *Sender);
 	void __fastcall actRemoveExecute(TObject *Sender);
+	void __fastcall actCentralizeExecute(TObject *Sender);
 
 private:	// User declarations
 	State state;
@@ -115,7 +120,7 @@ private:	// User declarations
 	void addLine(Line * l);
 	void addPolygon(Polygon2D * p);
 
-	enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect};
+//	enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect};
 public:		// User declarations
 	__fastcall TformMain(TComponent* Owner);
 

@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include <stack>
+#include <list>
 #include <windows.h>
 #include "graphics.h"
 #include "../transformation/transform2D.h"
@@ -15,27 +15,36 @@ enum DrawMethod {DM_BRESENHAN, DM_DDA, DM_POLYNOMIAL, DM_TRIGONOMETRIC};
 class Matrix;
 class WorkSpace;
 
+class Transformation{
+private:
+	string name;
+	Matrix * M;
+public:
+	Transformation(string name, Matrix * M);
+
+	string getName();
+	Matrix * getMatrix();
+};
+
 class Object{
-protected:
+private:
+	list<Transformation> history;
 	string name;
 	DrawMethod drawMethod;
 	DrawColor color;
-	
-	stack<Matrix*> history;
+protected:
 	Matrix * stateMatrix;
 public:
 	Object(string name, DrawMethod drawMethod);
-	string getName();
-	DrawMethod getMethod();
-
 	virtual void draw(WorkSpace * work, bool drawPoints, bool erase = false) = 0;
 	virtual Point2D * getReference() = 0;
-
-    void apply(Matrix * M);
-	void setColor(DrawColor color);
-
+	
+	string getName();
+	DrawMethod getMethod();
 	DrawColor getColor();
-	void setColor();
+
+    void apply(Matrix * M, std::string caption);
+	void setColor(DrawColor color);
 };
 
 #endif

@@ -142,6 +142,12 @@
             <DependentOn>frmParam.h</DependentOn>
             <BuildOrder>10</BuildOrder>
         </CppCompile>
+        <CppCompile Include="frmProperties.cpp">
+            <Form>formProperties</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>frmProperties.h</DependentOn>
+            <BuildOrder>11</BuildOrder>
+        </CppCompile>
         <CppCompile Include="objects\graphics.cpp">
             <DependentOn>objects\graphics.h</DependentOn>
             <BuildOrder>7</BuildOrder>
@@ -172,6 +178,7 @@
         </CppCompile>
         <FormResources Include="frmMain.dfm"/>
         <FormResources Include="frmParam.dfm"/>
+        <FormResources Include="frmProperties.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -1,145 +1,164 @@
 ﻿[barObjects]
-Coordinates=236,306,68,33
+Coordinates=236,306,77,36
 
 [lblUserY]
-Coordinates=167,146,56,51
+Coordinates=167,146,63,58
 
 [actProperties]
-Coordinates=433,155,80,33
+Coordinates=433,155,91,36
 
 [lblScrY]
-Coordinates=10,78,49,51
+Coordinates=10,78,56,58
 
 [lblScrX]
-Coordinates=351,78,49,51
+Coordinates=351,78,56,58
 
 [barTransformations]
-Coordinates=10,306,111,33
+Coordinates=10,306,126,36
 
 [pnlCoord]
-Coordinates=90,146,60,51
+Coordinates=90,146,67,58
 
 [barProperties]
-Coordinates=580,170,81,51
+Coordinates=580,170,92,58
 ExplicitSubNodes=Enabled
 
 [actScale]
-Coordinates=146,269,56,33
+Coordinates=146,269,64,36
 
 [chkShowAxis]
-Coordinates=356,10,95,51
+Coordinates=356,10,114,58
 
 [chkShowPoints]
-Coordinates=139,78,95,51
+Coordinates=139,78,114,58
 
 [imagelist48]
-Coordinates=433,265,70,33
+Coordinates=433,265,80,36
 
 [mainMenu]
-Coordinates=153,260,65,33
+Coordinates=153,260,74,36
 
 [imagelist16]
-Coordinates=433,320,70,33
+Coordinates=433,320,80,36
 
 [Label1]
-Coordinates=417,78,46,51
+Coordinates=417,78,53,58
 
 [btnCircle]
-Coordinates=77,260,58,33
+Coordinates=77,260,66,36
 
 [actMove]
-Coordinates=226,343,55,33
+Coordinates=226,343,63,36
 
 [Imagelist48ds]
-Coordinates=585,56,82,33
+Coordinates=585,56,94,36
 
 [actShear]
-Coordinates=157,343,57,33
+Coordinates=157,343,66,36
 
 [actCircle]
-Coordinates=88,343,57,33
+Coordinates=88,343,65,36
 
 [btnLine]
-Coordinates=10,260,51,33
+Coordinates=10,260,57,36
 
 [lblUserX]
-Coordinates=10,10,56,51
+Coordinates=10,10,63,58
 
 [barTools]
-Coordinates=414,214,57,33
+Coordinates=414,214,65,36
 
 [actRotate]
-Coordinates=585,166,61,33
+Coordinates=585,166,70,36
 
 [desktop]
-Coordinates=207,10,53,51
+Coordinates=207,10,60,58
+Visible=True
 
 [pnlLayout]
-Coordinates=10,146,63,51
+Coordinates=10,146,70,58
 Visible=True
 
 [imagelist16ds]
-Coordinates=585,276,82,33
+Coordinates=585,276,93,36
 
 [actComposed]
-Coordinates=585,331,82,33
+Coordinates=585,331,93,36
 
 [action_manager]
-Coordinates=749,1,93,33
+Coordinates=749,1,107,36
 
 [timer]
-Coordinates=14,77,40,33
+Coordinates=14,77,43,36
 
 [actLine]
-Coordinates=585,386,50,33
+Coordinates=585,386,56,36
 
 [Label2]
-Coordinates=76,78,46,51
+Coordinates=76,78,53,58
 
 [actPolygon]
-Coordinates=506,417,69,33
+Coordinates=506,417,78,36
 
 [ToolButton3]
-Coordinates=341,146,74,33
+Coordinates=341,146,84,36
 
 [chkShowGrid]
-Coordinates=83,10,95,51
+Coordinates=83,10,114,58
 
 []
-Coordinates=580,240,71,51
+Coordinates=351,270,59,58
 Visible=True
 ExplicitSubNodes=RowSelect
 
 [coolOptions]
-Coordinates=237,260,60,33
+Coordinates=237,260,83,36
 
 [pnlOptions]
-Coordinates=277,10,62,51
+Coordinates=277,10,76,58
 
 [btnTranslate]
-Coordinates=313,214,80,33
+Coordinates=313,214,86,36
 
 [btnScale]
-Coordinates=111,214,80,33
+Coordinates=111,214,65,36
 
 [btnRotate]
-Coordinates=435,146,80,33
+Coordinates=435,146,70,36
 
 [btnShear]
-Coordinates=240,146,80,33
+Coordinates=240,146,67,36
 
 [btnCompose]
-Coordinates=10,214,80,33
-
-[coolTools]
-Coordinates=417,260,60,33
+Coordinates=10,214,87,36
 
 [statusbar]
-Coordinates=263,78,68,51
+Coordinates=263,78,68,58
 
 [btnReflect]
-Coordinates=212,214,80,33
+Coordinates=212,214,73,36
 
 [actReflect]
-Coordinates=295,343,58,33
+Coordinates=295,343,72,36
+
+[Panel1]
+Coordinates=0,0,55,58
+
+[Panel2]
+Coordinates=235,1,55,58
+
+[treeObjects]
+Coordinates=508,1,80,36
+
+[actClearScreen]
+Coordinates=562,111,103,36
+
+[Panel3]
+Coordinates=500,220,55,58
+
+[actRemove]
+Coordinates=717,56,79,36
+
+[coolTools2D]
+Coordinates=417,260,70,36
 

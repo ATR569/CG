@@ -27,8 +27,9 @@ public:
 
 	double getRadius();
     Point2D * getCenter();
-	void draw(WorkSpace * work, bool drawPoints, bool erase);
 	Point2D * getReference();
+
+	void draw(WorkSpace * work, bool drawPoints, bool erase);
 };
 
 class Polygon2D : public Object{
@@ -37,10 +38,11 @@ private:
 	vector<Point2D*> P;
 public:
 	Polygon2D(vector<Point2D*> P, DrawMethod drawMethod);
+
 	vector<Point2D*> getPoints();
+	Point2D * getReference();
 
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
-	Point2D * getReference();
 };
 
 int Line::id = 0;

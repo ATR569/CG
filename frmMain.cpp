@@ -41,8 +41,8 @@ void __fastcall TformMain::actMoveExecute(TObject *Sender)
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
+		Object * obj = work->getObject(id);
 		TformParam * param = getParamWindow(ptTranslate);
-
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
 
@@ -99,8 +99,6 @@ void __fastcall TformMain::desktopResize(TObject *Sender)
 void __fastcall TformMain::treeObjectsClick(TObject *Sender)
 {
 	int id = treeObjects->Selected->Index;
-
-	action_manager->Actions[7]->Enabled = id >= 0;
 }
 //---------------------------------------------------------------------------
 
@@ -109,12 +107,15 @@ void __fastcall TformMain::desktopMouseMove(TObject *Sender, TShiftState Shift, 
 		  int Y)
 {
 	Point2D * p = work->CoordScrToUser(new Point2D(X,Y));
-
 	lblScrX->Caption = "X: " + IntToStr(X);
 	lblScrY->Caption = "Y: " + IntToStr(Y);
-	lblUserX->Caption = "X: " + FormatFloat("#,###0.000", p->X);
-	lblUserY->Caption = "Y: " + FormatFloat("#,###0.000", p->Y);
 
+	UnicodeString s1 = "X: " + FormatFloat("#,###0.000", p->X);
+	UnicodeString s2 = "Y: " + FormatFloat("#,###0.000", p->Y);
+	lblUserX->Caption = s1;
+	lblUserY->Caption = s2;
+
+	desktop->Hint = s1 + "\n" + s2;
 }
 //---------------------------------------------------------------------------
 
@@ -166,7 +167,7 @@ void __fastcall TformMain::actLineExecute(TObject *Sender){
 void __fastcall TformMain::FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight,
 		  bool &Resize)
 {
-	if (NewWidth < 875 || NewHeight < 655) {
+	if (NewWidth < 500 || NewHeight < 500) {
 		Resize = false;
 	}else{
 		desktop->Margins->Left = 30 - (NewWidth%2 == 0);
@@ -366,7 +367,7 @@ void __fastcall TformMain::actPropertiesExecute(TObject *Sender)
 	work->eraseObject(o);
 	o->getReference()->X = 0;
 	o->getReference()->Y = 0;
-	work->update();*/
+	work->update();
 
 	Point2D * p1 = new Point2D(-1,5);
 	Point2D * p2 = new Point2D(3,8);
@@ -375,6 +376,17 @@ void __fastcall TformMain::actPropertiesExecute(TObject *Sender)
 
 
 	ShowMessage("P1 = " + FormatFloat("0.000", p1->X) + ", " + FormatFloat("0.000", p1->Y) + "\nP2 = " + FormatFloat("0.000", p2->X) + ", " + FormatFloat("0.000", p2->Y));
+	*/
+
+	int id = treeObjects->Selected->Index;
+
+	if (id >= 0) {
+		Object * obj = work->getObject(id);
+		TformProperties * properties = new TformProperties(this, obj);
+
+        properties->ShowModal();
+		properties->Release();
+	}
 }
 //---------------------------------------------------------------------------
 
@@ -488,14 +500,26 @@ void __fastcall TformMain::actRemoveExecute(TObject *Sender)
 
 	if (id >= 0) {
         Object * obj = work->getObject(id);
-		UnicodeString name(obj->getName().data());
-		if (MessageDlg("Deseja realmente remover o objeto " + name + "?",
-			mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
+		UnicodeString msg = "Deseja realmente remover o objeto " + UnicodeString(obj->getName().data()) + "?";
+		if (MessageDlg(msg, mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
 
 			work->deleteObject(id);
             treeObjects->Selected->Delete();
 		}
 
+	}
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TformMain::actCentralizeExecute(TObject *Sender)
+{
+	int id = treeObjects->Selected->Index;
+
+	if (id >= 0) {
+		Object * obj = work->getObject(id);
+		Point2D * ref = obj->getReference();
+		work->translateObject(obj, -ref->X, -ref->Y);
 	}
 }
 //---------------------------------------------------------------------------

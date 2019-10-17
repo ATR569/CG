@@ -20,7 +20,7 @@ Object::Object(string name, DrawMethod drawMethod){
 	this->drawMethod = drawMethod;
 	this->color = CL_BLACK;
 	this->stateMatrix = getIdentityMatrix();
-	this->history.push(getIdentityMatrix());
+	this->history.push_back(Transformation(string("Estado inicial"), getIdentityMatrix()));
 }
 
 /**
@@ -39,14 +39,23 @@ DrawColor Object::getColor(){
 	return this->color;
 }
 
+DrawMethod Object::getMethod(){
+    return this->drawMethod;
+}
+
 /**
  * Aplica uma transformação ao objeto
  * @param M - Matriz de transformação
  */
-void Object::apply(Matrix * M){
+void Object::apply(Matrix * M, std::string caption){
 	//	Atualiza a matriz estado do objeto
-	*this->stateMatrix = (*M)*(*this->stateMatrix);
+	stateMatrix->assign((*M)*(*this->stateMatrix));
 	//	Armazena no histórico do objeto
-	this->history.push(M);
+	this->history.push_back(Transformation(caption, M));
 }
 
+//Transformation----------------------------------------------------------------
+Transformation::Transformation(string name, Matrix * M){
+	this->name = name;
+	this->M = M;
+}

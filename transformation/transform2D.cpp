@@ -209,7 +209,7 @@ Matrix * getWinVPMatrix(double uMin, double uMax, double vMin, double vMax, int 
  */ 
 int getCode(Point2D * p, int * bounds){
 	int code = 0;						// 0000
-
+	
 	code |= ((p->X < bounds[0]) << 0);	// 0001
 	code |= ((p->X > bounds[1]) << 1);	// 0010
 	code |= ((p->Y < bounds[2]) << 2);	// 0100

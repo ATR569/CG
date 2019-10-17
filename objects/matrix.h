@@ -17,8 +17,11 @@ public:
 
 	std::pair<int, int> dim();
 	vvd getData();
+	
 	void setValue(unsigned i, unsigned j, double v);
-
+	void assign(vvd data);
+	void assign(Matrix M);
+	
     Point2D * asPoint2D();
 };
 

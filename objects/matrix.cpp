@@ -47,6 +47,14 @@ void Matrix::setValue(unsigned i, unsigned j, double v){
 		this->data[i][j] = v;
 }
 
+void Matrix::assign(vvd data){
+	this->data = data;
+}
+
+void Matrix::assign(Matrix M){
+	this->data = M.getData();
+}
+
 Point2D * Matrix::asPoint2D(){
     if (this->data.size() != 3 || this->data[0].size() != 1)
 		throw std::exception();

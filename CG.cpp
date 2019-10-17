@@ -8,6 +8,7 @@
 #include <Vcl.Themes.hpp>
 USEFORM("frmMain.cpp", formMain);
 USEFORM("frmParam.cpp", formParam);
+USEFORM("frmProperties.cpp", formProperties);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
@@ -17,7 +18,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 		Application->MainFormOnTaskBar = true;
 		TStyleManager::TrySetStyle("Sapphire Kamri");
 		Application->CreateForm(__classid(TformMain), &formMain);
-		Application->CreateForm(__classid(TformParam), &formParam);
 		Application->Run();
 	}
 	catch (Exception &exception)

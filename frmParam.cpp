@@ -15,6 +15,11 @@ __fastcall TformParam::TformParam(TComponent* Owner)
 
 }
 //---------------------------------------------------------------------------
+TformParam::TformParam(TComponent* Owner, Object * obj, ParamType paramType) : TForm(Owner){
+	this->paramType = paramType;
+    this->obj = obj;
+}
+//---------------------------------------------------------------------------
 void __fastcall TformParam::rdgReferenceClick(TObject *Sender)
 {
 	grpRefPoint->Visible = (rdgReference->ItemIndex == 2);

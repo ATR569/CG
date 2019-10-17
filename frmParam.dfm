@@ -102,8 +102,6 @@ object formParam: TformParam
     Padding.Right = 10
     Padding.Bottom = 10
     TabOrder = 3
-    ExplicitTop = 109
-    ExplicitWidth = 339
     object btnCancel: TButton
       Left = 11
       Top = 11
@@ -126,7 +124,6 @@ object formParam: TformParam
       ModalResult = 1
       TabOrder = 1
       OnClick = btnOkClick
-      ExplicitLeft = 144
     end
   end
   object rdgReference: TRadioGroup
@@ -147,7 +144,6 @@ object formParam: TformParam
       'Ponto espec'#237'fico')
     TabOrder = 1
     OnClick = rdgReferenceClick
-    ExplicitLeft = 5
   end
   object grpRefPoint: TGroupBox
     AlignWithMargins = True
@@ -163,7 +159,6 @@ object formParam: TformParam
     Caption = 'Ponto de Refer'#234'ncia'
     TabOrder = 2
     Visible = False
-    ExplicitHeight = 141
     DesignSize = (
       248
       67)

@@ -12,6 +12,8 @@
 #include "objects/point2D.h"
 #include "objects/object.h"
 
+enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect};
+
 //---------------------------------------------------------------------------
 class TformParam : public TForm
 {
@@ -33,9 +35,11 @@ __published:	// IDE-managed Components
 	void __fastcall fixValues(TObject *Sender);
 	void __fastcall btnOkClick(TObject *Sender);
 private:	// User declarations
-
+	Object * obj;
+	ParamType paramType;
 public:		// User declarations
 	__fastcall TformParam(TComponent* Owner);
+	TformParam(TComponent* Owner, Object * obj, ParamType paramType);
 
 	Point2D * getReference(Object * obj);
 };

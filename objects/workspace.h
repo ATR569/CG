@@ -1,7 +1,8 @@
-#ifndef workspaceH
+﻿#ifndef workspaceH
 #define workspaceH
 
 #include <vector>
+#include <string>
 #include <windows.h>
 #include "../transformation/transform2D.h"
 
@@ -51,7 +52,7 @@ public:
 	void setDrawGrid(bool drwGrid);
 	void setMode(int mode);
 	
-	void apply(Object * obj, Matrix * M);
+	void apply(Object * obj, Matrix * M, std::string caption);
 	void translateObject(Object * obj, double tx, double ty);
 	void rotateObject(Object * obj, Point2D * ref, double theta);
 	void scaleObject(Object * obj, Point2D * ref, double sx, double sy);

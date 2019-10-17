@@ -27,7 +27,7 @@ Line::Line(Point2D * A, Point2D * B, DrawMethod drawMethod) : Object("Reta " + t
  * @param work - WorkSpace onde será desenhada a reta
  */
 void Line::draw(WorkSpace * work, bool drawPoints, bool erase){
-	DrawColor color = erase ? CL_WHITE : this->color;
+	DrawColor color = erase ? CL_WHITE : this->getColor();
 
 	Matrix MA = ((*this->stateMatrix)*(*A->asMatrix()));
 	Matrix MB = ((*this->stateMatrix)*(*B->asMatrix()));
@@ -41,7 +41,7 @@ void Line::draw(WorkSpace * work, bool drawPoints, bool erase){
 	}
 
 	if (cut(p1, p2, 0, work->getCanvasH(), 0, work->getCanvasV())){
-		if (drawMethod == DM_DDA){
+		if (this->getMethod() == DM_DDA){
 			drawLineDDA(work->hdc, p1, p2, color);
 		}else{
 			drawLineBresenhan(work->hdc, p1, p2, color);
@@ -81,16 +81,16 @@ Circle::Circle(Point2D * center, double radius, DrawMethod drawMethod) : Object(
  * @param work - WorkSpace onde será desenhada a reta
  */
 void Circle::draw(WorkSpace * work, bool drawPoints, bool erase){
-	DrawColor color = erase ? CL_WHITE : this->color;
+	DrawColor color = erase ? CL_WHITE : this->getColor();
 
 	Matrix M = ((*this->stateMatrix)*(*center->asMatrix()));
 	Point2D * p = work->CoordUserToScr(M.asPoint2D());
 
 	double r = work->CoordUserToScr(this->radius);
 
-	if (drawMethod == DM_BRESENHAN){
+	if (this->getMethod() == DM_BRESENHAN){
 		drawCircleBresenhan(work->hdc, p, r, color);
-	}else if (drawMethod == DM_POLYNOMIAL){
+	}else if (this->getMethod() == DM_POLYNOMIAL){
 		drawCirclePolynomial(work->hdc, p, r, color);
 	}else{
 		drawCircleTrigonometric(work->hdc, p, r, color);
@@ -130,7 +130,7 @@ Polygon2D::Polygon2D(vector<Point2D*> P, DrawMethod drawMethod) : Object("Políg
 void Polygon2D::draw(WorkSpace * work, bool drawPoints, bool erase){
 	int N = P.size();
 
-	DrawColor color = erase ? CL_WHITE : this->color;
+	DrawColor color = erase ? CL_WHITE : this->getColor();
 
 	//	Para cada par de pontos (A,B), aplica a stateMatrix e rasteriza na tela
 	for (int i = 0; i < N; i++) {
@@ -144,7 +144,7 @@ void Polygon2D::draw(WorkSpace * work, bool drawPoints, bool erase){
 			drawPoint(work->hdc, p1, color);
 
 		if (cut(p1, p2, 0, work->getCanvasH(), 0, work->getCanvasV())){
-			if (drawMethod == DM_DDA)
+			if (this->getMethod() == DM_DDA)
 				drawLineDDA(work->hdc, p1, p2, color);
 			else
 				drawLineBresenhan(work->hdc, p1, p2, color);
