@@ -6,6 +6,7 @@
 #define vvd std::vector<std::vector<double> >
 
 class Point2D;
+class Point3D;
 
 class Matrix{
 	vvd data;
@@ -23,6 +24,7 @@ public:
 	void assign(Matrix M);
 	
     Point2D * asPoint2D();
+    Point3D * asPoint3D();
 };
 
 #endif

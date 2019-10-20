@@ -66,8 +66,8 @@
     <Transaction>2019/10/12 09:31:51.000.253,D:\Projetos\Projetos C++\CG\frmProperties.dfm=D:\Projetos\Projetos C++\CG\Unit1.dfm</Transaction>
     <Transaction>2019/10/12 09:31:51.000.253,D:\Projetos\Projetos C++\CG\frmProperties.cpp=D:\Projetos\Projetos C++\CG\Unit1.cpp</Transaction>
     <Transaction>2019/10/12 09:31:51.000.253,D:\Projetos\Projetos C++\CG\frmProperties.h=D:\Projetos\Projetos C++\CG\Unit1.h</Transaction>
-    <Transaction>2019/10/18 16:04:01.461,=C:\Users\Agnsoft\Desktop\CG\statemachine\state.cpp</Transaction>
-    <Transaction>2019/10/18 16:04:01.618,=C:\Users\Agnsoft\Desktop\CG\statemachine\statemachine.cpp</Transaction>
+    <Transaction>2019/10/18 16:04:01.000.461,=C:\Users\Agnsoft\Desktop\CG\statemachine\state.cpp</Transaction>
+    <Transaction>2019/10/18 16:04:01.000.618,=C:\Users\Agnsoft\Desktop\CG\statemachine\statemachine.cpp</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="objects"/>
