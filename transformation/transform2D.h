@@ -5,6 +5,7 @@
 
 class Matrix;
 class Point2D;
+class Point3D;
 
 Matrix * getTranslationMatrix(double tx, double ty);
 

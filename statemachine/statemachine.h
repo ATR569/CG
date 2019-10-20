@@ -21,6 +21,7 @@ public:
 	void performDrawCircleClick();
 	void performDrawLineClick();
 	void performDrawPolygonClick();
+	void performObjectCancelClick();
 
 	void setState(State * state);
 

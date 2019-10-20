@@ -14,6 +14,7 @@ enum DrawMethod {DM_BRESENHAN, DM_DDA, DM_POLYNOMIAL, DM_TRIGONOMETRIC};
 
 class Matrix;
 class WorkSpace;
+class BasePoint;
 
 class Transformation{
 private:
@@ -37,7 +38,7 @@ protected:
 public:
 	Object(string name, DrawMethod drawMethod);
 	virtual void draw(WorkSpace * work, bool drawPoints, bool erase = false) = 0;
-	virtual Point2D * getReference() = 0;
+	virtual BasePoint * getReference() = 0;
 	
 	string getName();
 	DrawMethod getMethod();

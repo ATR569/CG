@@ -7,8 +7,8 @@
 #include <Vcl.Styles.hpp>
 #include <Vcl.Themes.hpp>
 USEFORM("frmMain.cpp", formMain);
-USEFORM("frmProperties.cpp", formProperties);
 USEFORM("frmParam.cpp", formParam);
+USEFORM("frmProperties.cpp", formProperties);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {

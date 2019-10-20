@@ -35,6 +35,18 @@ void StateMachine::performDrawPolygonClick(){
 }
 
 void StateMachine::setState(State * state){
-    free(this->state);
-    this->state = state;
+	free(this->state);
+	this->state = state;
+
+	int btnStateMask = state->getBtnStateMask();
+
+	for (int i = 0; i < formMain->action_manager->ActionCount; i++) {
+		formMain->action_manager->Actions[i]->Enabled = ((1 << i)&btnStateMask);
+	}
+
 }
+
+void StateMachine::performObjectCancelClick(){
+	this->state->onObjectCancelClick(this);
+}
+

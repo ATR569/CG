@@ -7,7 +7,7 @@
 #pragma package(smart_init)
 
 #include "../objects/matrix.h"
-#include "../objects/point2D.h"
+#include "../objects/point.h"
 
 using namespace std;
 

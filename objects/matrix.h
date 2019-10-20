@@ -24,7 +24,7 @@ public:
 	void assign(Matrix M);
 	
     Point2D * asPoint2D();
-    Point3D * asPoint3D();
+	Point3D * asPoint3D();
 };
 
 #endif

@@ -9,7 +9,7 @@
 #include <Vcl.Forms.hpp>
 #include <Vcl.ExtCtrls.hpp>
 
-#include "objects/point2D.h"
+#include "objects/point.h"
 #include "objects/object.h"
 
 enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect};

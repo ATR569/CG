@@ -81,7 +81,7 @@ Point2D * TformParam::getReference(Object * obj){
 		ref = new Point2D(0, 0);
 	//  Centro do objeto
 	}else if (rdgReference->ItemIndex == 1) {
-		ref = obj->getReference();
+		ref = (Point2D*)obj->getReference();
 	//  Ponto específico
 	}else{
 		double x = StrToFloat(edtX->Text);

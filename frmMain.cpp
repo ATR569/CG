@@ -312,7 +312,7 @@ void __fastcall TformMain::actCentralizeExecute(TObject *Sender){
 
 	if (id >= 0) {
 		Object * obj = work->getObject(id);
-		Point2D * ref = obj->getReference();
+		Point2D * ref = (Point2D*)obj->getReference();
 		work->translateObject(obj, -ref->X, -ref->Y);
 	}
 }
@@ -364,4 +364,12 @@ void TformMain::addPolygon(Polygon2D * p){
 		sub->SelectedIndex = -1;
 	}
 }
+
+void __fastcall TformMain::actObjectCancelExecute(TObject *Sender)
+{
+    machine->performObjectCancelClick();
+}
+//---------------------------------------------------------------------------
+
+
 

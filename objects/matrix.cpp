@@ -6,8 +6,7 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-#include "point2D.h"
-#include "point3D.h"
+#include "point.h"
 #include <math.h>
 
 Matrix::Matrix(int N, int M) : data(vvd(N, std::vector<double>(M, 0))){}
@@ -69,4 +68,3 @@ Point3D * Matrix::asPoint3D(){
 
 	return new Point3D(this->data[0][0], this->data[1][0], this->data[2][0]);
 }
-

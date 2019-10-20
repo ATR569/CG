@@ -26,7 +26,6 @@
 #include "frmParam.h"
 #include <Vcl.Menus.hpp>
 #include "frmProperties.h"
-#include "statemachine/statemachine.h"
 
 const int DEFAULT_SCR_SIZE = 300;
 
@@ -87,6 +86,9 @@ __published:	// IDE-managed Components
 	TImageList *imagelist24;
 	TImageList *imagelist24ds;
 	TAction *actCentralize;
+	TAction *actObjectCancel;
+	TSpeedButton *btnObjectCancel;
+	TBevel *Bevel1;
 	void __fastcall actPolygonExecute(TObject *Sender);
 	void __fastcall actMoveExecute(TObject *Sender);
 	void __fastcall actScaleExecute(TObject *Sender);
@@ -108,6 +110,7 @@ __published:	// IDE-managed Components
 	void __fastcall actReflectExecute(TObject *Sender);
 	void __fastcall actRemoveExecute(TObject *Sender);
 	void __fastcall actCentralizeExecute(TObject *Sender);
+	void __fastcall actObjectCancelExecute(TObject *Sender);
 
 private:	// User declarations
 	StateMachine * machine;

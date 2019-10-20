@@ -14,7 +14,7 @@ public:
 
 	Point2D * getA();
 	Point2D * getB();
-	Point2D * getReference();
+	BasePoint * getReference();
 };
 
 class Circle : public Object{
@@ -27,7 +27,7 @@ public:
 
 	double getRadius();
     Point2D * getCenter();
-	Point2D * getReference();
+	BasePoint * getReference();
 
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
 };
@@ -40,7 +40,7 @@ public:
 	Polygon2D(vector<Point2D*> P, DrawMethod drawMethod);
 
 	vector<Point2D*> getPoints();
-	Point2D * getReference();
+	BasePoint * getReference();
 
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
 };

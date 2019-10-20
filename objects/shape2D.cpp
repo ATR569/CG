@@ -7,7 +7,7 @@
 #pragma package(smart_init)
 
 #include "matrix.h"
-#include "point2D.h"
+#include "point.h"
 #include "workspace.h"
 
 //Line--------------------------------------------------------------------------
@@ -58,7 +58,7 @@ Point2D * Line::getB(){
 	return this->B;
 }
 
-Point2D * Line::getReference(){
+BasePoint * Line::getReference(){
 	Point2D * ref1 = ((*stateMatrix)*(*A->asMatrix())).asPoint2D();
 	Point2D * ref2 = ((*stateMatrix)*(*B->asMatrix())).asPoint2D();
 	return new Point2D((ref1->X + ref2->X)/2, (ref1->Y + ref2->Y)/2);
@@ -105,7 +105,7 @@ Point2D * Circle::getCenter(){
 	return this->center;
 }
 
-Point2D * Circle::getReference(){
+BasePoint * Circle::getReference(){
 	return ((*stateMatrix)*(*this->center->asMatrix())).asPoint2D();
 }
 
@@ -158,7 +158,7 @@ vector<Point2D*> Polygon2D::getPoints(){
 	return this->P;
 }
 
-Point2D * Polygon2D::getReference(){
+BasePoint * Polygon2D::getReference(){
 	double maxX, minX, maxY, minY;
 	
 	Point2D * ref = ((*stateMatrix)*(*P[0]->asMatrix())).asPoint2D();

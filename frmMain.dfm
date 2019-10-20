@@ -991,7 +991,6 @@ object formMain: TformMain
     Top = 5
     Width = 873
     Height = 29
-    UseSystemFont = False
     ActionManager = action_manager
     AnimationStyle = asFade
     Caption = 'mainMenu'
@@ -1002,7 +1001,7 @@ object formMain: TformMain
     ColorMap.UnusedColor = clWhite
     EdgeBorders = [ebLeft, ebTop, ebRight, ebBottom]
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
+    Font.Color = clWindowText
     Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
@@ -1031,6 +1030,31 @@ object formMain: TformMain
       Padding.Top = 3
       Padding.Bottom = 3
       TabOrder = 0
+      object btnObjectCancel: TSpeedButton
+        AlignWithMargins = True
+        Left = 326
+        Top = 3
+        Width = 98
+        Height = 26
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 5
+        Margins.Bottom = 0
+        Action = actObjectCancel
+        Align = alLeft
+        Visible = False
+        ExplicitLeft = 324
+        ExplicitTop = 5
+      end
+      object Bevel1: TBevel
+        AlignWithMargins = True
+        Left = 321
+        Top = 6
+        Width = 2
+        Height = 20
+        Align = alLeft
+        Shape = bsLeftLine
+      end
       object chkShowAxis: TCheckBox
         AlignWithMargins = True
         Left = 215
@@ -4913,6 +4937,12 @@ object formMain: TformMain
       Hint = 'Centralizar Objeto'
       ImageIndex = 12
       OnExecute = actCentralizeExecute
+    end
+    object actObjectCancel: TAction
+      Category = 'Objetos'
+      Caption = 'Cancelar'
+      Hint = 'Cancelar a cria'#231#227'o do objeto'
+      OnExecute = actObjectCancelExecute
     end
   end
   object imagelist16: TImageList

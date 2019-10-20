@@ -6,7 +6,7 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-#include "point2D.h"
+#include "point.h"
 
 /**
  * 	Rasteriza os eixos ortogonais
@@ -250,7 +250,7 @@ void drawCircleTrigonometric(HDC & hdc, Point2D * center, double radius, DrawCol
 /**
  * Desenha um ponto
  * @param hdc HDC - Manipulador da tela
- * @paramP Ponto - Ponto (x,y) a ser desenhado
+ * @param Ponto - Ponto (x,y) a ser desenhado
  * @param color DrawColor - Cor do ponto
  */
 void drawPoint(HDC & hdc, Point2D * P, DrawColor color){

@@ -7,7 +7,7 @@
 #pragma package(smart_init)
 
 #include "graphics.h"
-#include "point2D.h"
+#include "point.h"
 #include "object.h"
 #include "matrix.h"
 
