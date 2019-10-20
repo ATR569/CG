@@ -65,8 +65,8 @@
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
         <SanitizedProjectName>CG</SanitizedProjectName>
         <Custom_Styles>&quot;Sapphire Kamri|VCLSTYLE|$(BDSCOMMONDIR)\Styles\SapphireKamri.vsf&quot;</Custom_Styles>
-        <IncludePath>transformation\;objects\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>transformation\;objects\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>statemachine\;transformation\;objects\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>statemachine\;transformation\;objects\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <PackageImports>adortl;appanalytics;bcbie;bcbsmp;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindengine;CloudService;CustomIPTransport;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;DBXSqliteDriver;dsnap;dsnapcon;dsnapxml;FireDAC;FireDACADSDriver;FireDACCommon;FireDACCommonDriver;FireDACCommonODBC;FireDACIBDriver;FireDACMSAccDriver;FireDACMySQLDriver;FireDACPgDriver;FireDACSqliteDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;RESTBackendComponents;RESTComponents;rtl;soapmidas;soaprtl;soapserver;svn;tethering;vcl;vclactnband;vcldb;vcldsnap;vclFireDAC;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
@@ -172,13 +172,21 @@
             <DependentOn>objects\workspace.h</DependentOn>
             <BuildOrder>8</BuildOrder>
         </CppCompile>
+        <CppCompile Include="statemachine\state.cpp">
+            <DependentOn>statemachine\state.h</DependentOn>
+            <BuildOrder>12</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="statemachine\statemachine.cpp">
+            <DependentOn>statemachine\statemachine.h</DependentOn>
+            <BuildOrder>13</BuildOrder>
+        </CppCompile>
         <CppCompile Include="transformation\transform2D.cpp">
             <DependentOn>transformation\transform2D.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
         <FormResources Include="frmMain.dfm"/>
-        <FormResources Include="frmParam.dfm"/>
         <FormResources Include="frmProperties.dfm"/>
+        <FormResources Include="frmParam.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

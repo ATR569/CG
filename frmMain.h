@@ -26,12 +26,11 @@
 #include "frmParam.h"
 #include <Vcl.Menus.hpp>
 #include "frmProperties.h"
+#include "statemachine/statemachine.h"
 
-enum State{st_None, st_DrawCircle, st_DrawLine, st_DrawPolygon};
 const int DEFAULT_SCR_SIZE = 300;
 
-class TformMain : public TForm
-{
+class TformMain : public TForm {
 __published:	// IDE-managed Components
 	TImageList *imagelist48;
 	TActionManager *action_manager;
@@ -101,7 +100,7 @@ __published:	// IDE-managed Components
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall desktopDblClick(TObject *Sender);
 	void __fastcall desktopMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
-          int X, int Y);
+		  int X, int Y);
 	void __fastcall actRotateExecute(TObject *Sender);
 	void __fastcall chkShowAxisClick(TObject *Sender);
 	void __fastcall actPropertiesExecute(TObject *Sender);
@@ -111,21 +110,17 @@ __published:	// IDE-managed Components
 	void __fastcall actCentralizeExecute(TObject *Sender);
 
 private:	// User declarations
-	State state;
-	WorkSpace * work;
-	int limitClick;
+	StateMachine * machine;
+public:		// User declarations
 	std::vector<Point2D*> pointBuffer;
+	WorkSpace * work;
+	__fastcall TformMain(TComponent* Owner);
 
 	void addCircle(Circle * C);
 	void addLine(Line * l);
 	void addPolygon(Polygon2D * p);
 
-//	enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect};
-public:		// User declarations
-	__fastcall TformMain(TComponent* Owner);
-
-	void changeState(State state);
-    TformParam * getParamWindow(ParamType paramType);
+	TformParam * getParamWindow(ParamType paramType);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TformMain *formMain;

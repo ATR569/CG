@@ -647,7 +647,6 @@ object formMain: TformMain
           Align = alTop
           Caption = 'X'
           Layout = tlCenter
-          ExplicitTop = 26
           ExplicitWidth = 6
         end
         object lblUserY: TLabel
@@ -663,7 +662,6 @@ object formMain: TformMain
           Align = alTop
           Caption = 'Y'
           Layout = tlCenter
-          ExplicitTop = 39
           ExplicitWidth = 6
         end
         object lblScrX: TLabel
@@ -679,7 +677,6 @@ object formMain: TformMain
           Align = alTop
           Caption = 'X'
           Layout = tlCenter
-          ExplicitTop = 83
           ExplicitWidth = 6
         end
         object lblScrY: TLabel
@@ -695,7 +692,6 @@ object formMain: TformMain
           Align = alTop
           Caption = 'Y'
           Layout = tlCenter
-          ExplicitTop = 96
           ExplicitWidth = 6
         end
         object Label1: TLabel
@@ -747,7 +743,7 @@ object formMain: TformMain
           Left = 0
           Top = 0
           Width = 180
-          Height = 378
+          Height = 379
           Margins.Left = 10
           Margins.Top = 5
           Margins.Right = 10
@@ -769,9 +765,9 @@ object formMain: TformMain
         object barProperties: TActionToolBar
           AlignWithMargins = True
           Left = 3
-          Top = 381
+          Top = 382
           Width = 174
-          Height = 27
+          Height = 26
           ActionManager = action_manager
           Align = alBottom
           Caption = 'barProperties'

@@ -10,29 +10,23 @@
 TformMain * formMain;
 
 //---------------------------------------------------------------------------
-__fastcall TformMain::TformMain(TComponent* Owner)
-	: TForm(Owner)
-{
+__fastcall TformMain::TformMain(TComponent* Owner) : TForm(Owner){
 	work = new WorkSpace(DEFAULT_SCR_SIZE, desktop->Width, desktop->Height, GetDC(desktop->Handle));
 	work->setDrawGrid(false);
-	changeState(st_None);
+
+	this->machine = new StateMachine(this);
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TformMain::actPolygonExecute(TObject *Sender)
-{
-/*	std::vector<Point2D*> P;
+void __fastcall TformMain::FormDestroy(TObject *Sender){
+	work->clearObjects();
+	free(work);
+	Application->Terminate();
+}
+//---------------------------------------------------------------------------
 
-	P.push_back(new Point2D(3,3));
-	P.push_back(new Point2D(30,20));
-	P.push_back(new Point2D(-25,30));
-	P.push_back(new Point2D(-20,3));
-	P.push_back(new Point2D(-10,-50));
-
-	Object * o = new Polygon2D(P, DM_BRESENHAN);
-	work->addObject(o);
-*/
-	changeState(st_DrawPolygon);
+void __fastcall TformMain::actPolygonExecute(TObject *Sender){
+	machine->performDrawPolygonClick();
 }
 //---------------------------------------------------------------------------
 
@@ -119,51 +113,6 @@ void __fastcall TformMain::desktopMouseMove(TObject *Sender, TShiftState Shift, 
 }
 //---------------------------------------------------------------------------
 
-
-void __fastcall TformMain::actLineExecute(TObject *Sender){
-
-//	Ponto p1(StrToInt(Edit1->Text), StrToInt(Edit2->Text));
-//	Ponto p2(StrToInt(Edit3->Text), StrToInt(Edit4->Text));
-
-//	ShowMessage(UnicodeString(r->getName().data()));
-
-	//  Teste de inserção de retas
-/*	int v[] = {-30,-20,-10,0,10,20,30};
-
-	Point2D * p1 = new Point2D(0, 0);
-	for (int i = 0; i < 7; i++) {
-		Point2D * p2 = new Point2D(v[0], v[i]);
-		Object * r = new Line(p1, p2, DM_BRESENHAN);
-		work->addObject(r);
-
-		Point2D * p3 = new Point2D(v[6], v[i]);
-		r = new Line(p1, p3, DM_DDA);
-		work->addObject(r);
-	}
-	for (int i = 1; i < 6; i++) {
-		Point2D * p2 = new Point2D(v[i], v[0]);
-		Object * r = new Line(p1, p2, DM_BRESENHAN);
-		work->addObject(r);
-
-		Point2D * p3 = new Point2D(v[i], v[6]);
-		r = new Line(p1, p3, DM_DDA);
-		work->addObject(r);
-	}
-
-	Point2D * p1 = new Point2D(-30, -10);
-	Point2D * p2 = new Point2D(10, -20);
-	Object * o = new Line(p1, p2, DM_DDA);
-	work->addObject(o);
-
-	btnLine->Down = true;
-	*/
-
-
-
-	changeState(st_DrawLine);
-}
-//---------------------------------------------------------------------------
-
 void __fastcall TformMain::FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight,
 		  bool &Resize)
 {
@@ -176,70 +125,18 @@ void __fastcall TformMain::FormCanResize(TObject *Sender, int &NewWidth, int &Ne
 }
 //---------------------------------------------------------------------------
 
-
-void __fastcall TformMain::actCircleExecute(TObject *Sender)
-{
-/*	btnCircle->Down = true;
-	barTransformations->Enabled = false;
-	mainMenu->Enabled = false;
-
-	Point2D * p = new Point2D(20, 10);
-
-	Object * o = new Circle(p, 35, DM_BRESENHAN);
-	work->addObject(o);
-
-	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(o->getName().data()));
-	item->ImageIndex = 0;
-
-	TTreeNode * sub = treeObjects->Items->AddChild(item, "C = " + FormatFloat("(0.00, ", p->X)+FormatFloat("0.00)", p->Y));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-	sub = treeObjects->Items->AddChild(item, "R = " + FormatFloat("0.00", ((Circle*)o)->getRadius()));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-	*/
-
-	changeState(st_DrawCircle);
+void __fastcall TformMain::actLineExecute(TObject *Sender){
+	machine->performDrawLineClick();
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TformMain::FormDestroy(TObject *Sender)
-{
-	work->clearObjects();
-	free(work);
-    Application->Terminate();
+void __fastcall TformMain::actCircleExecute(TObject *Sender){
+	machine->performDrawCircleClick();
 }
 //---------------------------------------------------------------------------
 
-void TformMain::changeState(State state){
-	if (state == st_None) {
-		for (int i = 0; i < action_manager->ActionCount; i++) {
-			action_manager->Actions[i]->Enabled = true;
-		}
-		this->limitClick = -1;
-		this->pointBuffer.clear();
-	}else{
-		if (state == st_DrawPolygon) {
-			this->limitClick = -1;
-		}else{
-			this->limitClick = 2;
-		}
-
-		for (int i = 0; i < action_manager->ActionCount; i++) {
-			action_manager->Actions[i]->Enabled = false;
-		}
-	}
-
-	this->state = state;
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TformMain::desktopDblClick(TObject *Sender)
-{
-	if (state == st_DrawPolygon) {
-		addPolygon(new Polygon2D(pointBuffer, DM_BRESENHAN));
-		changeState(st_None);
-	}
+void __fastcall TformMain::desktopDblClick(TObject *Sender){
+	machine->performDblClick();
 }
 //---------------------------------------------------------------------------
 
@@ -247,88 +144,11 @@ void __fastcall TformMain::desktopDblClick(TObject *Sender)
 void __fastcall TformMain::desktopMouseDown(TObject *Sender, TMouseButton Button,
 		  TShiftState Shift, int X, int Y)
 {
-	switch (this->state) {
-		case st_DrawLine:{
-			pointBuffer.push_back(this->work->CoordScrToUser((new Point2D(X,Y))));
-			this->limitClick--;
-
-			if (this->limitClick == 0) {
-				addLine(new Line(pointBuffer[0], pointBuffer[1], DM_BRESENHAN));
-				changeState(st_None);
-			}
-
-			break;
-		}
-		case st_DrawCircle:{
-			pointBuffer.push_back(this->work->CoordScrToUser((new Point2D(X,Y))));
-			this->limitClick--;
-			if (this->limitClick == 0) {
-				double radius = dist(pointBuffer[0], pointBuffer[1]);
-				addCircle(new Circle(pointBuffer[0], radius, DM_BRESENHAN));
-				changeState(st_None);
-			}
-
-			break;
-		}
-		case st_DrawPolygon:
-			pointBuffer.push_back(this->work->CoordScrToUser((new Point2D(X,Y))));
-		case st_None:;
-
-	}
+	this->machine->performClick(X, Y);
 }
 //---------------------------------------------------------------------------
 
-
-void TformMain::addCircle(Circle * C){
-	this->work->addObject(C);
-
-	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(C->getName().data()));
-	item->ImageIndex = 0;
-	item->ImageIndex = 0;
-
-	TTreeNode * sub = treeObjects->Items->AddChild(item, "C = (" + FormatFloat("0.00, ", C->getCenter()->X)+FormatFloat("0.00)", C->getCenter()->Y));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-	sub = treeObjects->Items->AddChild(item, "R = " + FormatFloat("0.00", C->getRadius()));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-}
-
-void TformMain::addLine(Line * l){
-	this->work->addObject(l);
-
-	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(l->getName().data()));
-	item->ImageIndex = 1;
-	item->SelectedIndex = 1;
-
-	TTreeNode * sub = treeObjects->Items->AddChild(item, "A = (" + FormatFloat("0.00, ", l->getA()->X)+FormatFloat("0.00)", l->getA()->Y));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-	sub = treeObjects->Items->AddChild(item, "B = (" + FormatFloat("0.00, ", l->getB()->X)+FormatFloat("0.00)", l->getB()->Y));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-}
-
-void TformMain::addPolygon(Polygon2D * p){
-	work->addObject(p);
-
-	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(p->getName().data()));
-	item->ImageIndex = 2;
-	item->SelectedIndex = 2;
-
-	TTreeNode * sub;
-	vector<Point2D*> points = p->getPoints();
-
-	for (int i = 0; i < points.size(); i++) {
-		TTreeNode * sub = treeObjects->Items->AddChild(item, "(" + FormatFloat("0.00, ", points[i]->X)+FormatFloat("0.00)", points[i]->Y));
-		sub->ImageIndex = -1;
-		sub->SelectedIndex = -1;
-	}
-
-}
-
-void __fastcall TformMain::actRotateExecute(TObject *Sender)
-{
+void __fastcall TformMain::actRotateExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
@@ -349,9 +169,7 @@ void __fastcall TformMain::actRotateExecute(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-
-void __fastcall TformMain::chkShowAxisClick(TObject *Sender)
-{
+void __fastcall TformMain::chkShowAxisClick(TObject *Sender){
 	work->setDrawAxis(chkShowAxis->Checked);
 	work->setDrawGrid(chkShowGrid->Checked);
 	work->setDrawPoints(chkShowPoints->Checked);
@@ -360,39 +178,20 @@ void __fastcall TformMain::chkShowAxisClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TformMain::actPropertiesExecute(TObject *Sender)
-{
-/*	Object * o = work->getObject(treeObjects->Selected->Index);
-	ShowMessage(UnicodeString(o->getName().data()));
-	work->eraseObject(o);
-	o->getReference()->X = 0;
-	o->getReference()->Y = 0;
-	work->update();
-
-	Point2D * p1 = new Point2D(-1,5);
-	Point2D * p2 = new Point2D(3,8);
-
-	cut(p1, p2, -3,2,1,6);
-
-
-	ShowMessage("P1 = " + FormatFloat("0.000", p1->X) + ", " + FormatFloat("0.000", p1->Y) + "\nP2 = " + FormatFloat("0.000", p2->X) + ", " + FormatFloat("0.000", p2->Y));
-	*/
-
+void __fastcall TformMain::actPropertiesExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
 		Object * obj = work->getObject(id);
 		TformProperties * properties = new TformProperties(this, obj);
 
-        properties->ShowModal();
+		properties->ShowModal();
 		properties->Release();
 	}
 }
 //---------------------------------------------------------------------------
 
-
-void __fastcall TformMain::actShearExecute(TObject *Sender)
-{
+void __fastcall TformMain::actShearExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
@@ -414,9 +213,7 @@ void __fastcall TformMain::actShearExecute(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-
-void __fastcall TformMain::actReflectExecute(TObject *Sender)
-{
+void __fastcall TformMain::actReflectExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
@@ -494,15 +291,14 @@ TformParam * TformMain::getParamWindow(ParamType paramType){
 	return param;
 }
 
-void __fastcall TformMain::actRemoveExecute(TObject *Sender)
-{
+void __fastcall TformMain::actRemoveExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
-        Object * obj = work->getObject(id);
+		Object * obj = work->getObject(id);
 		UnicodeString msg = "Deseja realmente remover o objeto " + UnicodeString(obj->getName().data()) + "?";
-		if (MessageDlg(msg, mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
 
+		if (MessageDlg(msg, mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
 			work->deleteObject(id);
             treeObjects->Selected->Delete();
 		}
@@ -511,9 +307,7 @@ void __fastcall TformMain::actRemoveExecute(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-
-void __fastcall TformMain::actCentralizeExecute(TObject *Sender)
-{
+void __fastcall TformMain::actCentralizeExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
@@ -523,4 +317,51 @@ void __fastcall TformMain::actCentralizeExecute(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
+
+void TformMain::addCircle(Circle * C){
+	this->work->addObject(C);
+
+	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(C->getName().data()));
+	item->ImageIndex = 0;
+	item->ImageIndex = 0;
+
+	TTreeNode * sub = treeObjects->Items->AddChild(item, "C = (" + FormatFloat("0.00, ", C->getCenter()->X)+FormatFloat("0.00)", C->getCenter()->Y));
+	sub->ImageIndex = -1;
+	sub->SelectedIndex = -1;
+	sub = treeObjects->Items->AddChild(item, "R = " + FormatFloat("0.00", C->getRadius()));
+	sub->ImageIndex = -1;
+	sub->SelectedIndex = -1;
+}
+
+void TformMain::addLine(Line * l){
+	this->work->addObject(l);
+
+	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(l->getName().data()));
+	item->ImageIndex = 1;
+	item->SelectedIndex = 1;
+
+	TTreeNode * sub = treeObjects->Items->AddChild(item, "A = (" + FormatFloat("0.00, ", l->getA()->X)+FormatFloat("0.00)", l->getA()->Y));
+	sub->ImageIndex = -1;
+	sub->SelectedIndex = -1;
+	sub = treeObjects->Items->AddChild(item, "B = (" + FormatFloat("0.00, ", l->getB()->X)+FormatFloat("0.00)", l->getB()->Y));
+	sub->ImageIndex = -1;
+	sub->SelectedIndex = -1;
+}
+
+void TformMain::addPolygon(Polygon2D * p){
+	work->addObject(p);
+
+	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(p->getName().data()));
+	item->ImageIndex = 2;
+	item->SelectedIndex = 2;
+
+	TTreeNode * sub;
+	vector<Point2D*> points = p->getPoints();
+
+	for (int i = 0; i < points.size(); i++) {
+		TTreeNode * sub = treeObjects->Items->AddChild(item, "(" + FormatFloat("0.00, ", points[i]->X)+FormatFloat("0.00)", points[i]->Y));
+		sub->ImageIndex = -1;
+		sub->SelectedIndex = -1;
+	}
+}
 
