@@ -13,6 +13,7 @@ TformMain * formMain;
 __fastcall TformMain::TformMain(TComponent* Owner) : TForm(Owner){
 	work = new WorkSpace(DEFAULT_SCR_SIZE, desktop->Width, desktop->Height, GetDC(desktop->Handle));
 	work->setDrawGrid(false);
+    work->setMode(MODE_2D);
 
 	this->machine = new StateMachine(this);
 }
@@ -281,7 +282,7 @@ TformParam * TformMain::getParamWindow(ParamType paramType){
         param->Height = 250;
 	}
 
-	if (work->getMode() == MODE2D) {
+	if (work->getMode() == MODE_2D) {
 		param->edtParamZ->Visible = false;
 		param->edtZ->Visible = false;
 		param->edtX->Left += 35;
@@ -300,7 +301,7 @@ void __fastcall TformMain::actRemoveExecute(TObject *Sender){
 
 		if (MessageDlg(msg, mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
 			work->deleteObject(id);
-            treeObjects->Selected->Delete();
+			treeObjects->Selected->Delete();
 		}
 
 	}
@@ -367,9 +368,64 @@ void TformMain::addPolygon(Polygon2D * p){
 
 void __fastcall TformMain::actObjectCancelExecute(TObject *Sender)
 {
-    machine->performObjectCancelClick();
+	machine->performObjectCancelClick();
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TformMain::Button1Click(TObject *Sender)
+{
+	Object * obj = getCube(new Point3D(5,5,5), 10, DM_BRESENHAN);
+	work->addObject(obj);
+}
+//---------------------------------------------------------------------------
 
+void __fastcall TformMain::actMode2DExecute(TObject *Sender){
+	if (((TAction*)Sender)->Checked) {
+		if (MessageDlg("Deseja Mudar o modo para o modo 2D?\nIsso removerá todos os objetos criados!", mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
+			desktop->Repaint();
+			treeObjects->Items->Clear();
+			work->clearObjects();
+			work->setMode(MODE_2D);
+			action_manager->Actions[15]->Checked = false;
+			action_manager->Actions[16]->Checked = false;
+
+		}else{
+			action_manager->Actions[14]->Checked = false;
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformMain::actMode3DExecute(TObject *Sender){
+	if (((TAction*)Sender)->Checked) {
+		if (MessageDlg("Deseja Mudar o modo para o modo 3D?\nIsso removerá todos os objetos criados!", mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
+			desktop->Repaint();
+			treeObjects->Items->Clear();
+			work->clearObjects();
+			work->setMode(MODE_3D);
+			action_manager->Actions[14]->Checked = false;
+			action_manager->Actions[16]->Checked = false;
+		}else{
+			action_manager->Actions[15]->Checked = false;
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformMain::actModeImageExecute(TObject *Sender){
+	if (((TAction*)Sender)->Checked) {
+		if (MessageDlg("Deseja Mudar o modo para o modo Imagem?\nIsso removerá todos os objetos criados!", mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
+			desktop->Repaint();
+			treeObjects->Items->Clear();
+
+			work->clearObjects();
+			work->setMode(MODE_2D);
+			action_manager->Actions[14]->Checked = false;
+			action_manager->Actions[15]->Checked = false;
+		}else{
+			action_manager->Actions[16]->Checked = false;
+		}
+    }
+}
+//---------------------------------------------------------------------------
 

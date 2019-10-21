@@ -28,7 +28,7 @@ WorkSpace::WorkSpace(double userH, int canvasH, int canvasV, HDC hdc){
 	this->drwAxis = true;
 	this->drwGrid = true;
 	this->drwPoints = true;
-	this->mode = MODE2D;
+	this->mode = MODE_2D;
 }
 
 Point2D * WorkSpace::CoordScrToUser(Point2D * p){
@@ -55,6 +55,7 @@ int WorkSpace::getMode(){
 
 void WorkSpace::setMode(int mode){
 	this->mode = mode;
+    update();
 }
 
 int WorkSpace::getCanvasH(){
@@ -69,10 +70,15 @@ int WorkSpace::getCanvasV(){
  * Rasteriza os eixos ortogonais X e Y
  */
 void WorkSpace::drawAxis(){
-	if (this->drwAxis)
-		printAxis(this->hdc, this->canvasH, this->canvasV, CL_GREY);
-	if (this->drwGrid)
-		drawGrid(this->hdc, this->canvasH, this->canvasV, this->userH, this->userV, CL_LIGHTGREY);
+	if (this->drwAxis){
+		if (mode == MODE_2D){
+			printAxis(this->hdc, this->canvasH, this->canvasV, CL_GREY);
+			if (this->drwGrid)
+				drawGrid(this->hdc, this->canvasH, this->canvasV, this->userH, this->userV, CL_LIGHTGREY);
+		}else{
+			printAxis3D(this->hdc, this->canvasH, this->canvasV, CL_GREY);
+		}
+	}
 }
 
 /**
@@ -97,7 +103,7 @@ void WorkSpace::update(){
 	drawAxis();
 
 	for (int i = 0; i < objects.size(); i++) {
-		objects[i]->draw(this, this->drwPoints);
+		objects[i]->draw(this, this->mode == MODE_2D && this->drwPoints);
 	}
 }
 

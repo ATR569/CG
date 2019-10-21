@@ -19,6 +19,8 @@ using namespace std;
 
 void printAxis(HDC & hdc, int width, int height, DrawColor color);
 
+void printAxis3D(HDC & hdc, int width, int height, DrawColor color);
+
 void drawGrid(HDC & hdc, double canvasH, double canvasV, double userH, double userV, DrawColor color);
 
 void drawLineBresenhan(HDC & hdc, Point2D * p1, Point2D * p2, DrawColor color);

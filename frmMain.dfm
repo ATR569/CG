@@ -991,6 +991,7 @@ object formMain: TformMain
     Top = 5
     Width = 873
     Height = 29
+    UseSystemFont = False
     ActionManager = action_manager
     AnimationStyle = asFade
     Caption = 'mainMenu'
@@ -1001,7 +1002,7 @@ object formMain: TformMain
     ColorMap.UnusedColor = clWhite
     EdgeBorders = [ebLeft, ebTop, ebRight, ebBottom]
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
+    Font.Color = clBlack
     Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
@@ -1091,6 +1092,19 @@ object formMain: TformMain
         State = cbChecked
         TabOrder = 2
         OnClick = chkShowAxisClick
+      end
+      object Button1: TButton
+        Left = 783
+        Top = 3
+        Width = 75
+        Height = 26
+        Align = alRight
+        Caption = 'Button1'
+        TabOrder = 3
+        OnClick = Button1Click
+        ExplicitLeft = 504
+        ExplicitTop = 4
+        ExplicitHeight = 25
       end
     end
   end
@@ -4805,6 +4819,24 @@ object formMain: TformMain
                 ImageIndex = 12
               end>
             Caption = '&Transforma'#231#245'es'
+          end
+          item
+            Items = <
+              item
+                Action = actMode2D
+                Caption = '&Modo 2D'
+              end
+              item
+                Action = actMode3D
+                Caption = 'M&odo 3D'
+              end
+              item
+                Action = actModeImage
+                Caption = 'Mo&do Imagem'
+              end>
+            Caption = '&Modo'
+            CommandStyle = csRadioButton
+            CommandProperties.Width = -1
           end>
         ActionBar = mainMenu
       end
@@ -4943,6 +4975,25 @@ object formMain: TformMain
       Caption = 'Cancelar'
       Hint = 'Cancelar a cria'#231#227'o do objeto'
       OnExecute = actObjectCancelExecute
+    end
+    object actMode2D: TAction
+      Category = 'Modo'
+      AutoCheck = True
+      Caption = 'Modo 2D'
+      Checked = True
+      OnExecute = actMode2DExecute
+    end
+    object actMode3D: TAction
+      Category = 'Modo'
+      AutoCheck = True
+      Caption = 'Modo 3D'
+      OnExecute = actMode3DExecute
+    end
+    object actModeImage: TAction
+      Category = 'Modo'
+      AutoCheck = True
+      Caption = 'Modo Imagem'
+      OnExecute = actModeImageExecute
     end
   end
   object imagelist16: TImageList

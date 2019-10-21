@@ -5,14 +5,15 @@
 #include <string>
 #include <windows.h>
 #include "../transformation/transform2D.h"
+#include "../transformation/transform3D.h"
 
 typedef unsigned DrawColor;
 
 class Object;
 class Point2D;
 
-const int MODE2D = 0;
-const int MODE3D = 1;
+const int MODE_2D = 0;
+const int MODE_3D = 1;
 
 class WorkSpace{
 private:

@@ -22,7 +22,7 @@ public:
 	Matrix * asMatrix();
 };
 
-class Point3D{
+class Point3D : public BasePoint{
 
 public:
 	double X;

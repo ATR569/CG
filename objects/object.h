@@ -7,6 +7,7 @@
 #include <windows.h>
 #include "graphics.h"
 #include "../transformation/transform2D.h"
+#include "../transformation/transform3D.h"
 
 using namespace std;
 
@@ -29,11 +30,11 @@ public:
 
 class Object{
 private:
-	list<Transformation> history;
 	string name;
 	DrawMethod drawMethod;
 	DrawColor color;
 protected:
+	list<Transformation> history;
 	Matrix * stateMatrix;
 public:
 	Object(string name, DrawMethod drawMethod);

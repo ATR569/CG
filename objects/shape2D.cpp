@@ -20,6 +20,8 @@
 Line::Line(Point2D * A, Point2D * B, DrawMethod drawMethod) : Object("Reta " + to_string(++id), drawMethod){
 	this->A = A;
 	this->B = B;
+	this->stateMatrix = getIdentityMatrix();
+	this->history.push_back(Transformation(string("Estado inicial"), getIdentityMatrix()));
 }
 
 /**
@@ -74,6 +76,8 @@ BasePoint * Line::getReference(){
 Circle::Circle(Point2D * center, double radius, DrawMethod drawMethod) : Object("Círculo " + to_string(++id), drawMethod){
 	this->center = center;
 	this->radius = radius;
+	this->stateMatrix = getIdentityMatrix();
+	this->history.push_back(Transformation(string("Estado inicial"), getIdentityMatrix()));
 }
 
 /**
@@ -117,6 +121,8 @@ BasePoint * Circle::getReference(){
  */
 Polygon2D::Polygon2D(vector<Point2D*> P, DrawMethod drawMethod) : Object("Polígono " + to_string(++id), drawMethod){
 	this->P = P;
+	this->stateMatrix = getIdentityMatrix();
+	this->history.push_back(Transformation(string("Estado inicial"), getIdentityMatrix()));
 }
 
 /**

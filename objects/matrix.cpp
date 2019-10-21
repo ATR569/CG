@@ -56,14 +56,14 @@ void Matrix::assign(Matrix M){
 }
 
 Point2D * Matrix::asPoint2D(){
-    if (this->data.size() != 3 || this->data[0].size() != 1)
+    if (this->data.size() < 3 || this->data[0].size() != 1)
 		throw std::exception();
 
 	return new Point2D(this->data[0][0], this->data[1][0]);
 }
 
 Point3D * Matrix::asPoint3D(){
-    if (this->data.size() != 4 || this->data[0].size() != 1)
+    if (this->data.size() < 4 || this->data[0].size() != 1)
 		throw std::exception();
 
 	return new Point3D(this->data[0][0], this->data[1][0], this->data[2][0]);

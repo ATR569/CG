@@ -27,6 +27,28 @@ void printAxis(HDC & hdc, int width, int height, DrawColor color){
 		SetPixel(hdc, yAxis, i, color);
 	}
 }
+
+/**
+ * 	Rasteriza os eixos ortogonais no R3
+ *  @param hdc HDC - Manipulador da tela
+ *  @param width int - Largura da tela
+ *  @param height int - Altura da tela
+ *  @param color DrawColor - Cor da linha
+ */
+void printAxis3D(HDC & hdc, int width, int height, DrawColor color){
+	int xAxis = round(width/2);
+	int yAxis = round(height/2);
+
+	for (int i = 0; i < height/2; i++) {
+		SetPixel(hdc, xAxis, i, color);
+	}
+
+	double tan35 = tan(35.0/180*M_PI);
+
+	drawLineBresenhan(hdc, new Point2D(xAxis, yAxis), new Point2D(xAxis + 2*yAxis*tan35, height), color);
+	drawLineBresenhan(hdc, new Point2D(xAxis, yAxis), new Point2D(xAxis - 2*yAxis*tan35, height), color);
+}
+
 /**
  * 	Rasteriza uma grade
  *  @param hdc HDC - Manipulador da tela

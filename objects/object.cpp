@@ -19,8 +19,6 @@ Object::Object(string name, DrawMethod drawMethod){
     this->name = name;
 	this->drawMethod = drawMethod;
 	this->color = CL_BLACK;
-	this->stateMatrix = getIdentityMatrix();
-	this->history.push_back(Transformation(string("Estado inicial"), getIdentityMatrix()));
 }
 
 /**

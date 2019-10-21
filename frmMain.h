@@ -89,6 +89,10 @@ __published:	// IDE-managed Components
 	TAction *actObjectCancel;
 	TSpeedButton *btnObjectCancel;
 	TBevel *Bevel1;
+	TButton *Button1;
+	TAction *actMode2D;
+	TAction *actMode3D;
+	TAction *actModeImage;
 	void __fastcall actPolygonExecute(TObject *Sender);
 	void __fastcall actMoveExecute(TObject *Sender);
 	void __fastcall actScaleExecute(TObject *Sender);
@@ -111,6 +115,10 @@ __published:	// IDE-managed Components
 	void __fastcall actRemoveExecute(TObject *Sender);
 	void __fastcall actCentralizeExecute(TObject *Sender);
 	void __fastcall actObjectCancelExecute(TObject *Sender);
+	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall actMode2DExecute(TObject *Sender);
+	void __fastcall actMode3DExecute(TObject *Sender);
+	void __fastcall actModeImageExecute(TObject *Sender);
 
 private:	// User declarations
 	StateMachine * machine;

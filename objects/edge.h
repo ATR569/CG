@@ -2,9 +2,9 @@
 #define edgeH
 
 class Edge{
-    int a, b;
 public:
-    Edge(int a, int b) a(a), b(b){};
+    int A, B;
+    Edge(int A, int B) : A(A), B(B){};
 };
 
 #endif
