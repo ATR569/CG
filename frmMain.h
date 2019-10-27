@@ -93,6 +93,11 @@ __published:	// IDE-managed Components
 	TAction *actMode2D;
 	TAction *actMode3D;
 	TAction *actModeImage;
+	TAction *actPolyedron;
+	TAction *actCube;
+	TAction *actPrism;
+	TAction *actPyramid;
+	TAction *actExit;
 	void __fastcall actPolygonExecute(TObject *Sender);
 	void __fastcall actMoveExecute(TObject *Sender);
 	void __fastcall actScaleExecute(TObject *Sender);
@@ -119,6 +124,7 @@ __published:	// IDE-managed Components
 	void __fastcall actMode2DExecute(TObject *Sender);
 	void __fastcall actMode3DExecute(TObject *Sender);
 	void __fastcall actModeImageExecute(TObject *Sender);
+	void __fastcall actExitExecute(TObject *Sender);
 
 private:	// User declarations
 	StateMachine * machine;
@@ -127,9 +133,8 @@ public:		// User declarations
 	WorkSpace * work;
 	__fastcall TformMain(TComponent* Owner);
 
-	void addCircle(Circle * C);
-	void addLine(Line * l);
-	void addPolygon(Polygon2D * p);
+	void updateTreeView(TTreeNode * node, Object * obj);
+	TTreeNode * addTreeItem(int numChilds, int imageIndex);
 
 	TformParam * getParamWindow(ParamType paramType);
 };

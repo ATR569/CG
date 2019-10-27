@@ -2,7 +2,7 @@
 #define workspaceH
 
 #include <vector>
-#include <string>
+#include <System.Classes.hpp>
 #include <windows.h>
 #include "../transformation/transform2D.h"
 #include "../transformation/transform3D.h"
@@ -41,25 +41,28 @@ public:
 
 	void clearObjects();
 	void addObject(Object * obj);
-	Object * getObject(int id);
 	void deleteObject(int id);
 
+	Object * getObject(int id);
+    std::vector<Object*> getObjects();
 	int getMode();
 	int getCanvasH();
 	int getCanvasV();
-	
+
 	void setDrawPoints(bool drwPoints);
 	void setDrawAxis(bool drwAxis);
 	void setDrawGrid(bool drwGrid);
 	void setMode(int mode);
 	
-	void apply(Object * obj, Matrix * M, std::string caption);
+	void apply(Object * obj, Matrix * M, String caption);
 	void translateObject(Object * obj, double tx, double ty);
 	void rotateObject(Object * obj, Point2D * ref, double theta);
 	void scaleObject(Object * obj, Point2D * ref, double sx, double sy);
 	void shearObject(Object * obj, Point2D * ref, double shx, double shy);
 	void reflectObject(Object * obj, int axis);
 	void reflectObject(Object * obj, double m, double b);
+
+	void translateObject3D(Object * obj, double tx, double ty, double tz);
 };
 
 #endif

@@ -15,6 +15,7 @@ public:
     Polyedron(vector<Point3D *> P, vector<Edge> edges, DrawMethod drawMethod);
     Polyedron(vector<Point3D *> P, DrawMethod drawMethod);
 
+	vector<String> toStrings();
 	vector<Point3D *> getPoints();
 	vector<Edge> getEdges();
 	BasePoint * getReference();
@@ -24,6 +25,8 @@ public:
 };
 
 Polyedron * getCube(Point3D * center, double edgeSize, DrawMethod drawMethod);
+
+Polyedron * getPyramid(Point3D * center, double edgeBase, double height, DrawMethod drawMethod);
 
 int Polyedron::id = 0;
 

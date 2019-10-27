@@ -97,6 +97,10 @@ void drawGrid(HDC & hdc, double canvasH, double canvasV, double userH, double us
  *  @param color unsigned - Cor da reta
  */
 void drawLineBresenhan(HDC & hdc, Point2D * p1, Point2D * p2, DrawColor color){
+	p1->X = round(p1->X);
+	p1->Y = round(p1->Y);
+	p2->X = round(p2->X);
+	p2->Y = round(p2->Y);
 	int dX = abs(p2->X - p1->X);
 	int dY = abs(p2->Y - p1->Y);
 

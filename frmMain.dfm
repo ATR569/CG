@@ -755,10 +755,12 @@ object formMain: TformMain
           BorderStyle = bsNone
           Ctl3D = True
           HideSelection = False
+          HotTrack = True
           Images = imagelist16
           Indent = 19
           ParentCtl3D = False
           ReadOnly = True
+          RowSelect = True
           TabOrder = 0
           OnClick = treeObjectsClick
         end
@@ -1102,9 +1104,6 @@ object formMain: TformMain
         Caption = 'Button1'
         TabOrder = 3
         OnClick = Button1Click
-        ExplicitLeft = 504
-        ExplicitTop = 4
-        ExplicitHeight = 25
       end
     end
   end
@@ -4762,6 +4761,31 @@ object formMain: TformMain
           item
             Items = <
               item
+                Action = actMode2D
+                Caption = '&Modo 2D'
+              end
+              item
+                Action = actMode3D
+                Caption = 'M&odo 3D'
+              end
+              item
+                Action = actModeImage
+                Caption = 'Mo&do Imagem'
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = actExit
+                Caption = '&Sair'
+              end>
+            Caption = '&Sistema'
+            CommandStyle = csRadioButton
+            CommandProperties.Width = -1
+          end
+          item
+            Items = <
+              item
                 Action = actCircle
                 Caption = '&C'#237'rculo'
                 ImageIndex = 0
@@ -4775,6 +4799,43 @@ object formMain: TformMain
                 Action = actPolygon
                 Caption = '&Pol'#237'gono'
                 ImageIndex = 2
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = actPolyedron
+                Caption = 'P&oliedro'
+              end
+              item
+                Action = actCube
+                Caption = 'C&ubo'
+              end
+              item
+                Action = actPyramid
+                Caption = 'Pir'#226'&mide'
+              end
+              item
+                Action = actPrism
+                Caption = 'Pri&sma'
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = actProperties
+                Caption = 'Propr&iedades'
+                ImageIndex = 11
+              end
+              item
+                Action = actRemove
+                Caption = '&Delete'
+                ImageIndex = 10
+                ShortCut = 16430
+              end
+              item
+                Action = actObjectCancel
+                Caption = 'C&ancelar'
               end>
             Caption = '&Objetos'
           end
@@ -4819,24 +4880,6 @@ object formMain: TformMain
                 ImageIndex = 12
               end>
             Caption = '&Transforma'#231#245'es'
-          end
-          item
-            Items = <
-              item
-                Action = actMode2D
-                Caption = '&Modo 2D'
-              end
-              item
-                Action = actMode3D
-                Caption = 'M&odo 3D'
-              end
-              item
-                Action = actModeImage
-                Caption = 'Mo&do Imagem'
-              end>
-            Caption = '&Modo'
-            CommandStyle = csRadioButton
-            CommandProperties.Width = -1
           end>
         ActionBar = mainMenu
       end
@@ -4973,6 +5016,7 @@ object formMain: TformMain
     object actObjectCancel: TAction
       Category = 'Objetos'
       Caption = 'Cancelar'
+      Enabled = False
       Hint = 'Cancelar a cria'#231#227'o do objeto'
       OnExecute = actObjectCancelExecute
     end
@@ -4994,6 +5038,30 @@ object formMain: TformMain
       AutoCheck = True
       Caption = 'Modo Imagem'
       OnExecute = actModeImageExecute
+    end
+    object actPolyedron: TAction
+      Category = 'Objetos'
+      Caption = 'Poliedro'
+      Hint = 'Inserir um poliedro'
+    end
+    object actCube: TAction
+      Category = 'Objetos'
+      Caption = 'Cubo'
+      Hint = 'Adicionar um Cubo'
+    end
+    object actPrism: TAction
+      Category = 'Objetos'
+      Caption = 'Prisma'
+      Hint = 'Adicionar um prisma'
+    end
+    object actPyramid: TAction
+      Category = 'Objetos'
+      Caption = 'Pir'#226'mide'
+      Hint = 'Adicionar uma pir'#226'mide'
+    end
+    object actExit: TAction
+      Caption = 'Sair'
+      OnExecute = actExitExecute
     end
   end
   object imagelist16: TImageList

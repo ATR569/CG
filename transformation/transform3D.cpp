@@ -7,7 +7,7 @@
 #pragma package(smart_init)
 
 #include "../objects/matrix.h"
-#include "../objects/point3D.h"
+#include "../objects/point.h"
 
 using namespace std;
 
@@ -18,7 +18,7 @@ using namespace std;
  * @param tz - deslocamento em z
  * @return Matrix de translação
  */
-Matrix * getTranslationMatrix(double tx, double ty, double tz){
+Matrix * getTranslation3DMatrix(double tx, double ty, double tz){
 	vector<vector<double> > data;
 
 	data.push_back(vector<double>({1,0,0,tx}));
@@ -36,7 +36,7 @@ Matrix * getTranslationMatrix(double tx, double ty, double tz){
  * @param sy - fator de escala em y
  * @param sz - fator de escala em z
  */
-Matrix * getScaleMatrix(double sx, double sy, double sz){
+Matrix * getScale3DMatrix(double sx, double sy, double sz){
 
 	vvd data;
 
@@ -56,7 +56,7 @@ Matrix * getScaleMatrix(double sx, double sy, double sz){
  * @param sy - fator de escala em y
  * @param sz - fator de escala em z
  */
-Matrix * getScaleMatrix(double sx, double sy, double sz, Point3D * p){	
+Matrix * getScale3DMatrix(double sx, double sy, double sz, Point3D * p){	
 
 	vvd data;
 
@@ -195,7 +195,7 @@ Matrix * getRotationMatrixAroundAxisZ(double theta, vvd & data){
 * @param axis int - Eixo ao qual será aplicado a rotação
 * @return Matrix - matriz que realiza a rotação do objeto
 */
-Matrix * getRotationMatrix(double theta, int axis){
+Matrix * getRotation3DMatrix(double theta, int axis){
 	theta = M_PI * (theta/180);
 	vector<std::vector<double>> data;
 
@@ -249,7 +249,7 @@ Matrix * getReflectionMatrixPlan(int plan){
  * @param m - Inclinação da reta de reflexão
  * @param b - Y do ponto em que a reta toca o eixo Y
  */
-Matrix * getReflectionMatrix(double m, double b){ // NOT UPDATED
+Matrix * getReflection3DMatrix(double m, double b){ // NOT UPDATED
 	vvd data;
 
 	double den = (1+m*m);
@@ -265,7 +265,7 @@ Matrix * getReflectionMatrix(double m, double b){ // NOT UPDATED
 /**
  * Retorna uma matriz identidade
  */
-Matrix * getIdentityMatrix(){
+Matrix * getIdentity3DMatrix(){
 	vvd data;
 
 	data.push_back(vector<double>({1,0,0,0}));
@@ -275,18 +275,11 @@ Matrix * getIdentityMatrix(){
 
 	return new Matrix(data);
 }
-
 /**
- * Retorna uma matriz de transformação da viewport
- */
-/*
-Matrix * getWinVPMatrix(double uMin, double uMax, double vMin, double vMax, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax){
-	double sx = (uMax-uMin)/(xMax-xMin);
-	double sy = (vMax-vMin)/(yMax-yMin);
-
-	Matrix  * M = new Matrix(3,3);
-
-	*M = (*getTranslationMatrix(uMin, vMin))*(*getScaleMatrix(sx, sy))*(*getTranslationMatrix(-xMin, -yMin));
-
+ * Retorna uma matriz que alinha a câmera para executar a projeção
+ */ 
+Matrix * getProjectionMatrix(){
+	Matrix * M = new Matrix(4,4);
+	*M = (*getRotation3DMatrix(45, 0))*(*getRotation3DMatrix(-45, 1));
 	return M;
-}*/
+}

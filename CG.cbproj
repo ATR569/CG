@@ -160,13 +160,17 @@
             <DependentOn>objects\object.h</DependentOn>
             <BuildOrder>6</BuildOrder>
         </CppCompile>
-        <CppCompile Include="objects\point2D.cpp">
-            <DependentOn>objects\point2D.h</DependentOn>
-            <BuildOrder>7</BuildOrder>
+        <CppCompile Include="objects\point.cpp">
+            <DependentOn>objects\point.h</DependentOn>
+            <BuildOrder>13</BuildOrder>
         </CppCompile>
         <CppCompile Include="objects\shape2D.cpp">
             <DependentOn>objects\shape2D.h</DependentOn>
             <BuildOrder>11</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="objects\shape3D.cpp">
+            <DependentOn>objects\shape3D.h</DependentOn>
+            <BuildOrder>14</BuildOrder>
         </CppCompile>
         <CppCompile Include="objects\workspace.cpp">
             <DependentOn>objects\workspace.h</DependentOn>
@@ -184,9 +188,13 @@
             <DependentOn>transformation\transform2D.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
+        <CppCompile Include="transformation\transform3D.cpp">
+            <DependentOn>transformation\transform3D.h</DependentOn>
+            <BuildOrder>15</BuildOrder>
+        </CppCompile>
         <FormResources Include="frmMain.dfm"/>
-        <FormResources Include="frmProperties.dfm"/>
         <FormResources Include="frmParam.dfm"/>
+        <FormResources Include="frmProperties.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

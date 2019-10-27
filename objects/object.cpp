@@ -15,7 +15,7 @@
  * @param name - Nome do objeto
  * @param drawMethod - Algoritmo usado na rasterização
  */
-Object::Object(string name, DrawMethod drawMethod){
+Object::Object(String name, DrawMethod drawMethod){
     this->name = name;
 	this->drawMethod = drawMethod;
 	this->color = CL_BLACK;
@@ -23,9 +23,9 @@ Object::Object(string name, DrawMethod drawMethod){
 
 /**
  * Getter para o nome do objeto 
- * return string
+ * return String
  */
-string Object::getName(){
+String Object::getName(){
     return this->name;
 }
 
@@ -41,11 +41,15 @@ DrawMethod Object::getMethod(){
     return this->drawMethod;
 }
 
+list<Transformation> Object::getHistory(){
+    return this->history;
+}
+
 /**
  * Aplica uma transformação ao objeto
  * @param M - Matriz de transformação
  */
-void Object::apply(Matrix * M, std::string caption){
+void Object::apply(Matrix * M, String caption){
 	//	Atualiza a matriz estado do objeto
 	stateMatrix->assign((*M)*(*this->stateMatrix));
 	//	Armazena no histórico do objeto
@@ -53,7 +57,11 @@ void Object::apply(Matrix * M, std::string caption){
 }
 
 //Transformation----------------------------------------------------------------
-Transformation::Transformation(string name, Matrix * M){
+Transformation::Transformation(String name, Matrix * M){
 	this->name = name;
 	this->M = M;
+}
+
+String Transformation::getName(){
+    return this->name;
 }

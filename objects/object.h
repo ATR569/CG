@@ -1,10 +1,11 @@
 #ifndef objectH
 #define objectH
 
+#include <System.Classes.hpp>
+#include <windows.h>
 #include <vector>
 #include <string>
 #include <list>
-#include <windows.h>
 #include "graphics.h"
 #include "../transformation/transform2D.h"
 #include "../transformation/transform3D.h"
@@ -19,33 +20,35 @@ class BasePoint;
 
 class Transformation{
 private:
-	string name;
+	String name;
 	Matrix * M;
 public:
-	Transformation(string name, Matrix * M);
+	Transformation(String name, Matrix * M);
 
-	string getName();
+	String getName();
 	Matrix * getMatrix();
 };
 
 class Object{
 private:
-	string name;
+	String name;
 	DrawMethod drawMethod;
 	DrawColor color;
 protected:
 	list<Transformation> history;
 	Matrix * stateMatrix;
 public:
-	Object(string name, DrawMethod drawMethod);
+	Object(String name, DrawMethod drawMethod);
 	virtual void draw(WorkSpace * work, bool drawPoints, bool erase = false) = 0;
 	virtual BasePoint * getReference() = 0;
-	
-	string getName();
+	virtual vector<String> toStrings() = 0;
+
+	String getName();
 	DrawMethod getMethod();
 	DrawColor getColor();
+    list<Transformation> getHistory();
 
-    void apply(Matrix * M, std::string caption);
+    void apply(Matrix * M, String caption);
 	void setColor(DrawColor color);
 };
 

@@ -11,6 +11,7 @@ private:
 public:
 	Line(Point2D * A, Point2D * B, DrawMethod drawMethod);
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
+	vector<String> toStrings();
 
 	Point2D * getA();
 	Point2D * getB();
@@ -29,6 +30,7 @@ public:
     Point2D * getCenter();
 	BasePoint * getReference();
 
+	vector<String> toStrings();
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
 };
 
@@ -38,7 +40,8 @@ private:
 	vector<Point2D*> P;
 public:
 	Polygon2D(vector<Point2D*> P, DrawMethod drawMethod);
-
+	vector<String> toStrings();
+	
 	vector<Point2D*> getPoints();
 	BasePoint * getReference();
 

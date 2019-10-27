@@ -44,7 +44,14 @@ void __fastcall TformMain::actMoveExecute(TObject *Sender)
 			double tx = StrToFloat(param->edtParamX->Text);
 			double ty = StrToFloat(param->edtParamY->Text);
 
-			work->translateObject(obj, tx, ty);
+			if (work->getMode() == MODE_2D) {
+				work->translateObject(obj, tx, ty);
+			}else{
+				double tz = StrToFloat(param->edtParamZ->Text);
+				work->translateObject3D(obj, tx, ty, tz);
+			}
+
+			updateTreeView(treeObjects->Selected, obj);
 		}
 
 		param->Release();
@@ -68,6 +75,8 @@ void __fastcall TformMain::actScaleExecute(TObject *Sender)
 			Point2D * ref = param->getReference(obj);
 
 			work->scaleObject(obj, ref, sx, sy);
+
+			updateTreeView(treeObjects->Selected, obj);
 		}
 
 		param->Release();
@@ -163,6 +172,8 @@ void __fastcall TformMain::actRotateExecute(TObject *Sender){
 			Point2D * ref = param->getReference(obj);
 
 			work->rotateObject(obj, ref, theta);
+
+			updateTreeView(treeObjects->Selected, obj);
 		}
 
 		param->Release();
@@ -207,6 +218,8 @@ void __fastcall TformMain::actShearExecute(TObject *Sender){
 			Point2D * ref = param->getReference(obj);
 
 			work->shearObject(obj, ref, shx, shy);
+
+			updateTreeView(treeObjects->Selected, obj);
 		}
 
 		param->Release();
@@ -233,6 +246,8 @@ void __fastcall TformMain::actReflectExecute(TObject *Sender){
 			}else{
 				work->reflectObject(obj, axis);
 			}
+
+			updateTreeView(treeObjects->Selected, obj);
 		}
 
 		param->Release();
@@ -297,7 +312,7 @@ void __fastcall TformMain::actRemoveExecute(TObject *Sender){
 
 	if (id >= 0) {
 		Object * obj = work->getObject(id);
-		UnicodeString msg = "Deseja realmente remover o objeto " + UnicodeString(obj->getName().data()) + "?";
+		String msg = "Deseja realmente remover o objeto " + obj->getName() + "?";
 
 		if (MessageDlg(msg, mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
 			work->deleteObject(id);
@@ -307,64 +322,24 @@ void __fastcall TformMain::actRemoveExecute(TObject *Sender){
 	}
 }
 //---------------------------------------------------------------------------
-
+//  Centraliza o objeto em relação ao sistema de eixos ortogonais
 void __fastcall TformMain::actCentralizeExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
 		Object * obj = work->getObject(id);
-		Point2D * ref = (Point2D*)obj->getReference();
-		work->translateObject(obj, -ref->X, -ref->Y);
+
+		BasePoint * ref = obj->getReference();  //  Centro do objeto
+		if (work->getMode() == MODE_2D) {
+			work->translateObject(obj, -((Point2D*)ref)->X, -((Point2D*)ref)->Y);
+		}else{
+			work->translateObject3D(obj, -((Point3D*)ref)->X, -((Point3D*)ref)->Y, -((Point3D*)ref)->Z);
+		}
+
+		updateTreeView(treeObjects->Selected, obj);
 	}
 }
 //---------------------------------------------------------------------------
-
-void TformMain::addCircle(Circle * C){
-	this->work->addObject(C);
-
-	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(C->getName().data()));
-	item->ImageIndex = 0;
-	item->ImageIndex = 0;
-
-	TTreeNode * sub = treeObjects->Items->AddChild(item, "C = (" + FormatFloat("0.00, ", C->getCenter()->X)+FormatFloat("0.00)", C->getCenter()->Y));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-	sub = treeObjects->Items->AddChild(item, "R = " + FormatFloat("0.00", C->getRadius()));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-}
-
-void TformMain::addLine(Line * l){
-	this->work->addObject(l);
-
-	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(l->getName().data()));
-	item->ImageIndex = 1;
-	item->SelectedIndex = 1;
-
-	TTreeNode * sub = treeObjects->Items->AddChild(item, "A = (" + FormatFloat("0.00, ", l->getA()->X)+FormatFloat("0.00)", l->getA()->Y));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-	sub = treeObjects->Items->AddChild(item, "B = (" + FormatFloat("0.00, ", l->getB()->X)+FormatFloat("0.00)", l->getB()->Y));
-	sub->ImageIndex = -1;
-	sub->SelectedIndex = -1;
-}
-
-void TformMain::addPolygon(Polygon2D * p){
-	work->addObject(p);
-
-	TTreeNode * item = treeObjects->Items->Add(NULL, UnicodeString(p->getName().data()));
-	item->ImageIndex = 2;
-	item->SelectedIndex = 2;
-
-	TTreeNode * sub;
-	vector<Point2D*> points = p->getPoints();
-
-	for (int i = 0; i < points.size(); i++) {
-		TTreeNode * sub = treeObjects->Items->AddChild(item, "(" + FormatFloat("0.00, ", points[i]->X)+FormatFloat("0.00)", points[i]->Y));
-		sub->ImageIndex = -1;
-		sub->SelectedIndex = -1;
-	}
-}
 
 void __fastcall TformMain::actObjectCancelExecute(TObject *Sender)
 {
@@ -374,7 +349,7 @@ void __fastcall TformMain::actObjectCancelExecute(TObject *Sender)
 
 void __fastcall TformMain::Button1Click(TObject *Sender)
 {
-	Object * obj = getCube(new Point3D(5,5,5), 10, DM_BRESENHAN);
+	Object * obj = getCube(new Point3D(10,10,0), 20, DM_BRESENHAN);
 	work->addObject(obj);
 }
 //---------------------------------------------------------------------------
@@ -392,6 +367,8 @@ void __fastcall TformMain::actMode2DExecute(TObject *Sender){
 		}else{
 			action_manager->Actions[14]->Checked = false;
 		}
+	}else{
+		action_manager->Actions[14]->Checked = true;
 	}
 }
 //---------------------------------------------------------------------------
@@ -408,6 +385,8 @@ void __fastcall TformMain::actMode3DExecute(TObject *Sender){
 		}else{
 			action_manager->Actions[15]->Checked = false;
 		}
+	}else{
+		action_manager->Actions[15]->Checked = true;
 	}
 }
 //---------------------------------------------------------------------------
@@ -425,7 +404,50 @@ void __fastcall TformMain::actModeImageExecute(TObject *Sender){
 		}else{
 			action_manager->Actions[16]->Checked = false;
 		}
-    }
+	}else{
+		action_manager->Actions[16]->Checked = true;
+	}
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TformMain::actExitExecute(TObject *Sender){
+	Application->Terminate();
+}
+//---------------------------------------------------------------------------
+
+/**
+ *  Atualiza o objeto na árvore de objetos
+ */
+void TformMain::updateTreeView(TTreeNode * node, Object * obj){
+	//  Vetor com as strings que definem o objeto
+	vector<String> strings = obj->toStrings();
+
+	//  Primeira string é o nome do objeto
+	node->Text = strings[0];
+
+	//  Pontos do objeto
+	TTreeNode * child = node->getFirstChild();
+	for	(int i = 1; i < strings.size(); i++){
+		child->Text = strings[i];
+        child = node->GetNextChild(child);  //  Próximo subitem
+	}
+}
+
+/**
+ *  Cria um item na árvore de objetos
+ */
+TTreeNode * TformMain::addTreeItem(int numChilds, int imageIndex){
+	//  Cria o item na árvore
+	TTreeNode * item = treeObjects->Items->Add(NULL, "");
+	item->ImageIndex = imageIndex;
+	item->SelectedIndex = imageIndex;
+
+    //  Cria os subitens da árvore
+	for (int i = 0; i < numChilds; i++) {
+		TTreeNode * sub = treeObjects->Items->AddChild(item, "");
+		sub->ImageIndex = -1;
+		sub->SelectedIndex = -1;
+	}
+
+    return item;
+}
