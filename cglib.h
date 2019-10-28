@@ -13,4 +13,6 @@
 #include "statemachine/statemachine.h"
 #include "statemachine/state.h"
 
+const int DEFAULT_SCR_SIZE = 300;
+
 #endif

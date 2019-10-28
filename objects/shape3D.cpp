@@ -24,7 +24,7 @@ Polyedron::Polyedron(vector<Point3D *> P, DrawMethod drawMethod) : Object("Polie
 }
 
 Point2D * Polyedron::getProjection(Point3D * p){
-    Matrix M = (*getProjectionMatrix())*(*p->asMatrix());
+    Matrix M = (*getProjectionMatrix()) * (*p->asMatrix());
 
     return M.asPoint2D();
 }
@@ -51,7 +51,7 @@ BasePoint * Polyedron::getReference(){
 	return new Point3D((minX+maxX)/2, (minY+maxY)/2, (minZ+maxZ)/2);
 }
 
-vector<Point3D *> Polyedron::getPoints(){
+vector<Point3D *> Polyedron::get3DPoints(){
     return this->P;
 }
 

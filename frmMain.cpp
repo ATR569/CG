@@ -204,6 +204,8 @@ void __fastcall TformMain::actPropertiesExecute(TObject *Sender){
 
 		properties->ShowModal();
 		properties->Release();
+		desktop->Repaint();
+        work->update();
 	}
 }
 //---------------------------------------------------------------------------
@@ -299,7 +301,7 @@ TformParam * TformMain::getParamWindow(ParamType paramType){
 		param->grpRefPoint->Caption = "Reta: Y = mX + B";
 		param->edtX->EditLabel->Caption = "m";
 		param->edtY->EditLabel->Caption = "B";
-        param->Height = 250;
+		param->Height = 250;
 	}
 
 	if (work->getMode() == MODE_2D) {
@@ -456,3 +458,9 @@ TTreeNode * TformMain::addTreeItem(int numChilds, int imageIndex){
 
     return item;
 }
+
+void __fastcall TformMain::treeObjectsDblClick(TObject *Sender)
+{
+    actPropertiesExecute(Sender);
+}
+

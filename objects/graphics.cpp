@@ -158,25 +158,26 @@ void drawLineBresenhan(HDC & hdc, Point2D * p1, Point2D * p2, DrawColor color){
 * @param color unsigned - cor na qual a reta será impressa.
 */
 void drawLineDDA(HDC & hdc, Point2D * p1, Point2D * p2, DrawColor color){
-    double X = p1->X, Y = p1->Y;
+    if (p1->X > p2->X) swap(p1, p2);
+
+	double X = p1->X, Y = p1->Y;
     double dx = p2->X - p1->X,  dy = p2->Y - p1->Y;
 
     if(X == p2->X){
 		for(int i = min(Y, p2->Y); i <= max(Y, p2->Y); i++)
 			SetPixel(hdc, X, i, color);
 	}else{
-		int length = max(abs(dx), abs(dy));
+		double length = max(abs(dx), abs(dy));
 
 		double xInc = dx / length;
 		double yInc = dy / length;
 
-		while(round(X) != round(p2->X)){
+		while(X <= p2->X){
 			SetPixel(hdc, round(X), round(Y), color);
 
 			X += xInc;
 			Y += yInc;
 		}
-		SetPixel(hdc, round(X), round(Y), color);
 	}
 }
 

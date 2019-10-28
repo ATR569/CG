@@ -11,7 +11,10 @@
 #include "objects/object.h"
 #include <Vcl.ComCtrls.hpp>
 #include <Vcl.Grids.hpp>
+
+#include "cglib.h"
 //---------------------------------------------------------------------------
+
 class TformProperties : public TForm
 {
 __published:	// IDE-managed Components
@@ -35,9 +38,32 @@ __published:	// IDE-managed Components
 	TPanel *desktop;
 	TStringGrid *gridTransform;
 	TListView *lstPoints;
-	TStringGrid *gridOrigem;
-	TStringGrid *gridTarget;
+	TStringGrid *gridNewPoint;
+	TStringGrid *gridOldPoint;
+	TGroupBox *GroupBox1;
+	TColorBox *cmbColor;
+	TComboBox *cmbDrawMethod;
+	TLabel *Label3;
+	TLabel *Label4;
+	TTimer *timer;
+	TPanel *pnlCoord;
+	TLabel *lblUserX;
+	TLabel *lblUserY;
+	TLabel *lblScrX;
+	TLabel *lblScrY;
+	TLabel *Label5;
+	TLabel *Label6;
+	TBevel *Bevel1;
+	void __fastcall FormShow(TObject *Sender);
+	void __fastcall timerTimer(TObject *Sender);
+	void __fastcall desktopMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
+	void __fastcall cmbColorChange(TObject *Sender);
+	void __fastcall cmbDrawMethodChange(TObject *Sender);
+
 private:	// User declarations
+	WorkSpace * work;
+	vector<Matrix*> historyMatrix;
+	vector<Matrix*> stateMatrix;
 public:		// User declarations
 	__fastcall TformProperties(TComponent* Owner);
 	TformProperties(TComponent* Owner, Object * obj);

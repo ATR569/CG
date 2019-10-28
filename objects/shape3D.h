@@ -16,7 +16,8 @@ public:
     Polyedron(vector<Point3D *> P, DrawMethod drawMethod);
 
 	vector<String> toStrings();
-	vector<Point3D *> getPoints();
+	vector<Point2D *> getPoints(){return vector<Point2D*>();}
+	vector<Point3D *> get3DPoints();
 	vector<Edge> getEdges();
 	BasePoint * getReference();
 

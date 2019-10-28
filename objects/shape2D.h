@@ -12,6 +12,7 @@ public:
 	Line(Point2D * A, Point2D * B, DrawMethod drawMethod);
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
 	vector<String> toStrings();
+	vector<Point2D *> getPoints();
 
 	Point2D * getA();
 	Point2D * getB();
@@ -32,6 +33,7 @@ public:
 
 	vector<String> toStrings();
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
+	vector<Point2D *> getPoints();
 };
 
 class Polygon2D : public Object{
@@ -40,12 +42,12 @@ private:
 	vector<Point2D*> P;
 public:
 	Polygon2D(vector<Point2D*> P, DrawMethod drawMethod);
-	vector<String> toStrings();
 	
-	vector<Point2D*> getPoints();
 	BasePoint * getReference();
 
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
+	vector<String> toStrings();
+	vector<Point2D *> getPoints();
 };
 
 int Line::id = 0;

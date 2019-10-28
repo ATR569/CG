@@ -56,6 +56,10 @@ void Object::apply(Matrix * M, String caption){
 	this->history.push_back(Transformation(caption, M));
 }
 
+void Object::setDrawMethod(DrawMethod drawMethod){
+	this->drawMethod = drawMethod;
+}
+
 //Transformation----------------------------------------------------------------
 Transformation::Transformation(String name, Matrix * M){
 	this->name = name;
@@ -64,4 +68,8 @@ Transformation::Transformation(String name, Matrix * M){
 
 String Transformation::getName(){
     return this->name;
+}
+
+Matrix * Transformation::getMatrix(){
+    return this->M;
 }

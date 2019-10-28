@@ -93,6 +93,13 @@ BasePoint * Line::getReference(){
 	return new Point2D((ref1->X + ref2->X)/2, (ref1->Y + ref2->Y)/2);
 }
 
+vector<Point2D*> Line::getPoints(){
+	vector<Point2D*> P;
+	P.push_back(A);
+	P.push_back(B);
+	return P;
+}
+
 //Circle-----------------------------------------------------------------------------
 /**
  * Construtor de Círculo
@@ -156,6 +163,12 @@ Point2D * Circle::getCenter(){
 
 BasePoint * Circle::getReference(){
 	return ((*stateMatrix)*(*this->center->asMatrix())).asPoint2D();
+}
+
+vector<Point2D*> Circle::getPoints(){
+	vector<Point2D*> P;
+	P.push_back(center);
+	return P;
 }
 
 //Polygon2D-----------------------------------------------------------------------

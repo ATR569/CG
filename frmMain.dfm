@@ -763,6 +763,7 @@ object formMain: TformMain
           RowSelect = True
           TabOrder = 0
           OnClick = treeObjectsClick
+          OnDblClick = treeObjectsDblClick
         end
         object barProperties: TActionToolBar
           AlignWithMargins = True

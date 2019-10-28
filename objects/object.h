@@ -42,6 +42,7 @@ public:
 	virtual void draw(WorkSpace * work, bool drawPoints, bool erase = false) = 0;
 	virtual BasePoint * getReference() = 0;
 	virtual vector<String> toStrings() = 0;
+	virtual vector<Point2D *> getPoints() = 0;
 
 	String getName();
 	DrawMethod getMethod();
@@ -50,6 +51,7 @@ public:
 
     void apply(Matrix * M, String caption);
 	void setColor(DrawColor color);
+	void setDrawMethod(DrawMethod drawMethod);
 };
 
 #endif

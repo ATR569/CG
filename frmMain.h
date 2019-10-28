@@ -27,8 +27,6 @@
 #include <Vcl.Menus.hpp>
 #include "frmProperties.h"
 
-const int DEFAULT_SCR_SIZE = 300;
-
 class TformMain : public TForm {
 __published:	// IDE-managed Components
 	TImageList *imagelist48;
@@ -125,6 +123,7 @@ __published:	// IDE-managed Components
 	void __fastcall actMode3DExecute(TObject *Sender);
 	void __fastcall actModeImageExecute(TObject *Sender);
 	void __fastcall actExitExecute(TObject *Sender);
+	void __fastcall treeObjectsDblClick(TObject *Sender);
 
 private:	// User declarations
 	StateMachine * machine;

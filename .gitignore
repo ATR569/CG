@@ -33,3 +33,6 @@ __astcache/
 *.exe
 *.out
 *.app
+
+# History files
+*.~*

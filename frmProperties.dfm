@@ -3,8 +3,8 @@ object formProperties: TformProperties
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Propriedades do objeto'
-  ClientHeight = 506
-  ClientWidth = 841
+  ClientHeight = 532
+  ClientWidth = 847
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,12 +13,13 @@ object formProperties: TformProperties
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 456
-    Width = 841
+    Top = 482
+    Width = 847
     Height = 50
     Align = alBottom
     Padding.Left = 10
@@ -26,8 +27,6 @@ object formProperties: TformProperties
     Padding.Right = 10
     Padding.Bottom = 10
     TabOrder = 0
-    ExplicitTop = 447
-    ExplicitWidth = 808
     object btnCancel: TButton
       Left = 11
       Top = 11
@@ -40,7 +39,7 @@ object formProperties: TformProperties
       TabOrder = 0
     end
     object btnOk: TButton
-      Left = 718
+      Left = 724
       Top = 11
       Width = 112
       Height = 28
@@ -49,23 +48,22 @@ object formProperties: TformProperties
       Default = True
       ModalResult = 1
       TabOrder = 1
-      ExplicitLeft = 685
     end
   end
   object Panel12: TPanel
-    Left = 456
-    Top = 0
+    AlignWithMargins = True
+    Left = 459
+    Top = 3
     Width = 385
-    Height = 456
+    Height = 450
     Align = alRight
     TabOrder = 1
-    ExplicitLeft = 420
     object lstHistory: TListView
       AlignWithMargins = True
       Left = 4
-      Top = 4
+      Top = 84
       Width = 377
-      Height = 222
+      Height = 137
       Align = alClient
       Columns = <
         item
@@ -83,19 +81,15 @@ object formProperties: TformProperties
       RowSelect = True
       TabOrder = 0
       ViewStyle = vsReport
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 347
-      ExplicitHeight = 332
     end
     object Panel2: TPanel
       Left = 1
-      Top = 342
+      Top = 337
       Width = 383
-      Height = 113
+      Height = 112
       Align = alBottom
       BevelOuter = bvNone
-      Color = clWhite
+      Color = 15590354
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -109,14 +103,12 @@ object formProperties: TformProperties
       ParentFont = False
       TabOrder = 1
       StyleElements = [seFont, seBorder]
-      ExplicitTop = 333
-      ExplicitWidth = 347
       object Label1: TLabel
         AlignWithMargins = True
         Left = 88
         Top = 8
         Width = 12
-        Height = 97
+        Height = 96
         Align = alLeft
         Alignment = taCenter
         Caption = '='
@@ -127,7 +119,6 @@ object formProperties: TformProperties
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitLeft = 70
         ExplicitHeight = 89
       end
       object Label2: TLabel
@@ -135,7 +126,7 @@ object formProperties: TformProperties
         Left = 286
         Top = 8
         Width = 9
-        Height = 97
+        Height = 96
         Align = alRight
         Alignment = taCenter
         Caption = 'X'
@@ -146,7 +137,6 @@ object formProperties: TformProperties
         Font.Style = []
         ParentFont = False
         Layout = tlCenter
-        ExplicitLeft = 268
         ExplicitHeight = 89
       end
       object Panel3: TPanel
@@ -154,30 +144,38 @@ object formProperties: TformProperties
         Left = 20
         Top = 8
         Width = 50
-        Height = 97
+        Height = 96
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 0
-        object gridOrigem: TStringGrid
+        object gridNewPoint: TStringGrid
           Left = 0
           Top = 0
           Width = 50
-          Height = 97
+          Height = 96
           Align = alClient
           BevelEdges = []
           BorderStyle = bsNone
-          Color = clWhite
           ColCount = 1
           DefaultColWidth = 50
           DefaultRowHeight = 32
-          DefaultDrawing = False
+          DrawingStyle = gdsClassic
+          FixedColor = 15590354
           FixedCols = 0
-          RowCount = 3
-          FixedRows = 0
-          Options = []
+          RowCount = 4
+          FixedRows = 3
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Cambria Math'
+          Font.Style = []
+          GradientEndColor = clWhite
+          Options = [goFixedRowClick]
+          ParentColor = True
+          ParentFont = False
           ScrollBars = ssNone
           TabOrder = 0
-          ExplicitWidth = 33
+          StyleElements = [seClient]
         end
       end
       object Panel6: TPanel
@@ -185,80 +183,79 @@ object formProperties: TformProperties
         Left = 8
         Top = 8
         Width = 6
-        Height = 97
+        Height = 96
         Align = alLeft
         BevelEdges = [beLeft, beTop, beBottom]
         BevelKind = bkTile
         BevelOuter = bvNone
-        Ctl3D = False
+        Ctl3D = True
         ParentCtl3D = False
         TabOrder = 1
-        StyleElements = [seFont, seClient]
       end
       object Panel7: TPanel
         AlignWithMargins = True
         Left = 76
         Top = 8
         Width = 6
-        Height = 97
+        Height = 96
         Align = alLeft
         BevelEdges = [beTop, beRight, beBottom]
         BevelKind = bkTile
         BevelOuter = bvNone
-        Ctl3D = False
+        Ctl3D = True
         ParentCtl3D = False
         TabOrder = 2
-        StyleElements = [seFont, seClient]
-        ExplicitLeft = 58
       end
       object Panel4: TPanel
         AlignWithMargins = True
         Left = 369
         Top = 8
         Width = 6
-        Height = 97
+        Height = 96
         Align = alRight
         BevelEdges = [beTop, beRight, beBottom]
         BevelKind = bkTile
         BevelOuter = bvNone
-        Ctl3D = False
+        Ctl3D = True
         ParentCtl3D = False
         TabOrder = 3
-        StyleElements = [seFont, seClient]
-        ExplicitLeft = 345
-        ExplicitTop = 11
       end
       object Panel8: TPanel
         AlignWithMargins = True
         Left = 313
         Top = 8
         Width = 50
-        Height = 97
+        Height = 96
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 4
-        ExplicitLeft = 289
-        object gridTarget: TStringGrid
+        object gridOldPoint: TStringGrid
           Left = 0
           Top = 0
           Width = 50
-          Height = 97
+          Height = 96
           Align = alClient
           BevelEdges = []
           BorderStyle = bsNone
-          Color = clWhite
           ColCount = 1
           DefaultColWidth = 50
           DefaultRowHeight = 32
-          DefaultDrawing = False
+          DrawingStyle = gdsClassic
+          FixedColor = 15590354
           FixedCols = 0
-          RowCount = 3
-          FixedRows = 0
+          RowCount = 4
+          FixedRows = 3
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Cambria Math'
+          Font.Style = []
+          GradientEndColor = clWhite
           Options = []
+          ParentColor = True
+          ParentFont = False
           ScrollBars = ssNone
           TabOrder = 0
-          ExplicitLeft = 16
-          ExplicitTop = -5
         end
       end
       object Panel9: TPanel
@@ -266,64 +263,65 @@ object formProperties: TformProperties
         Left = 301
         Top = 8
         Width = 6
-        Height = 97
+        Height = 96
         Align = alRight
         BevelEdges = [beLeft, beTop, beBottom]
         BevelKind = bkTile
         BevelOuter = bvNone
-        Ctl3D = False
+        Ctl3D = True
         ParentCtl3D = False
         TabOrder = 5
-        StyleElements = [seFont, seClient]
-        ExplicitLeft = 283
       end
       object Panel5: TPanel
         AlignWithMargins = True
         Left = 106
         Top = 8
         Width = 6
-        Height = 97
+        Height = 96
         Align = alLeft
         BevelEdges = [beLeft, beTop, beBottom]
         BevelKind = bkTile
         BevelOuter = bvNone
-        Ctl3D = False
+        Ctl3D = True
         ParentCtl3D = False
         TabOrder = 6
-        StyleElements = [seFont, seClient]
-        ExplicitLeft = 88
       end
       object Panel10: TPanel
         AlignWithMargins = True
         Left = 118
         Top = 8
         Width = 150
-        Height = 97
+        Height = 96
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 7
-        ExplicitLeft = 100
         object gridTransform: TStringGrid
           Left = 0
           Top = 0
           Width = 150
-          Height = 97
+          Height = 96
           Align = alClient
           BevelEdges = []
           BorderStyle = bsNone
-          Color = clWhite
           ColCount = 3
           DefaultColWidth = 50
           DefaultRowHeight = 32
-          DefaultDrawing = False
+          DrawingStyle = gdsClassic
+          FixedColor = 15590354
           FixedCols = 0
-          RowCount = 3
-          FixedRows = 0
+          RowCount = 4
+          FixedRows = 3
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Cambria Math'
+          Font.Style = []
+          GradientEndColor = clWhite
           Options = []
+          ParentColor = True
+          ParentFont = False
           ScrollBars = ssNone
           TabOrder = 0
-          ExplicitWidth = 146
-          ExplicitHeight = 93
         end
       end
       object Panel11: TPanel
@@ -331,22 +329,20 @@ object formProperties: TformProperties
         Left = 274
         Top = 8
         Width = 6
-        Height = 97
+        Height = 96
         Align = alRight
         BevelEdges = [beTop, beRight, beBottom]
         BevelKind = bkTile
         BevelOuter = bvNone
-        Ctl3D = False
+        Ctl3D = True
         ParentCtl3D = False
         TabOrder = 8
-        StyleElements = [seFont, seClient]
-        ExplicitLeft = 256
       end
     end
     object lstPoints: TListView
       AlignWithMargins = True
       Left = 4
-      Top = 232
+      Top = 227
       Width = 377
       Height = 107
       Align = alBottom
@@ -362,7 +358,55 @@ object formProperties: TformProperties
       RowSelect = True
       TabOrder = 2
       ViewStyle = vsReport
-      ExplicitWidth = 341
+    end
+    object GroupBox1: TGroupBox
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 377
+      Height = 74
+      Align = alTop
+      Caption = 'Propriedades'
+      TabOrder = 3
+      object Label3: TLabel
+        Left = 24
+        Top = 21
+        Width = 70
+        Height = 13
+        Caption = 'Cor do objeto:'
+      end
+      object Label4: TLabel
+        Left = 24
+        Top = 48
+        Width = 129
+        Height = 13
+        Caption = 'Algoritmo de Rasteriza'#231#227'o:'
+      end
+      object cmbColor: TColorBox
+        Left = 160
+        Top = 16
+        Width = 145
+        Height = 22
+        Style = [cbStandardColors, cbPrettyNames]
+        TabOrder = 0
+        OnChange = cmbColorChange
+      end
+      object cmbDrawMethod: TComboBox
+        Left = 160
+        Top = 44
+        Width = 145
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 0
+        TabOrder = 1
+        Text = 'Bresenham'
+        OnChange = cmbDrawMethodChange
+        Items.Strings = (
+          'Bresenham'
+          'DDA'
+          'Polinomial'
+          'Trigonom'#233'trico')
+      end
     end
   end
   object desktop: TPanel
@@ -376,9 +420,134 @@ object formProperties: TformProperties
     BevelOuter = bvNone
     Color = clWhite
     ParentBackground = False
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 2
     StyleElements = [seFont]
-    ExplicitWidth = 453
-    ExplicitHeight = 441
+    OnMouseMove = desktopMouseMove
+  end
+  object pnlCoord: TPanel
+    Left = 0
+    Top = 456
+    Width = 847
+    Height = 26
+    Align = alBottom
+    BevelEdges = []
+    BevelOuter = bvNone
+    Padding.Left = 20
+    Padding.Right = 20
+    TabOrder = 3
+    object lblUserX: TLabel
+      AlignWithMargins = True
+      Left = 384
+      Top = 0
+      Width = 70
+      Height = 26
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alLeft
+      AutoSize = False
+      Caption = 'X'
+      Layout = tlCenter
+      ExplicitLeft = 403
+    end
+    object lblUserY: TLabel
+      AlignWithMargins = True
+      Left = 454
+      Top = 0
+      Width = 70
+      Height = 26
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alLeft
+      AutoSize = False
+      Caption = 'Y'
+      Layout = tlCenter
+      ExplicitLeft = 608
+    end
+    object lblScrX: TLabel
+      AlignWithMargins = True
+      Left = 139
+      Top = 0
+      Width = 51
+      Height = 26
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alLeft
+      AutoSize = False
+      Caption = 'X'
+      Layout = tlCenter
+    end
+    object lblScrY: TLabel
+      AlignWithMargins = True
+      Left = 190
+      Top = 0
+      Width = 51
+      Height = 26
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alLeft
+      AutoSize = False
+      Caption = 'Y'
+      Layout = tlCenter
+    end
+    object Label5: TLabel
+      AlignWithMargins = True
+      Left = 249
+      Top = 0
+      Width = 135
+      Height = 26
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alLeft
+      AutoSize = False
+      Caption = 'Coordenadas de Usu'#225'rio:'
+      GlowSize = 10
+      Layout = tlCenter
+      ExplicitLeft = 395
+    end
+    object Label6: TLabel
+      AlignWithMargins = True
+      Left = 20
+      Top = 0
+      Width = 119
+      Height = 26
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alLeft
+      AutoSize = False
+      Caption = 'Coordenadas de Tela:'
+      GlowSize = 10
+      Layout = tlCenter
+    end
+    object Bevel1: TBevel
+      AlignWithMargins = True
+      Left = 244
+      Top = 3
+      Width = 2
+      Height = 20
+      Align = alLeft
+      Shape = bsLeftLine
+      ExplicitLeft = 321
+      ExplicitTop = 6
+    end
+  end
+  object timer: TTimer
+    Interval = 1
+    OnTimer = timerTimer
+    Left = 800
+    Top = 14
   end
 end
