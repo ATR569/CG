@@ -173,10 +173,15 @@ void __fastcall TformMain::actRotateExecute(TObject *Sender){
 			Object * obj = work->getObject(id);
 
 			double theta = StrToFloat(param->edtParamX->Text);
-
-			Point2D * ref = param->getReference(obj);
-
-			work->rotateObject(obj, ref, theta);
+			
+			if(work->getMode() == MODE_2D){
+				Point2D * ref = param->getReference(obj);
+				work->rotateObject(obj, ref, theta);
+			}else{
+				Point3D * ref = (Point3D*)param->getReference(obj);
+				int axis = 0; //alterar pra pegar o eixo da janela de propriedades ... 
+				work->rotateObject3D(obj, axis, theta);
+			}
 
 			updateTreeView(treeObjects->Selected, obj);
 		}

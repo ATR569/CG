@@ -15,7 +15,7 @@ __fastcall TformParam::TformParam(TComponent* Owner)
 
 }
 //---------------------------------------------------------------------------
-TformParam::TformParam(TComponent* Owner, Object * obj, ParamType paramType) : TForm(Owner){
+TformParam::TformParam(TComponent* Owner, Object * obj, ParamType paramType) : TForm(Owner){	
 	this->paramType = paramType;
     this->obj = obj;
 }
