@@ -72,9 +72,14 @@ void __fastcall TformMain::actScaleExecute(TObject *Sender)
 			double sx = StrToFloat(param->edtParamX->Text);
 			double sy = StrToFloat(param->edtParamY->Text);
 
-			Point2D * ref = param->getReference(obj);
-
-			work->scaleObject(obj, ref, sx, sy);
+			if (work->getMode() == MODE_2D) {
+				Point2D * ref = param->getReference(obj);
+				work->scaleObject(obj, ref, sx, sy);
+			}else{
+				Point3D * ref = (Point3D*)param->getReference(obj);
+				double sz = StrToFloat(param->edtParamZ->Text);
+				work->scaleObject3DRelativePoint(obj, ref, sx, sy, sz);
+			}
 
 			updateTreeView(treeObjects->Selected, obj);
 		}

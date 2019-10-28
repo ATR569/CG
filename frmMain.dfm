@@ -4904,11 +4904,6 @@ object formMain: TformMain
             Caption = '-'
           end
           item
-            Action = actProperties
-            Caption = '&Propriedades'
-            ImageIndex = 11
-          end
-          item
             Action = actCentralize
             Caption = '&Centralizar'
             ImageIndex = 12

@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+ï»¿//---------------------------------------------------------------------------
 
 #include <vcl.h>
 #pragma hdrstop
@@ -82,7 +82,7 @@ Point2D * TformParam::getReference(Object * obj){
 	//  Centro do objeto
 	}else if (rdgReference->ItemIndex == 1) {
 		ref = (Point2D*)obj->getReference();
-	//  Ponto específico
+	//  Ponto especï¿½fico
 	}else{
 		double x = StrToFloat(edtX->Text);
 		double y = StrToFloat(edtY->Text);

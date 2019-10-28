@@ -259,3 +259,129 @@ void WorkSpace::translateObject3D(Object * obj, double tx, double ty, double tz)
 	apply(obj, M, caption);
 }
 
+/**
+ * Rotaciona o objeto 3D selecionado
+ * @param obj - Referência pra um objeto a ser rotacionado
+ * @param axis - Eixo ao qual o objeto será rotacionado
+ * @param theta - Ângulo que será aplicada a rotação
+ */
+void WorkSpace::rotateObject3D(Object * obj, int axis, double theta){
+	Matrix * M = getRotation3DMatrix(theta, axis);
+	String caption = "Rotação(" + FormatFloat("0.000", theta) + "em torno de ";
+	if(axis == 0){
+		caption += "X)";
+	}
+	else if(axis == 1){
+		caption += "Y)";
+	}
+	else {
+		caption += "Z)";
+	}
+	apply(obj, M, caption);
+}
+
+/**
+ * Escala o objeto 3D selecionado
+ * @param obj - Referência pra um objeto a ser escalado
+ * @param sx - Fator de escala em X
+ * @param sy - Fator de escala em Y
+ * @param sz - Fator de escala em Z
+ */
+void WorkSpace::scaleObject3D(Object * obj, double sx, double sy, double sz){
+	Matrix * M = getScale3DMatrix(sx, sy, sz);
+	String caption = "Escala(" + FormatFloat("0.000", sx) + ", " + FormatFloat("0.000", sy) + ", " + FormatFloat("0.000", sz) +")";
+	apply(obj, M, caption);
+}
+
+/**
+ * Escala o objeto 3D selecionado com relação a um ponto
+ * @param obj - Referência pra um objeto a ser escalado
+ * @param ref - Referência pra um ponto ao qual o objeto será escalado em relação ao mesmo
+ * @param sx - Fator de escala em X
+ * @param sy - Fator de escala em Y
+ * @param sz - Fator de escala em Z
+ */
+void WorkSpace::scaleObject3DRelativePoint(Object * obj, Point3D * ref, double sx, double sy, double sz){
+	Matrix * M = getScale3DMatrix(sx, sy, sz, ref);
+	String caption = "Escala(" + FormatFloat("0.000", sx) + ", " + FormatFloat("0.000", sy) + ", " + FormatFloat("0.000", sz) +")";
+	apply(obj, M, caption);
+}
+
+/**
+ * Cisalha o objeto 3D selecionado com relação ao eixo X
+ * @param obj - Referência pra um objeto a ser cisalhado
+ * @param ref - Referência pra um ponto ao qual o objeto será cisalhado em relação ao mesmo
+ * @param shy - Fator de cisalhamento em Y
+ * @param shz - Fator de cisalhamento em Z
+ */
+void WorkSpace::shearObject3DAroundX(Object * obj, Point3D * ref, double shy, double shz){
+	Matrix * M = getShearMatrixAroundAxisX(shy, shz, ref);
+    String caption = "Cisalhamento(" + FormatFloat("0.000", shy) + ", " + FormatFloat("0.000", shz) + " em torno de X)";
+	apply(obj, M, caption);
+}
+
+/**
+ * Cisalha o objeto 3D selecionado com relação ao eixo Y
+ * @param obj - Referência pra um objeto a ser cisalhado
+ * @param ref - Referência pra um ponto ao qual o objeto será cisalhado em relação ao mesmo
+ * @param shx - Fator de cisalhamento em X
+ * @param shz - Fator de cisalhamento em Z
+ */
+void WorkSpace::shearObject3DAroundY(Object * obj, Point3D * ref, double shx, double shz){
+	Matrix * M = getShearMatrixAroundAxisX(shx, shz, ref);
+    String caption = "Cisalhamento(" + FormatFloat("0.000", shx) + ", " + FormatFloat("0.000", shz) + " em torno de Y)";
+	apply(obj, M, caption);
+}
+
+/**
+ * Cisalha o objeto 3D selecionado com relação ao eixo Z
+ * @param obj - Referência pra um objeto a ser cisalhado
+ * @param ref - Referência pra um ponto ao qual o objeto será cisalhado em relação ao mesmo
+ * @param shx - Fator de cisalhamento em X
+ * @param shy - Fator de cisalhamento em Y
+ */
+void WorkSpace::shearObject3DAroundZ(Object * obj, Point3D * ref, double shx, double shy){
+	Matrix * M = getShearMatrixAroundAxisX(shx, shy, ref);
+    String caption = "Cisalhamento(" + FormatFloat("0.000", shx) + ", " + FormatFloat("0.000", shy) + " em torno de Z)";
+	apply(obj, M, caption);
+}
+
+/**
+ * Reflete o objeto 3D selecionado com relação a um eixo
+ * @param obj - Referência pra um objeto a ser refletido
+ * @param axis - Eixo ao qual o objeto será refletido
+ */
+void WorkSpace::refletObject3D(Object * obj, int axis){
+	Matrix * M = getReflectionMatrixAxis(axis);
+    String caption = "Reflexão(Eixo ";
+	if(axis == 0){
+		caption += "X)";
+	}
+	else if(axis == 1){
+		caption += "Y)";
+	}
+	else {
+		caption += "Z)";
+	}
+	apply(obj, M, caption);
+}
+
+/**
+ * Reflete o objeto 3D selecionado com relação a um plano
+ * @param obj - Referência pra um objeto a ser refletido
+ * @param plan - Plano ao qual o objeto será refletido
+ */
+void WorkSpace::refletObject3DRelativePlan(Object * obj, int plan){
+	Matrix * M = getReflectionMatrixPlan(plan);
+    String caption = "Reflexão(Plano ";
+	if(plan == 0){
+		caption += "XY)";
+	}
+	else if(plan == 1){
+		caption += "YZ)";
+	}
+	else {
+		caption += "XZ)";
+	}
+	apply(obj, M, caption);
+}

@@ -245,24 +245,6 @@ Matrix * getReflectionMatrixPlan(int plan){
 }
 
 /**
- * Reflete um objeto geométrico em relação à reta Y = mX + b.
- * @param m - Inclinação da reta de reflexão
- * @param b - Y do ponto em que a reta toca o eixo Y
- */
-Matrix * getReflection3DMatrix(double m, double b){ // NOT UPDATED
-	vvd data;
-
-	double den = (1+m*m);
-
-	data.push_back(vector<double>({(1-m*m)/den,   (2*m)/den, (-2*b*m)/den, 0}));
-	data.push_back(vector<double>({  (2*m)/den, (m*m-1)/den,    (2*b)/den, 0}));
-	data.push_back(vector<double>({        0, 		    0,        	 1,    1}));
-	data.push_back(vector<double>({        0, 		    0,        	 0,    1}));
-
-	return new Matrix(data);
-}
-
-/**
  * Retorna uma matriz identidade
  */
 Matrix * getIdentity3DMatrix(){

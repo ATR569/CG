@@ -51,7 +51,7 @@ public:
 
 	void setDrawPoints(bool drwPoints);
 	void setDrawAxis(bool drwAxis);
-	void setDrawGrid(bool drwGrid);
+	void setDrawGrid(bool drwGrid);                      
 	void setMode(int mode);
 	
 	void apply(Object * obj, Matrix * M, String caption);
@@ -63,6 +63,14 @@ public:
 	void reflectObject(Object * obj, double m, double b);
 
 	void translateObject3D(Object * obj, double tx, double ty, double tz);
+	void rotateObject3D(Object * obj, int axis, double theta);
+	void scaleObject3D(Object * obj, double sx, double sy, double sz);
+	void scaleObject3DRelativePoint(Object * obj, Point3D * ref, double sx, double sy, double sz);
+	void shearObject3DAroundX(Object * obj, Point3D * ref, double shy, double shz);
+	void shearObject3DAroundY(Object * obj, Point3D * ref, double shx, double shz);
+	void shearObject3DAroundZ(Object * obj, Point3D * ref, double shx, double shy);
+	void refletObject3D(Object * obj, int axis);
+	void refletObject3DRelativePlan(Object * obj, int plan);
 };
 
 #endif
