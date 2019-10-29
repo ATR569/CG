@@ -192,8 +192,8 @@
             <DependentOn>transformation\transform3D.h</DependentOn>
             <BuildOrder>15</BuildOrder>
         </CppCompile>
-        <FormResources Include="frmMain.dfm"/>
         <FormResources Include="frmParam.dfm"/>
+        <FormResources Include="frmMain.dfm"/>
         <FormResources Include="frmProperties.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

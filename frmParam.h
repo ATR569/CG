@@ -12,7 +12,7 @@
 #include "objects/point.h"
 #include "objects/object.h"
 
-enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect};
+enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect, ptRotate3D, ptShear3D, ptReflect3D};
 
 //---------------------------------------------------------------------------
 class TformParam : public TForm

@@ -869,7 +869,7 @@ object formMain: TformMain
         Control = Panel3
         ImageIndex = -1
         MinHeight = 39
-        Width = 448
+        Width = 443
       end>
     Vertical = True
     object Panel2: TPanel
@@ -1022,7 +1022,7 @@ object formMain: TformMain
         Control = pnlOptions
         ImageIndex = -1
         MinHeight = 32
-        Width = 872
+        Width = 867
       end>
     object pnlOptions: TPanel
       AlignWithMargins = True

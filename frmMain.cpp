@@ -167,7 +167,12 @@ void __fastcall TformMain::actRotateExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
-		TformParam * param = getParamWindow(ptRotate);
+		TformParam * param;
+		if(work->getMode() == MODE_2D){
+			param = getParamWindow(ptRotate);
+		}else{
+			param = getParamWindow(ptRotate3D);
+		}
 
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
@@ -179,7 +184,7 @@ void __fastcall TformMain::actRotateExecute(TObject *Sender){
 				work->rotateObject(obj, ref, theta);
 			}else{
 				Point3D * ref = (Point3D*)param->getReference(obj);
-				int axis = 0; //alterar pra pegar o eixo da janela de propriedades ... 
+				int axis = param->rdgReference->ItemIndex;
 				work->rotateObject3D(obj, axis, theta);
 			}
 
@@ -219,17 +224,35 @@ void __fastcall TformMain::actShearExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
-		TformParam * param = getParamWindow(ptShear);
+		TformParam * param;
+		if(work->getMode() == MODE_2D){
+			param = getParamWindow(ptShear);
+		}else{
+			param = getParamWindow(ptShear3D);
+		}
 
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
 
 			double shx = StrToFloat(param->edtParamX->Text);
 			double shy = StrToFloat(param->edtParamY->Text);
+			
+			if(work->getMode() == MODE_2D){
+				Point2D * ref = param->getReference(obj);
+				work->shearObject(obj, ref, shx, shy);
+			}else{
+				double shz = StrToFloat(param->edtParamZ->Text);
+				Point3D * ref = (Point3D*)param->getReference(obj);
+				int axis = param->rdgReference->ItemIndex;
 
-			Point2D * ref = param->getReference(obj);
-
-			work->shearObject(obj, ref, shx, shy);
+				if(axis == 0){
+					work->shearObject3DAroundX(obj, ref, shy, shz);
+				}else if(axis == 1){
+					work->shearObject3DAroundY(obj, ref, shx, shz);
+				}else{
+					work->shearObject3DAroundZ(obj, ref, shx, shy);
+				} 
+			}
 
 			updateTreeView(treeObjects->Selected, obj);
 		}
@@ -243,21 +266,30 @@ void __fastcall TformMain::actReflectExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
-		TformParam * param = getParamWindow(ptReflect);
+		TformParam * param;
+		if(work->getMode() == MODE_2D){
+			param = getParamWindow(ptReflect);
+		}else{
+			param = getParamWindow(ptReflect3D);
+		}
 
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
 
 			int axis = param->rdgReference->ItemIndex;
 
-			if (axis == 2) {
-				double m = StrToFloat(param->edtX->Text);
-				double b = StrToFloat(param->edtY->Text);
+			if(work->getMode() == MODE_2D){
+				if (axis == 2) {
+					double m = StrToFloat(param->edtX->Text);
+					double b = StrToFloat(param->edtY->Text);
 
-				work->reflectObject(obj, m, b);
+					work->reflectObject(obj, m, b);
+				}else{
+					work->reflectObject(obj, axis);
+				}
 			}else{
-				work->reflectObject(obj, axis);
-			}
+				work->refletObject3D(obj, axis);
+			}	
 
 			updateTreeView(treeObjects->Selected, obj);
 		}
@@ -289,7 +321,16 @@ TformParam * TformMain::getParamWindow(ParamType paramType){
 	case ptShear:
 		param->edtParamX->EditLabel->Caption = "Cisalhamento em X: ";
 		param->edtParamY->EditLabel->Caption = "Cisalhamento em Y: ";
-		param->edtParamZ->EditLabel->Caption = "Cisalhamento em Z: ";
+		param->edtParamZ->EditLabel->Caption = "Cisalhamento em Z: ";				
+		break;
+	case ptShear3D:
+		param->grpRefPoint->Visible = false;
+		param->edtParamX->EditLabel->Caption = "Cisalhamento em X: ";
+		param->edtParamY->EditLabel->Caption = "Cisalhamento em Y: ";
+		param->edtParamZ->EditLabel->Caption = "Cisalhamento em Z: ";				
+		param->rdgReference->Items->Strings[0] = "Cisalhamento em relação ao Eixo X";
+		param->rdgReference->Items->Strings[1] = "Cisalhamento em relação ao Eixo Y";
+		param->rdgReference->Items->Strings[2] = "Cisalhamento em relação ao Eixo Z";
 		break;
 	case ptRotate:
 		param->edtParamX->EditLabel->Caption = "Ângulo de Rotação: ";
@@ -297,6 +338,15 @@ TformParam * TformMain::getParamWindow(ParamType paramType){
 		param->edtParamZ->Visible = false;
 		param->pnlParams->Height = 41;
         param->Height -= 45;
+		break;
+	case ptRotate3D:
+		param->edtParamX->EditLabel->Caption = "Ângulo de Rotação: ";
+		param->grpRefPoint->Visible = false;
+		param->edtParamY->Visible = false;
+		param->edtParamZ->Visible = false;
+		param->rdgReference->Items->Strings[0] = "Rotação em relação ao Eixo X";
+		param->rdgReference->Items->Strings[1] = "Rotação em relação ao Eixo Y";
+		param->rdgReference->Items->Strings[2] = "Rotação em relação ao Eixo Z";
 		break;
 	case ptReflect:
 		param->pnlParams->Visible = false;
@@ -307,6 +357,13 @@ TformParam * TformMain::getParamWindow(ParamType paramType){
 		param->edtX->EditLabel->Caption = "m";
 		param->edtY->EditLabel->Caption = "B";
 		param->Height = 250;
+		break;
+	case ptReflect3D:
+		param->pnlParams->Visible = false;
+		param->grpRefPoint->Visible = false;
+		param->rdgReference->Items->Strings[0] = "Refletir em relação ao Plano XY";
+		param->rdgReference->Items->Strings[1] = "Refletir em relação ao Plano YZ";
+		param->rdgReference->Items->Strings[2] = "Refletir em relação ao Plano XZ";
 	}
 
 	if (work->getMode() == MODE_2D) {
