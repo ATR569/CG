@@ -48,10 +48,13 @@ public:
 	DrawMethod getMethod();
 	DrawColor getColor();
     list<Transformation> getHistory();
+    Matrix * getStateMatrix();
 
     void apply(Matrix * M, String caption);
 	void setColor(DrawColor color);
 	void setDrawMethod(DrawMethod drawMethod);
+    void setStateMatrix(Matrix * stateMatrix);
+	void cropHistory(unsigned maxSize);
 };
 
 #endif

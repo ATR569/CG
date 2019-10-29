@@ -45,6 +45,10 @@ list<Transformation> Object::getHistory(){
     return this->history;
 }
 
+Matrix * Object::getStateMatrix(){
+	return this->stateMatrix;
+}
+
 /**
  * Aplica uma transformação ao objeto
  * @param M - Matriz de transformação
@@ -59,6 +63,17 @@ void Object::apply(Matrix * M, String caption){
 void Object::setDrawMethod(DrawMethod drawMethod){
 	this->drawMethod = drawMethod;
 }
+
+void Object::setStateMatrix(Matrix * stateMatrix){
+	this->stateMatrix->assign(*stateMatrix);
+}
+
+void Object::cropHistory(unsigned maxSize){
+	while (this->history.size() > maxSize){
+		this->history.pop_back();
+	}
+}
+
 
 //Transformation----------------------------------------------------------------
 Transformation::Transformation(String name, Matrix * M){

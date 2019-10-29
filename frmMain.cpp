@@ -210,9 +210,16 @@ void __fastcall TformMain::actPropertiesExecute(TObject *Sender){
 
 	if (id >= 0) {
 		Object * obj = work->getObject(id);
+		Matrix * stateMatrix = new Matrix(obj->getStateMatrix()->getData());
 		TformProperties * properties = new TformProperties(this, obj);
 
-		properties->ShowModal();
+		if (properties->ShowModal() == mrOk){
+			int idTransf = properties->lstHistory->ItemIndex;
+			obj->cropHistory(idTransf+1);
+		}else{
+			obj->setStateMatrix(stateMatrix);
+		}
+
 		properties->Release();
 		desktop->Repaint();
         work->update();
@@ -418,7 +425,7 @@ void __fastcall TformMain::actObjectCancelExecute(TObject *Sender)
 
 void __fastcall TformMain::Button1Click(TObject *Sender)
 {
-	Object * obj = getCube(new Point3D(10,10,0), 20, DM_BRESENHAN);
+	Object * obj = getPrism(new Point3D(10,10,0), 10, 50, DM_BRESENHAN);
 	work->addObject(obj);
 }
 //---------------------------------------------------------------------------

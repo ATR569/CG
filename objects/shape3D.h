@@ -29,6 +29,8 @@ Polyedron * getCube(Point3D * center, double edgeSize, DrawMethod drawMethod);
 
 Polyedron * getPyramid(Point3D * center, double edgeBase, double height, DrawMethod drawMethod);
 
+Polyedron * getPrism(Point3D * center, double edgeBase, double height, DrawMethod drawMethod);
+
 int Polyedron::id = 0;
 
 #endif

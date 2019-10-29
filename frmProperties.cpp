@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+ï»¿//---------------------------------------------------------------------------
 
 #include <vcl.h>
 #pragma hdrstop
@@ -15,47 +15,36 @@ __fastcall TformProperties::TformProperties(TComponent* Owner)
 }
 //---------------------------------------------------------------------------
 TformProperties::TformProperties(TComponent* Owner, Object * obj) : TForm(Owner){
-	//  Título da janela
 	this->Caption = "Propriedades do objeto: " + obj->getName();
-	//  Método de rasterização
 	cmbDrawMethod->ItemIndex = obj->getMethod();
-	//  Cor do objeto
 	cmbColor->Selected = TColor(obj->getColor());
 
-		//  Exibe o histórico de transformações
-		list<Transformation> history = obj->getHistory();
-		list<Transformation>::iterator it;
-		for (it = history.begin(); it != history.end(); it++) {
-			TListItem * item = lstHistory->Items->Add();
-			item->Caption = it->getName();
+	list<Transformation> history = obj->getHistory();
+	list<Transformation>::iterator it;
+	for (it = history.begin(); it != history.end(); it++) {
+		TListItem * item = lstHistory->Items->Add();
+		item->Caption = it->getName();
+	}
 
+	lstHistory->ItemIndex = history.size()-1;
 
-		}
+	Matrix state = *getIdentityMatrix();
+	stateMatrix.push_back(state);
 
-		lstHistory->ItemIndex = history.size()-1;
-
-
-	//  Armazena as matrizes de transformação num array e
-	//  Precomputa todas as matrizes de estado do objeto
-	Matrix * state = getIdentityMatrix();
 	for (it = history.begin(); it != history.end(); it++) {
 		historyMatrix.push_back(it->getMatrix());
-		*state = (*it->getMatrix()) * (*state);
+		state = (*it->getMatrix()) * (state);
 		stateMatrix.push_back(state);
 	}
 
-	//  Vetor com as strings que definem o objeto
 	vector<String> strings = obj->toStrings();
 
-	//  Pontos do objeto
 	for	(int i = 1; i < strings.size(); i++){
 		TListItem * item = lstPoints->Items->Add();
 		item->Caption = strings[i];
 	}
+	lstPoints->ItemIndex = 0;
 
-
-
-	//  Inicialização do workspace
 	work = new WorkSpace(DEFAULT_SCR_SIZE, desktop->Width, desktop->Height, GetDC(desktop->Handle));
 	work->setDrawGrid(false);
 	work->setDrawAxis(false);
@@ -64,31 +53,11 @@ TformProperties::TformProperties(TComponent* Owner, Object * obj) : TForm(Owner)
 
 	work->addObject(obj);
 	work->update();
+
+    lstHistoryClick(NULL);
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TformProperties::FormShow(TObject *Sender)
-{
-	gridNewPoint->Cells[0][0] = "125.00";
-	gridNewPoint->Cells[0][1] = "999.00";
-	gridNewPoint->Cells[0][2] = "999.99";
-
-	gridTransform->Cells[0][0] = "125.00";
-	gridTransform->Cells[0][1] = "999.00";
-	gridTransform->Cells[0][2] = "999.99";
-	gridTransform->Cells[1][0] = "125.00";
-	gridTransform->Cells[1][1] = "999.00";
-	gridTransform->Cells[1][2] = "999.99";
-	gridTransform->Cells[2][0] = "125.00";
-	gridTransform->Cells[2][1] = "999.00";
-	gridTransform->Cells[2][2] = "999.99";
-
-	gridOldPoint->Cells[0][0] = "125.00";
-	gridOldPoint->Cells[0][1] = "999.00";
-	gridOldPoint->Cells[0][2] = "999.99";
-
-}
-//---------------------------------------------------------------------------
 
 void __fastcall TformProperties::timerTimer(TObject *Sender){
 	timer->Enabled = false;
@@ -124,5 +93,43 @@ void __fastcall TformProperties::cmbDrawMethodChange(TObject *Sender){
 	work->update();
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TformProperties::lstHistoryClick(TObject *Sender)
+{
+	int idTransf = lstHistory->ItemIndex;
+	int idPoint = lstPoints->ItemIndex;
+
+	showMatrixOperation(idTransf, idPoint);
+}
+//---------------------------------------------------------------------------
+void TformProperties::showMatrixOperation(int idTransf, int idPoint){
+	Object * obj = work->getObject(0);
+	vector<Point2D *> points = obj->getPoints();
+
+	if (idTransf >= 0 && idTransf < stateMatrix.size() && idPoint >= 0 && idPoint < points.size()){
+		Point2D * pNew = ((stateMatrix[idTransf+1]) * (*points[idPoint]->asMatrix())).asPoint2D();
+		Point2D * pOld = ((stateMatrix[idTransf]) * (*points[idPoint]->asMatrix())).asPoint2D();
+
+		gridNewPoint->Cells[0][0] = FormatFloat("0.00", pNew->X);
+		gridNewPoint->Cells[0][1] = FormatFloat("0.00", pNew->Y);
+		gridNewPoint->Cells[0][2] = "1,00";
+
+		gridOldPoint->Cells[0][0] = FormatFloat("0.00", pOld->X);
+		gridOldPoint->Cells[0][1] = FormatFloat("0.00", pOld->Y);
+		gridOldPoint->Cells[0][2] = "1,00";
+
+		vvd data = historyMatrix[idTransf]->getData();
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 3; j++){
+				gridTransform->Cells[j][i] = FormatFloat("0.00", data[i][j]);
+			}
+		}
+
+		obj->getStateMatrix()->assign(stateMatrix[idTransf+1]);
+
+		desktop->Repaint();
+		work->update();
+	}
+}
 
 

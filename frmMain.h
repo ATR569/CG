@@ -96,6 +96,8 @@ __published:	// IDE-managed Components
 	TAction *actPrism;
 	TAction *actPyramid;
 	TAction *actExit;
+	TAction *actElipse;
+	TToolButton *ToolButton1;
 	void __fastcall actPolygonExecute(TObject *Sender);
 	void __fastcall actMoveExecute(TObject *Sender);
 	void __fastcall actScaleExecute(TObject *Sender);

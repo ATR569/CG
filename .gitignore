@@ -35,4 +35,4 @@ __astcache/
 *.app
 
 # History files
-*.~*
+*.*~*

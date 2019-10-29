@@ -54,19 +54,20 @@ __published:	// IDE-managed Components
 	TLabel *Label5;
 	TLabel *Label6;
 	TBevel *Bevel1;
-	void __fastcall FormShow(TObject *Sender);
 	void __fastcall timerTimer(TObject *Sender);
 	void __fastcall desktopMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall cmbColorChange(TObject *Sender);
 	void __fastcall cmbDrawMethodChange(TObject *Sender);
+	void __fastcall lstHistoryClick(TObject *Sender);
 
 private:	// User declarations
 	WorkSpace * work;
 	vector<Matrix*> historyMatrix;
-	vector<Matrix*> stateMatrix;
+	vector<Matrix> stateMatrix;
 public:		// User declarations
 	__fastcall TformProperties(TComponent* Owner);
 	TformProperties(TComponent* Owner, Object * obj);
+	void showMatrixOperation(int idTransf, int idPoint);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TformProperties *formProperties;
