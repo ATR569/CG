@@ -13,7 +13,6 @@ object formProperties: TformProperties
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -76,11 +75,12 @@ object formProperties: TformProperties
         end>
       ColumnClick = False
       HideSelection = False
-      HotTrack = True
+      HotTrackStyles = [htHandPoint]
       ReadOnly = True
       RowSelect = True
       TabOrder = 0
       ViewStyle = vsReport
+      OnClick = lstHistoryClick
     end
     object Panel2: TPanel
       Left = 1
@@ -353,11 +353,12 @@ object formProperties: TformProperties
         end>
       ColumnClick = False
       HideSelection = False
-      HotTrack = True
+      HotTrackStyles = [htHandPoint]
       ReadOnly = True
       RowSelect = True
       TabOrder = 2
       ViewStyle = vsReport
+      OnClick = lstHistoryClick
     end
     object GroupBox1: TGroupBox
       AlignWithMargins = True

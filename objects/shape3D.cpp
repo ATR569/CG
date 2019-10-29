@@ -179,3 +179,30 @@ Polyedron * getPyramid(Point3D * baseCenter, double edgeBase, double height, Dra
 
     return new Polyedron(P, edges, drawMethod);
 }
+
+Polyedron * getPrism(Point3D * center, double edgeBase, double height, DrawMethod drawMethod){
+    vector<Point3D *> P;
+    vector<Edge> edges;
+
+	double k = edgeBase*sqrt(3)/3;
+	P.push_back(new Point3D(center->X, center->Y + k, center->Z));
+	P.push_back(new Point3D(center->X - edgeBase/2, center->Y - k/2, center->Z));
+	P.push_back(new Point3D(center->X + edgeBase/2, center->Y - k/2, center->Z));
+
+	P.push_back(new Point3D(center->X, center->Y + k, center->Z + height));
+	P.push_back(new Point3D(center->X - edgeBase/2, center->Y - k/2, center->Z + height));
+	P.push_back(new Point3D(center->X + edgeBase/2, center->Y - k/2, center->Z + height));
+
+	edges.push_back(Edge(0,1));
+	edges.push_back(Edge(1,2));
+	edges.push_back(Edge(0,2));
+	edges.push_back(Edge(3,4));
+	edges.push_back(Edge(4,5));
+	edges.push_back(Edge(3,5));
+
+	edges.push_back(Edge(0,3));
+	edges.push_back(Edge(1,4));
+	edges.push_back(Edge(2,5));
+
+	return new Polyedron(P, edges, drawMethod);
+}
