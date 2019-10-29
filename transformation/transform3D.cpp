@@ -84,7 +84,7 @@ Matrix * getShearMatrixAroundAxisX(double shy, double shz, Point3D * p){
 
 	vvd data;
 
-	double a = -(p->Y * shy);
+	double a = -(p->X * shy);
 	double b = -(p->X * shz);
 
 	data.push_back(vector<double>({1,   0, 0, 0}));
@@ -106,7 +106,7 @@ Matrix * getShearMatrixAroundAxisY(double shx, double shz, Point3D * p){
 	vvd data;
 
 	double a = -(p->Y * shx);
-	double b = -(p->X * shz);
+	double b = -(p->Y * shz);
 
 	data.push_back(vector<double>({1, shx, 0, a}));
 	data.push_back(vector<double>({0,   1, 0, 0}));
@@ -123,11 +123,10 @@ Matrix * getShearMatrixAroundAxisY(double shx, double shz, Point3D * p){
  * @param shy - cisalhamento em Y
  */
 Matrix * getShearMatrixAroundAxisZ(double shx, double shy, Point3D * p){
-
 	vvd data;
 
-	double a = -(p->Y * shx);
-	double b = -(p->X * shy);
+	double a = -(p->Z * shx);
+	double b = -(p->Z * shy);
 
 	data.push_back(vector<double>({1, 0, shx, a}));
 	data.push_back(vector<double>({0, 1, shy, b}));

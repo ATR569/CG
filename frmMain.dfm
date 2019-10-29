@@ -1113,6 +1113,15 @@ object formMain: TformMain
         TabOrder = 3
         OnClick = Button1Click
       end
+      object Button2: TButton
+        Left = 432
+        Top = 3
+        Width = 75
+        Height = 25
+        Caption = 'Button2'
+        TabOrder = 4
+        OnClick = Button2Click
+      end
     end
   end
   object imagelist48: TImageList
@@ -17765,5 +17774,12 @@ object formMain: TformMain
       E00007FFFF80FF00FFFE0000F0000FFFFF80FFC3FFFE0000FC003FFFFF81FFC3
       FFFE0000FF00FFFFFFC3FFE7FFFF000100000000000000000000000000000000
       000000000000}
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 200
+    OnTimer = Timer1Timer
+    Left = 596
+    Top = 362
   end
 end

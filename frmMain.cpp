@@ -283,9 +283,8 @@ void __fastcall TformMain::actReflectExecute(TObject *Sender){
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
 
-			int axis = param->rdgReference->ItemIndex;
-
 			if(work->getMode() == MODE_2D){
+				int axis = param->rdgReference->ItemIndex;
 				if (axis == 2) {
 					double m = StrToFloat(param->edtX->Text);
 					double b = StrToFloat(param->edtY->Text);
@@ -295,7 +294,8 @@ void __fastcall TformMain::actReflectExecute(TObject *Sender){
 					work->reflectObject(obj, axis);
 				}
 			}else{
-				work->refletObject3D(obj, axis);
+				int plan = param->rdgReference->ItemIndex;
+				work->refletObject3DRelativePlan(obj, plan);
 			}	
 
 			updateTreeView(treeObjects->Selected, obj);
@@ -425,7 +425,7 @@ void __fastcall TformMain::actObjectCancelExecute(TObject *Sender)
 
 void __fastcall TformMain::Button1Click(TObject *Sender)
 {
-	Object * obj = getPrism(new Point3D(10,10,0), 10, 50, DM_BRESENHAN);
+	Object * obj = getPyramid(new Point3D(10,10,0), 20, 10, DM_BRESENHAN);
 	work->addObject(obj);
 }
 //---------------------------------------------------------------------------
@@ -532,4 +532,17 @@ void __fastcall TformMain::treeObjectsDblClick(TObject *Sender)
 {
     actPropertiesExecute(Sender);
 }
+
+void __fastcall TformMain::Timer1Timer(TObject *Sender)
+{
+	Object * obj = work->getObject(0);
+	work->rotateObject3D(obj, 1, 10);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformMain::Button2Click(TObject *Sender)
+{
+    Timer1->Enabled = !Timer1->Enabled;
+}
+//---------------------------------------------------------------------------
 

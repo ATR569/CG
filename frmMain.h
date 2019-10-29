@@ -98,6 +98,8 @@ __published:	// IDE-managed Components
 	TAction *actExit;
 	TAction *actElipse;
 	TToolButton *ToolButton1;
+	TButton *Button2;
+	TTimer *Timer1;
 	void __fastcall actPolygonExecute(TObject *Sender);
 	void __fastcall actMoveExecute(TObject *Sender);
 	void __fastcall actScaleExecute(TObject *Sender);
@@ -126,6 +128,8 @@ __published:	// IDE-managed Components
 	void __fastcall actModeImageExecute(TObject *Sender);
 	void __fastcall actExitExecute(TObject *Sender);
 	void __fastcall treeObjectsDblClick(TObject *Sender);
+	void __fastcall Timer1Timer(TObject *Sender);
+	void __fastcall Button2Click(TObject *Sender);
 
 private:	// User declarations
 	StateMachine * machine;

@@ -328,7 +328,7 @@ void WorkSpace::shearObject3DAroundX(Object * obj, Point3D * ref, double shy, do
  * @param shz - Fator de cisalhamento em Z
  */
 void WorkSpace::shearObject3DAroundY(Object * obj, Point3D * ref, double shx, double shz){
-	Matrix * M = getShearMatrixAroundAxisX(shx, shz, ref);
+	Matrix * M = getShearMatrixAroundAxisY(shx, shz, ref);
     String caption = "Cisalhamento(" + FormatFloat("0.000", shx) + ", " + FormatFloat("0.000", shz) + " em torno de Y)";
 	apply(obj, M, caption);
 }
@@ -341,7 +341,7 @@ void WorkSpace::shearObject3DAroundY(Object * obj, Point3D * ref, double shx, do
  * @param shy - Fator de cisalhamento em Y
  */
 void WorkSpace::shearObject3DAroundZ(Object * obj, Point3D * ref, double shx, double shy){
-	Matrix * M = getShearMatrixAroundAxisX(shx, shy, ref);
+	Matrix * M = getShearMatrixAroundAxisZ(shx, shy, ref);
     String caption = "Cisalhamento(" + FormatFloat("0.000", shx) + ", " + FormatFloat("0.000", shy) + " em torno de Z)";
 	apply(obj, M, caption);
 }
