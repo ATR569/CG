@@ -73,13 +73,13 @@ void __fastcall TformMain::actScaleExecute(TObject *Sender)
 			double sy = StrToFloat(param->edtParamY->Text);
 
 			if (work->getMode() == MODE_2D) {
-				work->translateObject(obj, sx, sy);
 				Point2D * ref = param->getReference(obj);
 				work->scaleObject(obj, ref, sx, sy);
 			}else{
-
-            }
-
+				Point3D * ref = (Point3D*)param->getReference(obj);
+				double sz = StrToFloat(param->edtParamZ->Text);
+				work->scaleObject3DRelativePoint(obj, ref, sx, sy, sz);
+			}
 
 			updateTreeView(treeObjects->Selected, obj);
 		}
@@ -456,3 +456,11 @@ TTreeNode * TformMain::addTreeItem(int numChilds, int imageIndex){
 
     return item;
 }
+void __fastcall TformMain::Button2Click(TObject *Sender)
+{
+	Point2D * center = new Point2D(0, 0);
+	Object * obj = new Elipse(center, 30, 10, DM_BRESENHAN);
+	work->addObject(obj);
+}
+//---------------------------------------------------------------------------
+

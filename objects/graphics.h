@@ -37,4 +37,6 @@ void drawCircleTrigonometric(HDC & hdc, Point2D * center, double radius, DrawCol
 
 void drawPoint(HDC & hdc, Point2D * P, DrawColor color);
 
+void drawElipseBresenhan(HDC & hdc, Point2D * center, double a, double b, DrawColor color);
+
 #endif

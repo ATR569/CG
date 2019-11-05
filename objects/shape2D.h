@@ -48,8 +48,27 @@ public:
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
 };
 
+class Elipse : public Object{
+private:
+	static int id;
+	Point2D * center;
+	double a;
+	double b;
+public:
+	Elipse(Point2D * center, double a, double b, DrawMethod drawMethod);
+
+	double getRadiusX();
+	double getRadiusY();
+    Point2D * getCenter();
+	BasePoint * getReference();
+
+	vector<String> toStrings();
+	void draw(WorkSpace * work, bool drawPoints, bool erase);
+};
+
 int Line::id = 0;
 int Circle::id = 0;
 int Polygon2D::id = 0;
+int Elipse::id = 0;
 
 #endif
