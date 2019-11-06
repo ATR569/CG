@@ -290,3 +290,63 @@ void drawPoint(HDC & hdc, Point2D * P, DrawColor color){
 		}
 	}
 }
+
+/**
+ * Desenha uma elipse utilizando o algoritmo do ponto médio (Bresenhan)
+ * @param hdc HDC - Manipulador da tela
+ * @param center Point2D - Pontos (x,y) em que a elipse está centrada
+ * @param radius Point2D - Pontos (x,y) distância da origem até os pontos x e y
+ * @param color unsigned - Cor da elipse
+ */
+void drawElipseBresenhan(HDC & hdc, Point2D * center, double a, double b, DrawColor color){
+	double dx, dy, d1, d2, x, y, rx, ry, rx2, ry2;
+	rx = a;
+	ry = b;
+	rx2 = rx*rx;
+	ry2 = ry*ry;
+	x = 0;
+	y = b;
+
+	// Parâmetro de decisão inicial da 1º região
+	d1 = ry2 - (rx2 * ry) + (0.25 * rx2);
+	dx = 2 * ry2 * x; // incremento em x 
+	dy = 2 * rx2 * y; // incremento em y
+
+	// Para a primeira região
+	while(dx < dy){
+		circlePoints(hdc, x, y, center, color); // rasterização a primeira região
+
+		// Verificando e atualizando a variavel de decisão 
+		if(d1 < 0){
+			x++;
+			dx = dx + (2 * ry2);
+			d1 = d1 + dx + ry2;
+		}else{
+			x++;
+			y--;
+			dx = dx + (2 * ry2);
+			dy = dy - (2 * rx2);
+			d1 = d1 + dx - dy + ry2;
+		}
+	}
+	
+	// Parâmetro de decisão da 2º região
+	d2 = (ry2 * ((x + 0.5) * (x + 0.5))) + (rx2 * ((y - 1) * (y - 1))) - (rx2 * ry2);
+
+	// Para a segunda região
+	while(y >= 0){
+		circlePoints(hdc, x, y, center, color); // rasterização a segunda região
+
+		if(d2 > 0){
+			y--;
+			dy = dy - (2 * rx2); 
+            d2 = d2 + rx2 - dy; 
+		}else{
+			y--; 
+            x++; 
+            dx = dx + (2 * ry2); 
+            dy = dy - (2 * rx2); 
+            d2 = d2 + dx - dy + rx2; 
+		}
+	}
+}

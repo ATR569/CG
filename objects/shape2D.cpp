@@ -255,3 +255,68 @@ BasePoint * Polygon2D::getReference(){
 
 	return new Point2D((minX+maxX)/2, (minY+maxY)/2);
 }
+
+//Elipse-----------------------------------------------------------------------------
+/**
+ * Construtor da Elipse
+ * @param center - Centro da elipse
+ * @param radius - Raio da elipse onde radius->X e radius->Y são respectivamente a distância da origem para o A e o B da elipse
+ * @param drawMethod - Algoritmo usado na rasterização
+ */
+Elipse::Elipse(Point2D * center, double a, double b, DrawMethod drawMethod) : Object("Elipse " + IntToStr(++id), drawMethod){
+	this->center = center;
+	this->a = a;
+	this->b = b;
+	this->stateMatrix = getIdentityMatrix();
+	this->history.push_back(Transformation("Estado inicial", getIdentityMatrix()));
+}
+
+/**
+ * Desenha o objeto Elipse no hdc
+ * @param work - WorkSpace onde será desenhada a elipse
+ */
+void Elipse::draw(WorkSpace * work, bool drawPoints, bool erase){
+	DrawColor color = erase ? CL_WHITE : this->getColor();
+
+	//  Transforma o ponto em matriz coluna e multiplica pela matriz de estado
+	Matrix M = ((*this->stateMatrix) * (*center->asMatrix()));
+	//  Obtém o ponto em coordenadas de tela
+	Point2D * p = work->CoordUserToScr(M.asPoint2D());
+	//  Calcula o raio proporcionalmente ao tamanho da tela
+	double rx = work->CoordUserToScr(this->a);
+	double ry = work->CoordUserToScr(this->b);
+
+	drawElipseBresenhan(work->hdc, p, rx, ry, color);
+}
+
+/**
+ * Retorna um array de strings com os pontos (2 casas decimais de precisão) do objeto
+ */
+vector<String> Elipse::toStrings(){
+	vector<String> strings;
+	strings.push_back(this->getName());
+
+	char X[16], Y[16];
+
+	Point2D * p = ((*stateMatrix) * (*center->asMatrix())).asPoint2D();
+	strings.push_back("A = (" + FormatFloat("0.000", p->X) + ", " + FormatFloat("0.000", p->Y) + ")");
+	strings.push_back("RX = " + FormatFloat("0.000", this->a) + "RY = " + FormatFloat("0.000", this->b));
+	
+	return strings;
+}
+
+double Elipse::getRadiusX(){
+	return this->a;
+}
+
+double Elipse::getRadiusY(){
+	return this->b;
+}
+
+Point2D * Elipse::getCenter(){
+	return this->center;
+}
+
+BasePoint * Elipse::getReference(){
+	return ((*stateMatrix)*(*this->center->asMatrix())).asPoint2D();
+}
