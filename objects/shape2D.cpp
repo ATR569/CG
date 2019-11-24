@@ -299,8 +299,7 @@ vector<String> Elipse::toStrings(){
 	char X[16], Y[16];
 
 	Point2D * p = ((*stateMatrix) * (*center->asMatrix())).asPoint2D();
-	strings.push_back("A = (" + FormatFloat("0.000", p->X) + ", " + FormatFloat("0.000", p->Y) + ")");
-	strings.push_back("RX = " + FormatFloat("0.000", this->a) + "RY = " + FormatFloat("0.000", this->b));
+	strings.push_back("C = (" + FormatFloat("0.000", p->X) + ", " + FormatFloat("0.000", p->Y) + ")");
 	
 	return strings;
 }
@@ -319,4 +318,10 @@ Point2D * Elipse::getCenter(){
 
 BasePoint * Elipse::getReference(){
 	return ((*stateMatrix)*(*this->center->asMatrix())).asPoint2D();
+}
+
+vector<Point2D*> Elipse::getPoints(){
+	vector<Point2D*> P;
+	P.push_back(center);
+	return P;
 }

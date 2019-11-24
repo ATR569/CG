@@ -30,6 +30,10 @@ void StateMachine::performDrawCircleClick(){
 	this->state->onCircleClick(this);
 }
 
+void StateMachine::performDrawEllipseClick(){
+	this->state->onEllipseClick(this);
+}
+
 void StateMachine::performDrawPolygonClick(){
 	this->state->onPolygonClick(this);
 }

@@ -16,6 +16,7 @@ public:
 	virtual void onLineClick(StateMachine * machine) = 0;
 	virtual void onCircleClick(StateMachine * machine) = 0;
 	virtual void onPolygonClick(StateMachine * machine) = 0;
+	virtual void onEllipseClick(StateMachine * machine) = 0;
 	virtual void onObjectCancelClick(StateMachine * machine) = 0;
 
     int getBtnStateMask();
@@ -29,6 +30,7 @@ protected:
 
 	void onLineClick(StateMachine * machine);
 	void onCircleClick(StateMachine * machine);
+	void onEllipseClick(StateMachine * machine);
 	void onPolygonClick(StateMachine * machine);
 public:
 	StateNone() : State(NONE_BTN_STATE){};
@@ -39,6 +41,7 @@ protected:
 	void onLineClick(StateMachine * machine){};
 	void onCircleClick(StateMachine * machine){};
 	void onPolygonClick(StateMachine * machine){};
+	void onEllipseClick(StateMachine * machine){};
 	void onObjectCancelClick(StateMachine * machine);
 public:
 	StateDrawing() : State(DRAWING_BTN_STATE){};
@@ -57,6 +60,12 @@ protected:
 };
 
 class StateDrawingCircleCenter : public StateDrawing{
+protected:
+	void onClick(StateMachine * machine, int X, int Y);
+	void onDblClick(StateMachine * machine){}
+};
+
+class StateDrawingEllipseCenter : public StateDrawing{
 protected:
 	void onClick(StateMachine * machine, int X, int Y);
 	void onDblClick(StateMachine * machine){}

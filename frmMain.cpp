@@ -37,7 +37,8 @@ void __fastcall TformMain::actMoveExecute(TObject *Sender)
 
 	if (id >= 0) {
 		Object * obj = work->getObject(id);
-		TformParam * param = getParamWindow(ptTranslate);
+		TformParam * param = new TformParam(this, work, ptTranslate);
+
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
 
@@ -64,7 +65,7 @@ void __fastcall TformMain::actScaleExecute(TObject *Sender)
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
-		TformParam * param = getParamWindow(ptScale);
+		TformParam * param = new TformParam(this, work, ptScale);
 
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
@@ -167,12 +168,7 @@ void __fastcall TformMain::actRotateExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
-		TformParam * param;
-		if(work->getMode() == MODE_2D){
-			param = getParamWindow(ptRotate);
-		}else{
-			param = getParamWindow(ptRotate3D);
-		}
+		TformParam * param = new TformParam(this, work, ptRotate);
 
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
@@ -231,12 +227,7 @@ void __fastcall TformMain::actShearExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
-		TformParam * param;
-		if(work->getMode() == MODE_2D){
-			param = getParamWindow(ptShear);
-		}else{
-			param = getParamWindow(ptShear3D);
-		}
+		TformParam * param = new TformParam(this, work, ptShear);
 
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
@@ -273,12 +264,7 @@ void __fastcall TformMain::actReflectExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
 
 	if (id >= 0) {
-		TformParam * param;
-		if(work->getMode() == MODE_2D){
-			param = getParamWindow(ptReflect);
-		}else{
-			param = getParamWindow(ptReflect3D);
-		}
+		TformParam * param = new TformParam(this, work, ptReflect);
 
 		if (param->ShowModal() == mrOk){
 			Object * obj = work->getObject(id);
@@ -305,83 +291,6 @@ void __fastcall TformMain::actReflectExecute(TObject *Sender){
 	}
 }
 //---------------------------------------------------------------------------
-
-TformParam * TformMain::getParamWindow(ParamType paramType){
-	TformParam * param = new TformParam(this);
-
-	switch (paramType) {
-	case ptTranslate:
-		param->edtParamX->EditLabel->Caption = "Translação em X: ";
-		param->edtParamY->EditLabel->Caption = "Translação em Y: ";
-		param->edtParamZ->EditLabel->Caption = "Translação em Z: ";
-		param->rdgReference->Visible = false;
-		param->Height = 200;
-		break;
-	case ptScale:
-		param->edtParamX->EditLabel->Caption = "Escala em X: ";
-		param->edtParamY->EditLabel->Caption = "Escala em Y: ";
-		param->edtParamZ->EditLabel->Caption = "Escala em Z: ";
-		param->edtParamX->Text = "1,000";
-		param->edtParamY->Text = "1,000";
-		param->edtParamZ->Text = "1,000";
-		break;
-	case ptShear:
-		param->edtParamX->EditLabel->Caption = "Cisalhamento em X: ";
-		param->edtParamY->EditLabel->Caption = "Cisalhamento em Y: ";
-		param->edtParamZ->EditLabel->Caption = "Cisalhamento em Z: ";				
-		break;
-	case ptShear3D:
-		param->grpRefPoint->Visible = false;
-		param->edtParamX->EditLabel->Caption = "Cisalhamento em X: ";
-		param->edtParamY->EditLabel->Caption = "Cisalhamento em Y: ";
-		param->edtParamZ->EditLabel->Caption = "Cisalhamento em Z: ";				
-		param->rdgReference->Items->Strings[0] = "Cisalhamento em relação ao Eixo X";
-		param->rdgReference->Items->Strings[1] = "Cisalhamento em relação ao Eixo Y";
-		param->rdgReference->Items->Strings[2] = "Cisalhamento em relação ao Eixo Z";
-		break;
-	case ptRotate:
-		param->edtParamX->EditLabel->Caption = "Ângulo de Rotação: ";
-		param->edtParamY->Visible = false;
-		param->edtParamZ->Visible = false;
-		param->pnlParams->Height = 41;
-        param->Height -= 45;
-		break;
-	case ptRotate3D:
-		param->edtParamX->EditLabel->Caption = "Ângulo de Rotação: ";
-		param->grpRefPoint->Visible = false;
-		param->edtParamY->Visible = false;
-		param->edtParamZ->Visible = false;
-		param->rdgReference->Items->Strings[0] = "Rotação em relação ao Eixo X";
-		param->rdgReference->Items->Strings[1] = "Rotação em relação ao Eixo Y";
-		param->rdgReference->Items->Strings[2] = "Rotação em relação ao Eixo Z";
-		break;
-	case ptReflect:
-		param->pnlParams->Visible = false;
-		param->rdgReference->Items->Strings[0] = "Refletir em relação ao Eixo X";
-		param->rdgReference->Items->Strings[1] = "Refletir em relação ao Eixo Y";
-		param->rdgReference->Items->Strings[2] = "Refletir em relação a uma reta";
-		param->grpRefPoint->Caption = "Reta: Y = mX + B";
-		param->edtX->EditLabel->Caption = "m";
-		param->edtY->EditLabel->Caption = "B";
-		param->Height = 250;
-		break;
-	case ptReflect3D:
-		param->pnlParams->Visible = false;
-		param->grpRefPoint->Visible = false;
-		param->rdgReference->Items->Strings[0] = "Refletir em relação ao Plano XY";
-		param->rdgReference->Items->Strings[1] = "Refletir em relação ao Plano YZ";
-		param->rdgReference->Items->Strings[2] = "Refletir em relação ao Plano XZ";
-	}
-
-	if (work->getMode() == MODE_2D) {
-		param->edtParamZ->Visible = false;
-		param->edtZ->Visible = false;
-		param->edtX->Left += 35;
-		param->edtY->Left += 35;
-	}
-
-	return param;
-}
 
 void __fastcall TformMain::actRemoveExecute(TObject *Sender){
 	int id = treeObjects->Selected->Index;
@@ -543,6 +452,33 @@ void __fastcall TformMain::Timer1Timer(TObject *Sender)
 void __fastcall TformMain::Button2Click(TObject *Sender)
 {
     Timer1->Enabled = !Timer1->Enabled;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformMain::actElipseExecute(TObject *Sender)
+{
+	machine->performDrawEllipseClick();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformMain::actComposedExecute(TObject *Sender)
+{
+	int id = treeObjects->Selected->Index;
+
+	if (id >= 0) {
+		Object * obj = work->getObject(id);
+		TformCompose * compose = new TformCompose(this, this->work, obj);
+
+		if (compose->ShowModal() == mrOk){
+			Object * obj = work->getObject(id);
+
+			work->apply(obj, compose->getStateMatrix(), "Transformação composta");
+
+			updateTreeView(treeObjects->Selected, obj);
+		}
+
+		compose->Release();
+	}
 }
 //---------------------------------------------------------------------------
 

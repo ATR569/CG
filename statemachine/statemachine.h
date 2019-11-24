@@ -19,6 +19,7 @@ public:
 	void performClick(int X, int Y);
 	void performDblClick();
 	void performDrawCircleClick();
+	void performDrawEllipseClick();
 	void performDrawLineClick();
 	void performDrawPolygonClick();
 	void performObjectCancelClick();

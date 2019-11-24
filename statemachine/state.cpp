@@ -30,6 +30,13 @@ void StateNone::onCircleClick(StateMachine * machine){
 	machine->setState(new StateDrawingCircleCenter());
 }
 
+//  None.Ellipse
+void StateNone::onEllipseClick(StateMachine * machine){
+//  TO DO
+	machine->formMain->btnObjectCancel->Visible = true;
+	machine->setState(new StateDrawingEllipseCenter());
+}
+
 //  None.PolygonClick
 void StateNone::onPolygonClick(StateMachine * machine){
 //  TO DO
@@ -111,3 +118,28 @@ void StateDrawingCircleRadius::onClick(StateMachine * machine, int X, int Y){
 	onObjectCancelClick(machine);
 }
 
+//  StateDrawingEllipseCenter.Click
+void StateDrawingEllipseCenter::onClick(StateMachine * machine, int X, int Y){
+	TformParam * param = new TformParam(machine->formMain, machine->formMain->work, ptNewEllipse);
+
+	if (param->ShowModal() == mrOk){
+		double a = StrToFloat(param->edtParamX->Text);
+		double b = StrToFloat(param->edtParamY->Text);
+
+		//	Adiciona o ponto ao vetor de pontos
+		machine->pointBuffer.push_back(machine->formMain->work->CoordScrToUser((new Point2D(X, Y))));
+		//	Instancia uma nova reta
+		Elipse * obj = new Elipse(machine->pointBuffer[0], a, b, DM_BRESENHAN);
+		//	Adiciona o objeto ao workspace
+		machine->formMain->work->addObject(obj);
+		//	Cria os nós na árvore (ícone de círculo = 0)
+		TTreeNode * item = machine->formMain->addTreeItem(machine->pointBuffer.size(), 0);
+		//	Atualiza a descrição do objeto na árvore de visualização
+		machine->formMain->updateTreeView(item, obj);
+
+		onObjectCancelClick(machine);
+	}
+
+	param->Release();
+
+}

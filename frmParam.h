@@ -11,8 +11,9 @@
 
 #include "objects/point.h"
 #include "objects/object.h"
+#include "objects/workspace.h"
 
-enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect, ptRotate3D, ptShear3D, ptReflect3D};
+enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect, ptNewEllipse};
 
 //---------------------------------------------------------------------------
 class TformParam : public TForm
@@ -35,11 +36,11 @@ __published:	// IDE-managed Components
 	void __fastcall fixValues(TObject *Sender);
 	void __fastcall btnOkClick(TObject *Sender);
 private:	// User declarations
-	Object * obj;
+	WorkSpace * work;
 	ParamType paramType;
 public:		// User declarations
 	__fastcall TformParam(TComponent* Owner);
-	TformParam(TComponent* Owner, Object * obj, ParamType paramType);
+	TformParam(TComponent* Owner, WorkSpace * work, ParamType paramType);
 
 	Point2D * getReference(Object * obj);
 };

@@ -26,6 +26,7 @@
 #include "frmParam.h"
 #include <Vcl.Menus.hpp>
 #include "frmProperties.h"
+#include "frmCompose.h"
 
 class TformMain : public TForm {
 __published:	// IDE-managed Components
@@ -130,6 +131,8 @@ __published:	// IDE-managed Components
 	void __fastcall treeObjectsDblClick(TObject *Sender);
 	void __fastcall Timer1Timer(TObject *Sender);
 	void __fastcall Button2Click(TObject *Sender);
+	void __fastcall actElipseExecute(TObject *Sender);
+	void __fastcall actComposedExecute(TObject *Sender);
 
 private:	// User declarations
 	StateMachine * machine;
@@ -140,8 +143,6 @@ public:		// User declarations
 
 	void updateTreeView(TTreeNode * node, Object * obj);
 	TTreeNode * addTreeItem(int numChilds, int imageIndex);
-
-	TformParam * getParamWindow(ParamType paramType);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TformMain *formMain;

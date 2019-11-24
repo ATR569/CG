@@ -65,6 +65,7 @@ public:
 	BasePoint * getReference();
 
 	vector<String> toStrings();
+	vector<Point2D *> getPoints();
 	void draw(WorkSpace * work, bool drawPoints, bool erase);
 };
 

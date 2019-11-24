@@ -67,11 +67,7 @@ object formProperties: TformProperties
       Columns = <
         item
           Caption = 'Transforma'#231#227'o'
-          Width = 200
-        end
-        item
-          Caption = 'Refer'#234'ncia'
-          Width = 100
+          Width = 250
         end>
       ColumnClick = False
       HideSelection = False

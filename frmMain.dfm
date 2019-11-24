@@ -7383,6 +7383,7 @@ object formMain: TformMain
       Caption = 'Transforma'#231#227'o Composta'
       Hint = 'Transforma'#231#227'o Composta'
       ImageIndex = 8
+      OnExecute = actComposedExecute
     end
     object actProperties: TAction
       Category = 'Objetos'
@@ -7470,6 +7471,7 @@ object formMain: TformMain
       Caption = 'Elipse'
       Hint = 'Adicionar uma elipse'
       ImageIndex = 17
+      OnExecute = actElipseExecute
     end
   end
   object imagelist16: TImageList
