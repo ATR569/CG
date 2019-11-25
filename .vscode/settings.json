@@ -5,6 +5,13 @@
         "string": "cpp",
         "vector": "cpp",
         "*.tcc": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "typeinfo": "cpp",
+        "system_error": "cpp",
+        "xlocale": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp"
     }
 }
