@@ -392,6 +392,8 @@ void __fastcall TformMain::actModeImageExecute(TObject *Sender){
 	}else{
 		action_manager->Actions[16]->Checked = true;
 	}
+
+    formImageMain->ShowModal();
 }
 //---------------------------------------------------------------------------
 

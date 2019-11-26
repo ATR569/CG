@@ -27,6 +27,7 @@
 #include <Vcl.Menus.hpp>
 #include "frmProperties.h"
 #include "frmCompose.h"
+#include "frmImageMain.h"
 
 class TformMain : public TForm {
 __published:	// IDE-managed Components

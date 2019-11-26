@@ -136,6 +136,12 @@
             <DependentOn>frmCompose.h</DependentOn>
             <BuildOrder>16</BuildOrder>
         </CppCompile>
+        <CppCompile Include="frmImageMain.cpp">
+            <Form>formImageMain</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>frmImageMain.h</DependentOn>
+            <BuildOrder>17</BuildOrder>
+        </CppCompile>
         <CppCompile Include="frmMain.cpp">
             <Form>formMain</Form>
             <FormType>dfm</FormType>
@@ -157,6 +163,10 @@
         <CppCompile Include="objects\graphics.cpp">
             <DependentOn>objects\graphics.h</DependentOn>
             <BuildOrder>7</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="objects\image.cpp">
+            <DependentOn>objects\image.h</DependentOn>
+            <BuildOrder>18</BuildOrder>
         </CppCompile>
         <CppCompile Include="objects\matrix.cpp">
             <DependentOn>objects\matrix.h</DependentOn>
@@ -198,10 +208,11 @@
             <DependentOn>transformation\transform3D.h</DependentOn>
             <BuildOrder>15</BuildOrder>
         </CppCompile>
-        <FormResources Include="frmParam.dfm"/>
         <FormResources Include="frmMain.dfm"/>
-        <FormResources Include="frmProperties.dfm"/>
         <FormResources Include="frmCompose.dfm"/>
+        <FormResources Include="frmProperties.dfm"/>
+        <FormResources Include="frmParam.dfm"/>
+        <FormResources Include="frmImageMain.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <algorithm>
 #include <math.h>
+#include <vector>
 
 class Point2D;
 
@@ -38,5 +39,9 @@ void drawCircleTrigonometric(HDC & hdc, Point2D * center, double radius, DrawCol
 void drawPoint(HDC & hdc, Point2D * P, DrawColor color);
 
 void drawElipseBresenhan(HDC & hdc, Point2D * center, double a, double b, DrawColor color);
+
+void drawImageGS(HDC & hdc, int X, int Y, std::vector< std::vector<int> > & data);
+
+void drawImageBW(HDC & hdc, int X, int Y, std::vector< std::vector<int> > & data);
 
 #endif

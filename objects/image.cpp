@@ -6,7 +6,8 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-//#include "./workspace.h"
+#include "workspace.h"
+#include "graphics.h"
 
 bool Image::isValid(int i, int j){
     if (i < 0 || i >= getHeight()) return false;
@@ -14,7 +15,7 @@ bool Image::isValid(int i, int j){
     return true;
 }
 
-Image::Image(int X, int Y, vector<vector<int>> data){
+Image::Image(int X, int Y, vector<vector<int> > data){
     this->X = X;
     this->Y = Y;
     this->data = data;
@@ -50,11 +51,15 @@ void Image::setPixel(int X, int Y, int value){
     }
 }
 
-void Image::setData(vector<vector<int>> & data){
+int Image::getPixel(int X, int Y){
+    return data[X][Y];
+}
+
+void Image::setData(vector<vector<int> > & data){
     this->data = data;
 }
 
-double Image::correlation(int i, int j, vector<vector<double>> & M){
+double Image::correlation(int i, int j, vector<vector<double> > & M){
     double result = 0;
 
     for (int k = -1; k <= 1; k++){
@@ -68,9 +73,9 @@ double Image::correlation(int i, int j, vector<vector<double>> & M){
     return result;
 }
 
-ImageGS::ImageGS(int X, int Y, vector<vector<int>> data) : Image(X, Y, data){}
+ImageGS::ImageGS(int X, int Y, vector<vector<int> > data) : Image(X, Y, data){}
 
-ImageBW::ImageBW(int X, int Y, vector<vector<int>> data) : Image(X, Y, data){}
+ImageBW::ImageBW(int X, int Y, vector<vector<int> > data) : Image(X, Y, data){}
 
 void ImageGS::draw(WorkSpace * work){
     //TO DO
