@@ -870,7 +870,14 @@ object formMain: TformMain
         Control = Panel3
         ImageIndex = -1
         MinHeight = 39
-        Width = 405
+        Width = 216
+      end
+      item
+        Break = False
+        Control = Panel4
+        ImageIndex = -1
+        MinHeight = 39
+        Width = 185
       end>
     Vertical = True
     object Panel2: TPanel
@@ -934,7 +941,7 @@ object formMain: TformMain
       Left = 0
       Top = 171
       Width = 39
-      Height = 396
+      Height = 203
       BevelEdges = []
       BevelOuter = bvNone
       Padding.Left = 2
@@ -946,7 +953,7 @@ object formMain: TformMain
         Left = 2
         Top = 2
         Width = 35
-        Height = 392
+        Height = 199
         Align = alClient
         AutoSize = True
         BorderWidth = 1
@@ -992,6 +999,58 @@ object formMain: TformMain
           Left = 0
           Top = 155
           Action = actComposed
+        end
+      end
+    end
+    object Panel4: TPanel
+      Left = 0
+      Top = 391
+      Width = 39
+      Height = 107
+      AutoSize = True
+      BevelEdges = []
+      BevelOuter = bvNone
+      Padding.Left = 2
+      Padding.Top = 2
+      Padding.Right = 2
+      Padding.Bottom = 2
+      ParentColor = True
+      TabOrder = 2
+      object barObject3D: TToolBar
+        Left = 2
+        Top = 2
+        Width = 35
+        Height = 103
+        Align = alNone
+        BorderWidth = 1
+        ButtonHeight = 30
+        ButtonWidth = 31
+        Caption = 'barTools'
+        DisabledImages = imagelist24ds
+        EdgeInner = esNone
+        EdgeOuter = esNone
+        Images = imagelist24
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        Transparent = True
+        object btnCube: TToolButton
+          Left = 0
+          Top = 0
+          Action = actCube
+          Wrap = True
+        end
+        object btnPyramid: TToolButton
+          Left = 0
+          Top = 30
+          Action = actPyramid
+          Wrap = True
+        end
+        object btnPrism: TToolButton
+          Left = 0
+          Top = 60
+          Action = actPrism
+          Wrap = True
         end
       end
     end
@@ -1102,25 +1161,6 @@ object formMain: TformMain
         State = cbChecked
         TabOrder = 2
         OnClick = chkShowAxisClick
-      end
-      object Button1: TButton
-        Left = 783
-        Top = 3
-        Width = 75
-        Height = 26
-        Align = alRight
-        Caption = 'Button1'
-        TabOrder = 3
-        OnClick = Button1Click
-      end
-      object Button2: TButton
-        Left = 432
-        Top = 3
-        Width = 75
-        Height = 25
-        Caption = 'Button2'
-        TabOrder = 4
-        OnClick = Button2Click
       end
     end
   end
@@ -7278,6 +7318,17 @@ object formMain: TformMain
                 ImageIndex = 12
               end>
             Caption = '&Transforma'#231#245'es'
+          end
+          item
+            Items = <
+              item
+                Action = actAnimate3D
+                Caption = '&Animar objeto 3D'
+              end
+              item
+                Action = actArnoldTransf
+              end>
+            Caption = '&Exerc'#237'cios'
           end>
         ActionBar = mainMenu
       end
@@ -7436,7 +7487,6 @@ object formMain: TformMain
     end
     object actModeImage: TAction
       Category = 'Modo'
-      AutoCheck = True
       Caption = 'Modo Imagem'
       OnExecute = actModeImageExecute
     end
@@ -7450,17 +7500,21 @@ object formMain: TformMain
       Caption = 'Cubo'
       Hint = 'Adicionar um Cubo'
       ImageIndex = 15
+      OnExecute = actCubeExecute
     end
     object actPrism: TAction
       Category = 'Objetos'
       Caption = 'Prisma'
       Hint = 'Adicionar um prisma'
+      ImageIndex = 18
+      OnExecute = actPrismExecute
     end
     object actPyramid: TAction
       Category = 'Objetos'
       Caption = 'Pir'#226'mide'
       Hint = 'Adicionar uma pir'#226'mide'
       ImageIndex = 16
+      OnExecute = actPyramidExecute
     end
     object actExit: TAction
       Caption = 'Sair'
@@ -7472,6 +7526,15 @@ object formMain: TformMain
       Hint = 'Adicionar uma elipse'
       ImageIndex = 17
       OnExecute = actElipseExecute
+    end
+    object actAnimate3D: TAction
+      Category = 'Exerc'#237'cios'
+      Caption = 'Animar objeto 3D'
+      OnExecute = actAnimate3DExecute
+    end
+    object actArnoldTransf: TAction
+      Category = 'Exerc'#237'cios'
+      Caption = 'Transforma'#231#227'o do Gato de Arnold'
     end
   end
   object imagelist16: TImageList

@@ -23,8 +23,16 @@ Polyedron::Polyedron(vector<Point3D *> P, DrawMethod drawMethod) : Object("Polie
 	this->history.push_back(Transformation(String("Estado inicial"), getIdentity3DMatrix()));
 }
 
-Point2D * Polyedron::getProjection(Point3D * p){
-    Matrix M = (*getProjectionMatrix()) * (*p->asMatrix());
+Point2D * Polyedron::getProjection(Point3D * p, int projectionType){
+    Matrix M(3,3);
+	if (projectionType == 0) 
+		M = (*getProjectionMatrix()) * (*p->asMatrix());
+	else if (projectionType == 1)
+		M = (*getFrontalProjectionMatrix()) * (*p->asMatrix());
+	else if (projectionType == 2)
+		M = (*getSideProjectionMatrix()) * (*p->asMatrix());
+	else
+		M = (*getTopProjectionMatrix()) * (*p->asMatrix());
 
     return M.asPoint2D();
 }
@@ -63,19 +71,13 @@ void Polyedron::addEdge(int a, int b){
     this->edges.push_back(Edge(a,b));
 }
 
-void Polyedron::draw(WorkSpace * work, bool drawPoints, bool erase){
-    vector<Point2D*> vertices;
 
-    for (int i = 0; i < P.size(); i++) {
-		Matrix MA = ((*this->stateMatrix)*(*P[i]->asMatrix()));
-        vertices.push_back(getProjection(MA.asPoint3D()));
-    }
-
+/**
+ * Método auxiliar de rasterização
+ */
+void Polyedron::draw(WorkSpace * work, HDC hdc, vector<Point2D*> & vertices, DrawColor color){
 	int N = edges.size();
-
-	DrawColor color = erase ? CL_WHITE : this->getColor();
-
-	//	Para cada par de pontos (A,B), aplica a stateMatrix e rasteriza na tela
+	//	Para cada par de pontos (A,B), rasteriza na tela
 	for (int i = 0; i < N; i++) {
         int v1 = edges[i].A;
         int v2 = edges[i].B;
@@ -83,15 +85,58 @@ void Polyedron::draw(WorkSpace * work, bool drawPoints, bool erase){
 		Point2D * p1 = work->CoordUserToScr(vertices[v1]);
 		Point2D * p2 = work->CoordUserToScr(vertices[v2]);
 
-		if (drawPoints)
-			drawPoint(work->hdc, p1, color);
-
 		if (cut(p1, p2, 0, work->getCanvasH(), 0, work->getCanvasV())){
 			if (this->getMethod() == DM_DDA)
-				drawLineDDA(work->hdc, p1, p2, color);
+				drawLineDDA(hdc, p1, p2, color);
 			else
-				drawLineBresenhan(work->hdc, p1, p2, color);
+				drawLineBresenhan(hdc, p1, p2, color);
 		}
+	}
+}
+
+void Polyedron::draw(WorkSpace * work, bool drawPoints, bool erase){
+    vector<Point2D*> vertices;
+	DrawColor color = erase ? CL_WHITE : this->getColor();
+
+	//	Projeção ortográfica
+    for (int i = 0; i < P.size(); i++) {
+		Matrix MA = ((*this->stateMatrix)*(*P[i]->asMatrix()));
+        vertices.push_back(getProjection(MA.asPoint3D()));
+    }
+
+	draw(work, work->hdc, vertices, color);	
+
+	//	Projeção frontal
+	if (work->hdcFront != NULL){
+		vertices.clear();
+		for (int i = 0; i < P.size(); i++) {
+			Matrix MA = ((*this->stateMatrix)*(*P[i]->asMatrix()));
+			vertices.push_back(getProjection(MA.asPoint3D(), 1));
+		}
+
+		draw(work, work->hdcFront, vertices, color);	
+	}
+
+	//	Projeção lateral
+	if (work->hdcFront != NULL){
+		vertices.clear();
+		for (int i = 0; i < P.size(); i++) {
+			Matrix MA = ((*this->stateMatrix)*(*P[i]->asMatrix()));
+			vertices.push_back(getProjection(MA.asPoint3D(), 2));
+		}
+
+		draw(work, work->hdcSide, vertices, color);	
+	}
+
+	//	Projeção superior
+	if (work->hdcFront != NULL){
+		vertices.clear();
+		for (int i = 0; i < P.size(); i++) {
+			Matrix MA = ((*this->stateMatrix)*(*P[i]->asMatrix()));
+			vertices.push_back(getProjection(MA.asPoint3D(), 3));
+		}
+
+		draw(work, work->hdcTop, vertices, color);	
 	}
 }
 

@@ -55,7 +55,7 @@ void StateDrawing::onObjectCancelClick(StateMachine * machine){
 	machine->formMain->btnObjectCancel->Visible = false;
 
 	machine->pointBuffer.clear();
-	machine->setState(new StateNone());
+	machine->setState(new StateNone(machine->formMain->work->getMode()));
 }
 
 //  DrawingSecondPointLine.Click

@@ -6,11 +6,12 @@
 //---------------------------------------------------------------------------
 #include <Vcl.Styles.hpp>
 #include <Vcl.Themes.hpp>
-USEFORM("frmMain.cpp", formMain);
+USEFORM("frmImageMain.cpp", formImageMain);
 USEFORM("frmCompose.cpp", formCompose);
+USEFORM("frmMain.cpp", formMain);
 USEFORM("frmProperties.cpp", formProperties);
 USEFORM("frmParam.cpp", formParam);
-USEFORM("frmImageMain.cpp", formImageMain);
+USEFORM("frmViewPort3D.cpp", formViewPort3D);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {

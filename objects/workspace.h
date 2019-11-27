@@ -27,6 +27,7 @@ private:
 	int mode;
 public:
 	HDC hdc;
+	HDC hdcFront, hdcSide, hdcTop;
 
     WorkSpace(double userH, int canvasH, int canvasV, HDC hdc);
 
@@ -53,6 +54,9 @@ public:
 	void setDrawAxis(bool drwAxis);
 	void setDrawGrid(bool drwGrid);                      
 	void setMode(int mode);
+	void setHdcFront(HDC hdc);
+	void setHdcSide(HDC hdc);
+	void setHdcTop(HDC hdc);
 	
 	void apply(Object * obj, Matrix * M, String caption);
 	void translateObject(Object * obj, double tx, double ty);

@@ -1,10 +1,14 @@
-#ifndef stateH
+﻿#ifndef stateH
 #define stateH
 
 class StateMachine;
 
-const int NONE_BTN_STATE = -1;
-const int DRAWING_BTN_STATE = 8192;
+//  1111 1111 0110 0001 1111 1111 1111 1111
+const int NONE_BTN_STATE2D =  0xFF61FFFF;
+//  1111 1111 1111 1111 1111 1111 1111 1111
+const int NONE_BTN_STATE3D =  0xFFBFFFF8;
+//  0000 0000 0000 0000 0010 0000 0000 0000
+const int DRAWING_BTN_STATE = 0x00002000;
 
 class State{
 	int btnStateMask;
@@ -33,7 +37,7 @@ protected:
 	void onEllipseClick(StateMachine * machine);
 	void onPolygonClick(StateMachine * machine);
 public:
-	StateNone() : State(NONE_BTN_STATE){};
+	StateNone(int mode) : State(mode == 0 ? NONE_BTN_STATE2D : NONE_BTN_STATE3D){};
 };
 
 class StateDrawing : public State{

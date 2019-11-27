@@ -87,6 +87,19 @@ TformParam::TformParam(TComponent* Owner, WorkSpace * work, ParamType paramType)
 		Height = 200;
 		break;
 
+	case ptNewCube:
+		edtParamY->Visible = false;
+	case ptNewPolyedron:
+		edtParamX->EditLabel->Caption = "Aresta da base: ";
+		edtParamY->EditLabel->Caption = "Altura: ";
+
+		edtParamZ->Visible = false;
+		rdgReference->Visible = false;
+		grpRefPoint->Visible = true;
+
+		Height = 250;
+		pnlParams->Height = edtParamY->Visible ? 75 : 41;
+
 		break;
 	}
 

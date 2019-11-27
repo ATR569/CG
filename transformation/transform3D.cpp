@@ -264,3 +264,18 @@ Matrix * getProjectionMatrix(){
 	*M = (*getRotation3DMatrix(45, 0))*(*getRotation3DMatrix(-45, 1));
 	return M;
 }
+
+/**
+ * Retorna uma matriz que alinha a câmera para executar a projeção Frontal
+ */ 
+Matrix * getFrontalProjectionMatrix(){
+	return getIdentity3DMatrix();
+}
+
+Matrix * getSideProjectionMatrix(){
+	return getRotation3DMatrix(-90, 1);
+}
+
+Matrix * getTopProjectionMatrix(){
+	return getRotation3DMatrix(90, 0);
+}

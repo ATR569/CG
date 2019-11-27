@@ -30,6 +30,12 @@ Matrix * getReflection3DMatrix(double m, double b);
 
 Matrix * getProjectionMatrix();
 
+Matrix * getFrontalProjectionMatrix();
+
+Matrix * getSideProjectionMatrix();
+
+Matrix * getTopProjectionMatrix();
+
 Matrix * getIdentity3DMatrix();
 
 #endif

@@ -13,7 +13,7 @@
 #include "objects/object.h"
 #include "objects/workspace.h"
 
-enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect, ptNewEllipse};
+enum ParamType{ptTranslate, ptScale, ptRotate, ptShear, ptReflect, ptNewEllipse, ptNewPolyedron, ptNewCube};
 
 //---------------------------------------------------------------------------
 class TformParam : public TForm

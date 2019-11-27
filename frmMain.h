@@ -28,6 +28,7 @@
 #include "frmProperties.h"
 #include "frmCompose.h"
 #include "frmImageMain.h"
+#include "frmViewPort3D.h"
 
 class TformMain : public TForm {
 __published:	// IDE-managed Components
@@ -89,7 +90,6 @@ __published:	// IDE-managed Components
 	TAction *actObjectCancel;
 	TSpeedButton *btnObjectCancel;
 	TBevel *Bevel1;
-	TButton *Button1;
 	TAction *actMode2D;
 	TAction *actMode3D;
 	TAction *actModeImage;
@@ -100,8 +100,14 @@ __published:	// IDE-managed Components
 	TAction *actExit;
 	TAction *actElipse;
 	TToolButton *ToolButton1;
-	TButton *Button2;
 	TTimer *Timer1;
+	TPanel *Panel4;
+	TToolBar *barObject3D;
+	TToolButton *btnCube;
+	TToolButton *btnPyramid;
+	TToolButton *btnPrism;
+	TAction *actAnimate3D;
+	TAction *actArnoldTransf;
 	void __fastcall actPolygonExecute(TObject *Sender);
 	void __fastcall actMoveExecute(TObject *Sender);
 	void __fastcall actScaleExecute(TObject *Sender);
@@ -124,16 +130,18 @@ __published:	// IDE-managed Components
 	void __fastcall actRemoveExecute(TObject *Sender);
 	void __fastcall actCentralizeExecute(TObject *Sender);
 	void __fastcall actObjectCancelExecute(TObject *Sender);
-	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall actMode2DExecute(TObject *Sender);
 	void __fastcall actMode3DExecute(TObject *Sender);
 	void __fastcall actModeImageExecute(TObject *Sender);
 	void __fastcall actExitExecute(TObject *Sender);
 	void __fastcall treeObjectsDblClick(TObject *Sender);
 	void __fastcall Timer1Timer(TObject *Sender);
-	void __fastcall Button2Click(TObject *Sender);
 	void __fastcall actElipseExecute(TObject *Sender);
 	void __fastcall actComposedExecute(TObject *Sender);
+	void __fastcall actCubeExecute(TObject *Sender);
+	void __fastcall actPrismExecute(TObject *Sender);
+	void __fastcall actPyramidExecute(TObject *Sender);
+	void __fastcall actAnimate3DExecute(TObject *Sender);
 
 private:	// User declarations
 	StateMachine * machine;

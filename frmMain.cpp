@@ -207,18 +207,25 @@ void __fastcall TformMain::actPropertiesExecute(TObject *Sender){
 	if (id >= 0) {
 		Object * obj = work->getObject(id);
 		Matrix * stateMatrix = new Matrix(obj->getStateMatrix()->getData());
-		TformProperties * properties = new TformProperties(this, obj);
 
-		if (properties->ShowModal() == mrOk){
-			int idTransf = properties->lstHistory->ItemIndex;
-			obj->cropHistory(idTransf+1);
+		if (work->getMode() == MODE_2D) {
+			TformProperties * properties = new TformProperties(this, obj);
+
+			if (properties->ShowModal() == mrOk){
+				int idTransf = properties->lstHistory->ItemIndex;
+				obj->cropHistory(idTransf+1);
+			}else{
+				obj->setStateMatrix(stateMatrix);
+			}
+
+			properties->Release();
+			desktop->Repaint();
+			work->update();
 		}else{
-			obj->setStateMatrix(stateMatrix);
-		}
+			TformViewPort3D * viewPort = new TformViewPort3D(this, obj);
 
-		properties->Release();
-		desktop->Repaint();
-        work->update();
+            viewPort->ShowModal();
+        }
 	}
 }
 //---------------------------------------------------------------------------
@@ -332,12 +339,6 @@ void __fastcall TformMain::actObjectCancelExecute(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TformMain::Button1Click(TObject *Sender)
-{
-	Object * obj = getPyramid(new Point3D(10,10,0), 20, 10, DM_BRESENHAN);
-	work->addObject(obj);
-}
-//---------------------------------------------------------------------------
 
 void __fastcall TformMain::actMode2DExecute(TObject *Sender){
 	if (((TAction*)Sender)->Checked) {
@@ -346,9 +347,10 @@ void __fastcall TformMain::actMode2DExecute(TObject *Sender){
 			treeObjects->Items->Clear();
 			work->clearObjects();
 			work->setMode(MODE_2D);
-			action_manager->Actions[15]->Checked = false;
-			action_manager->Actions[16]->Checked = false;
 
+			machine->setState(new StateNone(work->getMode()));
+
+			action_manager->Actions[15]->Checked = false;
 		}else{
 			action_manager->Actions[14]->Checked = false;
 		}
@@ -365,8 +367,9 @@ void __fastcall TformMain::actMode3DExecute(TObject *Sender){
 			treeObjects->Items->Clear();
 			work->clearObjects();
 			work->setMode(MODE_3D);
+			machine->setState(new StateNone(work->getMode()));
+
 			action_manager->Actions[14]->Checked = false;
-			action_manager->Actions[16]->Checked = false;
 		}else{
 			action_manager->Actions[15]->Checked = false;
 		}
@@ -377,7 +380,7 @@ void __fastcall TformMain::actMode3DExecute(TObject *Sender){
 //---------------------------------------------------------------------------
 
 void __fastcall TformMain::actModeImageExecute(TObject *Sender){
-	if (((TAction*)Sender)->Checked) {
+/*	if (((TAction*)Sender)->Checked) {
 		if (MessageDlg("Deseja Mudar o modo para o modo Imagem?\nIsso removerá todos os objetos criados!", mtConfirmation, mbYesNo, 0, mbNo) == mrYes) {
 			desktop->Repaint();
 			treeObjects->Items->Clear();
@@ -392,7 +395,7 @@ void __fastcall TformMain::actModeImageExecute(TObject *Sender){
 	}else{
 		action_manager->Actions[16]->Checked = true;
 	}
-
+ */
     formImageMain->ShowModal();
 }
 //---------------------------------------------------------------------------
@@ -446,16 +449,11 @@ void __fastcall TformMain::treeObjectsDblClick(TObject *Sender)
 
 void __fastcall TformMain::Timer1Timer(TObject *Sender)
 {
-	Object * obj = work->getObject(0);
+	Object * obj = work->getObject(treeObjects->Selected->Index);
 	work->rotateObject3D(obj, 1, 10);
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TformMain::Button2Click(TObject *Sender)
-{
-    Timer1->Enabled = !Timer1->Enabled;
-}
-//---------------------------------------------------------------------------
 
 void __fastcall TformMain::actElipseExecute(TObject *Sender)
 {
@@ -481,6 +479,80 @@ void __fastcall TformMain::actComposedExecute(TObject *Sender)
 
 		compose->Release();
 	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformMain::actCubeExecute(TObject *Sender){
+	TformParam * param = new TformParam(this, work, ptNewCube);
+
+	if (param->ShowModal() == mrOk){
+		double X = StrToFloat(param->edtX->Text);
+		double Y = StrToFloat(param->edtY->Text);
+		double Z = StrToFloat(param->edtZ->Text);
+		double edge = StrToFloat(param->edtParamX->Text);
+
+		Object * obj = getCube(new Point3D(X,Y,Z), edge, DM_BRESENHAN);
+
+		work->addObject(obj);
+
+		TTreeNode * item = addTreeItem(8, 15);
+		updateTreeView(item, obj);
+	}
+
+    param->Release();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformMain::actPrismExecute(TObject *Sender){
+	TformParam * param = new TformParam(this, work, ptNewPolyedron);
+
+	if (param->ShowModal() == mrOk){
+		double X = StrToFloat(param->edtX->Text);
+		double Y = StrToFloat(param->edtY->Text);
+		double Z = StrToFloat(param->edtZ->Text);
+		double edge = StrToFloat(param->edtParamX->Text);
+		double height = StrToFloat(param->edtParamY->Text);
+
+		Object * obj = getPrism(new Point3D(X,Y,Z), edge, height, DM_BRESENHAN);
+
+		work->addObject(obj);
+		TTreeNode * item = addTreeItem(6, 18);
+		updateTreeView(item, obj);
+	}
+
+    param->Release();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformMain::actPyramidExecute(TObject *Sender){
+	TformParam * param = new TformParam(this, work, ptNewPolyedron);
+
+	if (param->ShowModal() == mrOk){
+		double X = StrToFloat(param->edtX->Text);
+		double Y = StrToFloat(param->edtY->Text);
+		double Z = StrToFloat(param->edtZ->Text);
+		double edge = StrToFloat(param->edtParamX->Text);
+		double height = StrToFloat(param->edtParamY->Text);
+
+		Object * obj = getPyramid(new Point3D(X,Y,Z), edge, height, DM_BRESENHAN);
+
+        work->addObject(obj);
+		TTreeNode * item = addTreeItem(5, 16);
+		updateTreeView(item, obj);
+	}
+
+    param->Release();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformMain::actAnimate3DExecute(TObject *Sender){
+	int id = treeObjects->Selected->Index;
+
+	if (id >= 0) {
+		Timer1->Enabled = !Timer1->Enabled;
+	}else{
+		ShowMessage("Não há um objeto selecionado!");
+    }
 }
 //---------------------------------------------------------------------------
 

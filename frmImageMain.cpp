@@ -15,7 +15,7 @@ __fastcall TformImageMain::TformImageMain(TComponent* Owner)
 }
 //---------------------------------------------------------------------------
 void __fastcall TformImageMain::Button1Click(TObject *Sender){
-	ifstream file("D:\\projetos\\projetos c++\\cg\\example\\airplane.pgm");
+	ifstream file("C:\\Users\\Agnsoft\\Desktop\\CG\\example\\airplane.pgm");
 
 	string str;
 

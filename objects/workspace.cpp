@@ -25,6 +25,10 @@ WorkSpace::WorkSpace(double userH, int canvasH, int canvasV, HDC hdc){
         this->userV = userH;
 	
 	this->hdc = hdc;
+	this->hdcFront = NULL;
+	this->hdcSide = NULL;
+	this->hdcTop = NULL;
+
 	this->drwAxis = true;
 	this->drwGrid = true;
 	this->drwPoints = true;
@@ -56,6 +60,18 @@ int WorkSpace::getMode(){
 void WorkSpace::setMode(int mode){
 	this->mode = mode;
     update();
+}
+
+void WorkSpace::setHdcFront(HDC hdc){
+	this->hdcFront = hdc;
+}
+
+void WorkSpace::setHdcSide(HDC hdc){
+	this->hdcSide = hdc;
+}
+
+void WorkSpace::setHdcTop(HDC hdc){
+	this->hdcTop = hdc;
 }
 
 int WorkSpace::getCanvasH(){

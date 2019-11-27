@@ -5,7 +5,7 @@ object formImageMain: TformImageMain
   Caption = 'Processamento de Imagens'
   ClientHeight = 489
   ClientWidth = 764
-  Color = clBtnFace
+  Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -13,6 +13,7 @@ object formImageMain: TformImageMain
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  StyleElements = [seFont, seBorder]
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton

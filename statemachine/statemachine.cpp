@@ -10,8 +10,10 @@
 #include "../frmMain.h"
 
 StateMachine::StateMachine(TformMain * formMain){
-    this->state = new StateNone();
     this->formMain = formMain;
+    this->state = NULL;
+	State * state = new StateNone(formMain->work->getMode());
+	setState(state);
 }
 
 void StateMachine::performClick(int X, int Y){
@@ -40,6 +42,7 @@ void StateMachine::performDrawPolygonClick(){
 
 void StateMachine::setState(State * state){
 	free(this->state);
+
 	this->state = state;
 
 	int btnStateMask = state->getBtnStateMask();

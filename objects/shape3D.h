@@ -10,7 +10,8 @@ private:
     vector<Point3D *> P;
     vector<Edge> edges; 
 
-    Point2D * getProjection(Point3D * p);
+    Point2D * getProjection(Point3D * p, int projectionType = 0);
+    void draw(WorkSpace * work, HDC hdc, vector<Point2D*> & vertices, DrawColor color);
 public:
     Polyedron(vector<Point3D *> P, vector<Edge> edges, DrawMethod drawMethod);
     Polyedron(vector<Point3D *> P, DrawMethod drawMethod);
