@@ -73,7 +73,56 @@ double Image::correlation(int i, int j, vector<vector<double> > & M){
     return result;
 }
 
-ImageGS::ImageGS(int X, int Y, vector<vector<int> > data) : Image(X, Y, data){}
+ImageGS::ImageGS(int X, int Y, vector<vector<int>> data, int colorDepth) : Image(X, Y, data){
+    this->colorDepth = colorDepth;
+}
+
+/**
+ * Calcula P(r) para cada pixel da imagem
+ * @return vector<double> com P(r)
+ */ 
+vector<double> ImageGS::getHistogramValues(){
+	vector<double> hist(this->colorDepth, 0);
+
+	for (int i = 0; i < this->getHeight(); i++) {
+		for (int j = 0; j < this->getWidth(); j++) {
+			int value = this->data[i][j];
+			hist[value]++;
+		}
+	}
+
+	double totalSize = this->getHeight() * this->getWidth();
+	for (int i = 0; i < hist.size(); i++)
+		hist[i] /= totalSize;
+
+	return hist;
+}
+
+void ImageGS::equalizeHistogram(){
+    vector<double> histogram = getHistogramValues();
+    vector<int> mapPixels;
+
+    double prob = 0;
+    for (int i = 0; i < histogram.size(); i++){
+        prob += histogram[i];
+        mapPixels.push_back((int)round(prob*(colorDepth-1)));
+    }
+
+	for (int i = 0; i < this->getHeight(); i++) {
+		for (int j = 0; j < this->getWidth(); j++) {
+			int value = this->data[i][j];
+            this->data[i][j] = mapPixels[value];
+        }
+    }
+}
+
+int ImageGS::getColorDepth(){
+    return this->colorDepth;
+}
+
+void ImageGS::setColorDepth(int colorDepth){
+    this->colorDepth = colorDepth;
+}
 
 ImageBW::ImageBW(int X, int Y, vector<vector<int> > data) : Image(X, Y, data){}
 

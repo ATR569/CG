@@ -9,6 +9,7 @@ using namespace std;
 class WorkSpace;
 
 class Image{
+protected:
     int X;
     int Y;
     vector<vector<int> > data;
@@ -33,9 +34,14 @@ public:
 };
 
 class ImageGS : public Image{
+    int colorDepth;
 public:
-    ImageGS(int X, int Y, vector<vector<int> > data);
+    ImageGS(int X, int Y, vector<vector<int>> data, int colorDepth);
     void draw(WorkSpace * work);
+    int getColorDepth();
+    void setColorDepth(int colorDepth);
+    vector<double> getHistogramValues();
+    void equalizeHistogram();
 };
 
 class ImageBW : public Image{
