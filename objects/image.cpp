@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+﻿//---------------------------------------------------------------------------
 
 #pragma hdrstop
 
@@ -8,6 +8,7 @@
 
 #include "workspace.h"
 #include "graphics.h"
+#include <fstream>
 
 bool Image::isValid(int i, int j){
     if (i < 0 || i >= getHeight()) return false;
@@ -15,10 +16,31 @@ bool Image::isValid(int i, int j){
     return true;
 }
 
-Image::Image(int X, int Y, vector<vector<int> > data){
-    this->X = X;
-    this->Y = Y;
+Image::Image(vector<vector<int> > data){
     this->data = data;
+}
+
+ImageGS::ImageGS(String filePath) : Image(vector<vector<int>>()){
+	ifstream file(filePath.c_str());
+
+	string format;
+	int height, width;
+
+	file >> format;             //  ASCII ou binário
+	file >> height >> width;    //  Tamanho da imagem
+	file >> this->colorDepth; 	//  Níves de cinza
+
+	//  Leitura dos pixels da imagem
+	for (int X = 0; X < height; X++){
+		this->data.push_back(vector<int>());
+		int pixelValue;
+		for (int Y = 0; Y < width; Y++){
+			file >> pixelValue;
+			this->data[X].push_back(pixelValue);
+		}
+	}
+
+    file.close();
 }
 
 vector<vector<int>> Image::getData(){
@@ -27,14 +49,6 @@ vector<vector<int>> Image::getData(){
 
 vector<int> Image::getLine(int i){
     return this->data[i];
-}
-
-int Image::getX(){
-    return this->X;
-}
-
-int Image::getY(){
-    return this->Y;
 }
 
 int Image::getHeight(){
@@ -59,13 +73,13 @@ void Image::setData(vector<vector<int> > & data){
     this->data = data;
 }
 
-double Image::correlation(int i, int j, vector<vector<double> > & M){
+double Image::correlation(int X, int Y, vector<vector<double> > & M){
     double result = 0;
 
-    for (int k = -1; k <= 1; k++){
-        for (int l = -1; l <= 1; l++) {
-            if (isValid(i+k, j+l)){
-                result += M[k+1][l+1] * data[i+k][j+l];
+    for (int i = -1; i <= 1; i++){
+        for (int j = -1; j <= 1; j++) {
+            if (isValid(X+i, Y+j)){
+                result += M[i+1][j+1] * data[X+i][Y+j];
             }
         }
     }
@@ -73,7 +87,7 @@ double Image::correlation(int i, int j, vector<vector<double> > & M){
     return result;
 }
 
-ImageGS::ImageGS(int X, int Y, vector<vector<int>> data, int colorDepth) : Image(X, Y, data){
+ImageGS::ImageGS(vector<vector<int>> data, int colorDepth) : Image(data){
     this->colorDepth = colorDepth;
 }
 
@@ -124,12 +138,12 @@ void ImageGS::setColorDepth(int colorDepth){
     this->colorDepth = colorDepth;
 }
 
-ImageBW::ImageBW(int X, int Y, vector<vector<int> > data) : Image(X, Y, data){}
+ImageBW::ImageBW(vector<vector<int> > data) : Image(data){}
 
-void ImageGS::draw(WorkSpace * work){
-    //TO DO
+void ImageGS::draw(HDC hdc, int X, int Y){
+    drawImageGS(hdc, X, Y, this->data);
 }
 
-void ImageBW::draw(WorkSpace * work){
-    //TO DO
+void ImageBW::draw(HDC hdc, int X, int Y){
+    drawImageBW(hdc, X, Y, this->data);
 }

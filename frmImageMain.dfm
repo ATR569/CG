@@ -24,10 +24,6 @@ object formImageMain: TformImageMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = 192
-    ExplicitTop = 80
-    ExplicitWidth = 521
-    ExplicitHeight = 297
     object hist1: TPanel
       Left = 17
       Top = 280
@@ -49,10 +45,6 @@ object formImageMain: TformImageMain
         ParentBackground = False
         TabOrder = 0
         StyleElements = [seFont, seBorder]
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 321
-        ExplicitHeight = 137
       end
     end
     object Panel3: TPanel

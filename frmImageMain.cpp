@@ -15,75 +15,47 @@ __fastcall TformImageMain::TformImageMain(TComponent* Owner)
 }
 //---------------------------------------------------------------------------
 void __fastcall TformImageMain::Button1Click(TObject *Sender){
-	ifstream file("C:\\Users\\Agnsoft\\Desktop\\CG\\example\\lena.pgm");
 
-	string str;
+	ImageGS * image = new ImageGS("D:/Projetos/Projetos c++/CG/example/lena.pgm");
+	vector<double> histogram1 = image->getHistogramValues();
+	image->draw(GetDC(Panel1->Handle), 10, 20);
 
-	file >> str;
+	image->equalizeHistogram();
+	vector<double> histogram2 = image->getHistogramValues();
+	image->draw(GetDC(Panel1->Handle), 10, 300);
 
-	int w, h;
-
-	file >> w >> h;
-
-	file >> str;
-
-	std::vector<std::vector<int> > data;
-
-	for (int i = 0; i < h; i++){
-		data.push_back(vector<int>());
-		for (int j= 0; j < w; j++){
-			int l;
-			file >> l;
-			data[i].push_back(l);
-		}
-	}
-
-	file.close();
-	ImageGS * image = new ImageGS(10, 180, data, 256);
-	HDC hdc = GetDC(Panel1->Handle);
-	drawImageGS(hdc, 10, 20, data);
-
-	vector<double> histogram = image->getHistogramValues();
-
-	HDC dc = GetDC(Panel2->Handle);
 
 	double maxProb = 0;
-	for (int i = 0; i < histogram.size(); i++)
-		if (histogram[i] > maxProb) {
-			maxProb = histogram[i];
+	for (int i = 0; i < histogram1.size(); i++)
+		if (histogram1[i] > maxProb) {
+			maxProb = histogram1[i];
 		}
 
 	double multip = 120/maxProb;
 
-	for (int i = 0; i < histogram.size(); i++) {
+	HDC dc = GetDC(Panel2->Handle);
+	for (int i = 0; i < histogram1.size(); i++) {
 		MoveToEx(dc, i, 130, NULL);
-		int value = (int)round(multip*histogram[i]);
+		int value = (int)round(multip*histogram1[i]);
 		LineTo(dc, i, 130-value);
 	}
-
-	ShowMessage("Equalizando o histograma...");
-
-	image->equalizeHistogram();
-	data = image->getData();
-	drawImageGS(hdc, 10, 300, data);
-
-	histogram = image->getHistogramValues();
 
 	dc = GetDC(Panel4->Handle);
 
 	maxProb = 0;
-	for (int i = 0; i < histogram.size(); i++)
-		if (histogram[i] > maxProb) {
-			maxProb = histogram[i];
+	for (int i = 0; i < histogram2.size(); i++)
+		if (histogram2[i] > maxProb) {
+			maxProb = histogram2[i];
 		}
 
 	multip = 120/maxProb;
 
-	for (int i = 0; i < histogram.size(); i++) {
+	for (int i = 0; i < histogram2.size(); i++) {
 		MoveToEx(dc, i, 130, NULL);
-		int value = (int)round(multip*histogram[i]);
+		int value = (int)round(multip*histogram2[i]);
 		LineTo(dc, i, 130-value);
 	}
+
 }
 //---------------------------------------------------------------------------
 
