@@ -10,8 +10,8 @@
 #include <math.h>
 #include "../objects/image.h"
 
-int getTruncatedValue(int nv){
-    return (int) round(max(0, min(nv, 255)));
+int getTruncatedValue(double nv){
+	return (int) round(max(0.0, min(nv, 255.0)));
 }
 
 bool isValid(int i, int j, vector<vector<int>> & M){

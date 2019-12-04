@@ -1,8 +1,6 @@
 #ifndef filtersH
 #define filtersH
 
-using namespace std;
-
 class ImageGS;
 
 void meanFilter(ImageGS *image);
