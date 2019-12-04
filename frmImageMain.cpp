@@ -176,3 +176,13 @@ void __fastcall TformImageMain::actPrewittExecute(TObject *Sender){
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TformImageMain::actArnoldsCatTransformExecute(TObject *Sender){
+	if (loadOriginalImage()){
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+		int iter = arnoldsCatTransform(GetDC(transformImgCanvas->Handle), 0, 0, (ImageGS*)imgTransformed);
+
+        ShowMessage("Transformada do Gato de Arnold: " + IntToStr(iter) + " iterações.");
+	}
+}
+//---------------------------------------------------------------------------
+

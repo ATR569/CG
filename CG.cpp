@@ -12,6 +12,7 @@ USEFORM("frmCompose.cpp", formCompose);
 USEFORM("frmViewPort3D.cpp", formViewPort3D);
 USEFORM("frmProperties.cpp", formProperties);
 USEFORM("frmParam.cpp", formParam);
+USEFORM("frmCredits.cpp", formCredits);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {

@@ -816,6 +816,8 @@ object formMain: TformMain
       OnMouseDown = desktopMouseDown
       OnMouseMove = desktopMouseMove
       OnResize = desktopResize
+      ExplicitLeft = 37
+      ExplicitTop = 39
     end
   end
   object statusbar: TStatusBar
@@ -870,14 +872,14 @@ object formMain: TformMain
         Control = Panel3
         ImageIndex = -1
         MinHeight = 39
-        Width = 216
+        Width = 218
       end
       item
         Break = False
         Control = Panel4
         ImageIndex = -1
         MinHeight = 39
-        Width = 185
+        Width = 183
       end>
     Vertical = True
     object Panel2: TPanel
@@ -941,7 +943,7 @@ object formMain: TformMain
       Left = 0
       Top = 171
       Width = 39
-      Height = 203
+      Height = 205
       BevelEdges = []
       BevelOuter = bvNone
       Padding.Left = 2
@@ -953,7 +955,7 @@ object formMain: TformMain
         Left = 2
         Top = 2
         Width = 35
-        Height = 199
+        Height = 201
         Align = alClient
         AutoSize = True
         BorderWidth = 1
@@ -1004,7 +1006,7 @@ object formMain: TformMain
     end
     object Panel4: TPanel
       Left = 0
-      Top = 391
+      Top = 393
       Width = 39
       Height = 107
       AutoSize = True
@@ -7327,6 +7329,7 @@ object formMain: TformMain
               end
               item
                 Action = actArnoldTransf
+                Caption = '&Transforma'#231#227'o do Gato de Arnold'
               end>
             Caption = '&Exerc'#237'cios'
           end>
