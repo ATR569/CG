@@ -1,18 +1,16 @@
 #include "morfologic.h"
 
+// Morfologia em imagens binárias
+// ----------------------------------------------------------------------------------------------------------------
+
 /** Método que realiza as operações de dilatação ou erosão
  *  de acordo com parâmetro especificado pelo usúario
  *
  * @image ImageBW - imagem binária que irá sofrer a operação de dilatação ou erosão
  * @mo MorfOperation - valor que define se a operação será de dilatação ou erosão
 */
-void morfologicBW(ImageBW * image, MorfOperation mo){
+void morfologicBW(ImageBW * image, MorfOperation mo, vector<vector<int>> & M){
     vector<vector<int>> data = image->getData();
-    vector<vector<int>> M {
-        {1,1,1},
-        {1,1,1},
-        {1,1,1}
-    };
 
     //  Iterando pixel a pixel da imagem
     for (int i = 0; i < data.size(); i++) {
@@ -38,18 +36,18 @@ void morfologicBW(ImageBW * image, MorfOperation mo){
 *
 * @image ImageBW - imagem binária que irá sofrer a operação de abertura
 */
-void openingBW(ImageBW * image){
-    morfologicBW(image, EROSION);
-    morfologicBW(image, DILATION);
+void openingBW(ImageBW * image, vector<vector<int>> & M){
+    morfologicBW(image, EROSION, M);
+    morfologicBW(image, DILATION, M);
 }
 
 /** Método que realiza a operação de fechamento em uma imagem
 *
 * @image ImageBW - imagem binária que irá sofrer a operação de fechamento
 */
-void closureBW(ImageBW * image){
-    morfologicBW(image, DILATION);
-    morfologicBW(image, EROSION);
+void closureBW(ImageBW * image, vector<vector<int>> & M){
+    morfologicBW(image, DILATION, M);
+    morfologicBW(image, EROSION, M);
 }
 
 /** A função realiza as operações necessárias para extrações de fronteira, seja 
@@ -59,13 +57,13 @@ void closureBW(ImageBW * image){
  * @bp BorderOperation - valor que define se a fronteira extraida sera interna ou externa.
  *
 */
-void extractionBorders(ImageBW * image, BorderOperation bp){
+void extractionBordersBW(ImageBW * image, BorderOperation bp, vector<vector<int>> & M){
     vector<vector<int>> data = image->getData(); // guarda uma cópia da imagem original
     vector<vector<int>> data2; // guarda a matriz da imagem após a dilatação ou erosão
     if(bp == INNER)
-        morfologicBW(image, EROSION); // erosão da imagem original
+        morfologicBW(image, EROSION, M); // erosão da imagem original
     else
-        morfologicBW(image, DILATION); // dilatação da imagem original
+        morfologicBW(image, DILATION, M); // dilatação da imagem original
 
     data2 = image->getData(); // variavel recebe a imagem original após a dilatação ou erosão
 
@@ -83,16 +81,16 @@ void extractionBorders(ImageBW * image, BorderOperation bp){
  *
  * @image ImageBW - imagem binária que terá o grandiente extraido
 */
-void gradientBW(ImageBW * image){
-    vector<vector<int>> data = image->getData(); // guarda uma cópia da image original
-    ImageBW * copyImage = new ImageBW(0, 0, data); // guarda uma cópia da image original para usar na operação de erosão
+void gradientBW(ImageBW * image, vector<vector<int>> & M){
+    vector<vector<int>> data = image->getData(); // guarda uma cópia da imagem original
+    ImageBW * copyImage = new ImageBW(data); // guarda uma cópia da image original para usar na operação de erosão
     vector<vector<int>> erosion; // guarda a referencia para a imagem após a erosão
     vector<vector<int>> dilation; // guarda a referencia para a imagem após a erosão
 
-    morfologicBW(image, DILATION); // operação de dilatação
+    morfologicBW(image, DILATION, M); // operação de dilatação
     dilation = image->getData(); // variavel dilation guarda a imagem dilatada
 
-    morfologicBW(copyImage, EROSION); // operação de erosão
+    morfologicBW(copyImage, EROSION, M); // operação de erosão
     erosion = copyImage->getData(); // variavel erosion guarda a imagem erodida
 
 
@@ -103,26 +101,34 @@ void gradientBW(ImageBW * image){
     }
 }
 
+void hitMiss(ImageBW * image, vector<vector<int>> & M, vector<vector<int>> & M2){
+    vector<vector<int>> data = image->getData(); // guarda uma cópia da imagem original
+    ImageBW * imageCopy = new ImageBW(data); // imagem que irá sofrer erosão
+    ImageBW * imageC; // complemento da imagem original
+    vector<vector<int>> imageCop; // matriz de pixels da imagem original apos erosão
+    vector<vector<int>> imageComp; // matriz de pixels do complementar da imagem apois erosão
+
+    for (int i = 0; i < data.size(); i++){
+        for (int j = 0; j < data[i].size(); j++){
+            imageC->setPixel(i, j, !data[i][j]);
+        }
+    }
+    
+    morfologicBW(imageCopy, EROSION, M);
+    morfologicBW(imageC, EROSION, M2);
+
+    imageCop = imageCopy->getData();
+    imageComp = imageC->getData();
+
+    for (int i = 0; i < data.size(); i++){
+        for (int j = 0; j < data[i].size(); j++) {
+            image->setPixel(i, j, imageCop[i][j] && imageComp[i][j]);
+        }
+    }
+}
+
+
 // Morfologia em nível de cinza
 // ----------------------------------------------------------------------------------------------------------------
-
-int getTruncatedValue(int nv){
-    return (int) round(max(0, min(nv, 255)));
-}
-
-bool isValid(int i, int j, vector<vector<int>> & M){
-    if (i < 0 || i >= M.size()) return false;
-    if (j < 0 || j >= M[0].size()) return false;
-    return true;
-}
-
-void morfologicGS(ImageGS * image){
-    vector<vector<int>> data = image->getData();
-    vector<vector<int>> M {
-        {1,1,1},
-        {1,1,1},
-        {1,1,1}
-    };
-}
 
 
