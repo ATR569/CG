@@ -6,20 +6,16 @@
 enum MorfOperation{DILATION, EROSION};
 enum BorderOperation{INNER, EXTERNAL};
 
-void morfologicBW(ImageBW * image, MorfOperation mo);
+void morfologicBW(ImageBW * image, MorfOperation mo, vector<vector<int>> & M);
 
-void openingBW(ImageBW * image);
+void openingBW(ImageBW * image, vector<vector<int>> & M);
 
-void closureBW(ImageBW * image);
+void closureBW(ImageBW * image, vector<vector<int>> & M);
 
-void extractionBorders(ImageBW * image, BorderOperation bp);
+void extractionBordersBW(ImageBW * image, BorderOperation bp, vector<vector<int>> & M);
 
-void gradientBW(ImageBW * image);
+void gradientBW(ImageBW * image, vector<vector<int>> & M);
 
-void morfologicGS(ImageGS * image);
-
-int getTruncatedValue(int nv);
-
-bool isValid(int i, int j, vector<vector<int>> & M);
+void hitMiss(ImageBW * image);
 
 #endif
