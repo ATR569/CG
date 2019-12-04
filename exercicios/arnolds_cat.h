@@ -2,10 +2,12 @@
 #define arnolds_catH
 
 #include <windows.h>
-#include "../objects/image.h"
 
-using namespace std;
+class ImageGS;
+class ImageBW;
 
-void transform(HDC &hdc, int X, int Y, ImageBW *image);
+int arnoldsCatTransform(HDC hdc, int X, int Y, ImageBW * image);
+
+int arnoldsCatTransform(HDC hdc, int X, int Y, ImageGS * image);
 
 #endif

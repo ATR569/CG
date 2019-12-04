@@ -53,6 +53,14 @@ __published:	// IDE-managed Components
 	TAction *actSobelFilter;
 	TAction *actPrewitt;
 	TRadioGroup *rdgElemento;
+	TAction *actArnoldsCatTransform;
+	TAction *actDilation;
+	TAction *actErosion;
+	TAction *actClosure;
+	TAction *actOpening;
+	TAction *actInnerBorder;
+	TAction *actExternalBorder;
+	TAction *actGradient;
 	void __fastcall actHistEqualizeExecute(TObject *Sender);
 	void __fastcall originalImgCanvasMouseEnter(TObject *Sender);
 	void __fastcall originalImgCanvasMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
@@ -65,6 +73,7 @@ __published:	// IDE-managed Components
 	void __fastcall actRobertsCrossedFilterExecute(TObject *Sender);
 	void __fastcall actSobelFilterExecute(TObject *Sender);
 	void __fastcall actPrewittExecute(TObject *Sender);
+	void __fastcall actArnoldsCatTransformExecute(TObject *Sender);
 
 
 private:	// User declarations

@@ -141,8 +141,6 @@ object formImageMain: TformImageMain
         OnClick = originalImgCanvasClick
         OnMouseEnter = originalImgCanvasMouseEnter
         OnMouseMove = originalImgCanvasMouseMove
-        ExplicitLeft = 10
-        ExplicitTop = 13
       end
     end
     object Panel4: TPanel
@@ -208,13 +206,15 @@ object formImageMain: TformImageMain
       Width = 177
       Height = 549
       Align = alClient
+      BorderStyle = bsNone
       ButtonFlow = cbfVertical
-      ButtonOptions = [boFullSize, boGradientFill, boShowCaptions, boVerticalCategoryCaptions]
+      ButtonHeight = 30
+      ButtonOptions = [boFullSize, boGradientFill, boShowCaptions, boBoldCaptions]
       Categories = <
         item
           Caption = 'Filtros'
           Color = 15400959
-          Collapsed = False
+          Collapsed = True
           Items = <
             item
               Action = actHistEqualize
@@ -245,38 +245,44 @@ object formImageMain: TformImageMain
             end>
         end
         item
-          Caption = 'Filtros Morfologia'
+          Caption = 'Morfologia Matem'#225'tica'
           Color = 16777194
-          Collapsed = False
+          Collapsed = True
           Items = <
             item
+              Action = actDilation
             end
             item
+              Action = actErosion
             end
             item
+              Action = actOpening
             end
             item
+              Action = actClosure
             end
             item
+              Action = actInnerBorder
             end
             item
+              Action = actExternalBorder
             end
             item
-            end
+              Action = actGradient
+            end>
+        end
+        item
+          Caption = 'Exerc'#237'cios'
+          Color = 15395839
+          Collapsed = True
+          Items = <
             item
-            end
-            item
-            end
-            item
+              Action = actArnoldsCatTransform
             end>
         end>
       RegularButtonColor = clWhite
       SelectedButtonColor = 15132390
       TabOrder = 0
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 183
-      ExplicitHeight = 638
     end
     object rdgElemento: TRadioGroup
       AlignWithMargins = True
@@ -338,6 +344,39 @@ object formImageMain: TformImageMain
       Category = 'Filtros'
       Caption = 'Filtro de Sobel'
       OnExecute = actSobelFilterExecute
+    end
+    object actArnoldsCatTransform: TAction
+      Category = 'Exerc'#237'cios'
+      Caption = 'Transf. do Gato de Arnold'
+      OnExecute = actArnoldsCatTransformExecute
+    end
+    object actDilation: TAction
+      Category = 'Morfologia Matem'#225'tica'
+      Caption = 'Dilata'#231#227'o'
+    end
+    object actErosion: TAction
+      Category = 'Morfologia Matem'#225'tica'
+      Caption = 'Eros'#227'o'
+    end
+    object actOpening: TAction
+      Category = 'Morfologia Matem'#225'tica'
+      Caption = 'Abertura'
+    end
+    object actClosure: TAction
+      Category = 'Morfologia Matem'#225'tica'
+      Caption = 'Fechamento'
+    end
+    object actInnerBorder: TAction
+      Category = 'Morfologia Matem'#225'tica'
+      Caption = 'Borda Interna'
+    end
+    object actExternalBorder: TAction
+      Category = 'Morfologia Matem'#225'tica'
+      Caption = 'Borda Externa'
+    end
+    object actGradient: TAction
+      Category = 'Morfologia Matem'#225'tica'
+      Caption = 'Gradiente Morfol'#243'gico'
     end
   end
   object openDialog: TOpenDialog

@@ -11,6 +11,11 @@ TformMain * formMain;
 
 //---------------------------------------------------------------------------
 __fastcall TformMain::TformMain(TComponent* Owner) : TForm(Owner){
+	TformCredits * credits = new TformCredits(this);
+
+	credits->ShowModal();
+
+    credits->Release();
 	work = new WorkSpace(DEFAULT_SCR_SIZE, desktop->Width, desktop->Height, GetDC(desktop->Handle));
 	work->setDrawGrid(false);
     work->setMode(MODE_2D);
@@ -555,4 +560,6 @@ void __fastcall TformMain::actAnimate3DExecute(TObject *Sender){
     }
 }
 //---------------------------------------------------------------------------
+
+
 

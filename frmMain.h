@@ -29,6 +29,7 @@
 #include "frmCompose.h"
 #include "frmImageMain.h"
 #include "frmViewPort3D.h"
+#include "frmCredits.h"
 
 class TformMain : public TForm {
 __published:	// IDE-managed Components
