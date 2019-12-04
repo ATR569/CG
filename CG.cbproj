@@ -206,6 +206,10 @@
             <DependentOn>statemachine\statemachine.h</DependentOn>
             <BuildOrder>13</BuildOrder>
         </CppCompile>
+        <CppCompile Include="transformation\filters.cpp">
+            <DependentOn>transformation\filters.h</DependentOn>
+            <BuildOrder>20</BuildOrder>
+        </CppCompile>
         <CppCompile Include="transformation\transform2D.cpp">
             <DependentOn>transformation\transform2D.h</DependentOn>
             <BuildOrder>9</BuildOrder>
@@ -214,12 +218,12 @@
             <DependentOn>transformation\transform3D.h</DependentOn>
             <BuildOrder>15</BuildOrder>
         </CppCompile>
+        <FormResources Include="frmMain.dfm"/>
         <FormResources Include="frmImageMain.dfm"/>
         <FormResources Include="frmCompose.dfm"/>
-        <FormResources Include="frmMain.dfm"/>
+        <FormResources Include="frmViewPort3D.dfm"/>
         <FormResources Include="frmProperties.dfm"/>
         <FormResources Include="frmParam.dfm"/>
-        <FormResources Include="frmViewPort3D.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

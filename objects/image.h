@@ -13,8 +13,8 @@ protected:
     vector<vector<int> > data;
 
     vector<int> getLine(int i);
-    bool isValid(int i, int j);
 public:
+    bool isValid(int i, int j);
     Image(vector<vector<int> > data);
     
     virtual void draw(HDC hdc, int X, int Y) = 0;
