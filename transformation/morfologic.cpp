@@ -143,4 +143,98 @@ void hitMiss(ImageBW * image, vector<vector<int>> & M, vector<vector<int>> & M2)
 // Morfologia em nível de cinza
 // ----------------------------------------------------------------------------------------------------------------
 
+int getTruncatedValue(double nv){
+	return (int) round(max(0.0, min(nv, 255.0)));
+}
 
+void morfologicGS(ImageGS * image, MorfOperation mo, std::vector<std::vector<int>> & M){
+    vector<vector<int>> data = image->getData();
+
+     //  Iterando pixel a pixel da imagem
+    for (int i = 0; i < data.size(); i++) {
+        for (int j = 0; j < data[i].size(); j++) {
+            int value = 0;
+            int maxPixel = 0;
+            int minPixel = 255;
+            //  Iterando no elemento estruturante
+            for (int k = -1; k <= 1; k++) {
+                for (int l = -1; l <= 1; l++) {
+                    //  Se for ativo no elemento estruturante
+                    if (image->isValid(i+k, j+l) && M[k+1][l+1]){
+                        if (mo == DILATION){
+                            maxPixel = max(maxPixel, data[i+k][j+l]);
+                            value = maxPixel;
+                        }else{
+                            minPixel = min(minPixel, data[i+k][j+l]);
+                            value = minPixel;
+                        }
+                    }
+                }
+            }
+
+            if(mo == DILATION){
+                image->setPixel(i, j, data[getTruncatedValue(i+value)][getTruncatedValue(j+value)]);
+            }else{
+                image->setPixel(i, j, data[getTruncatedValue(i-value)][getTruncatedValue(j-value)]);
+            }
+        }
+    }
+}
+
+void openingGS(ImageGS * image, std::vector<std::vector<int>> & M){
+    morfologicGS(image, EROSION, M);
+    morfologicGS(image, DILATION, M);
+}
+
+void closureGS(ImageGS * image, std::vector<std::vector<int>> & M){
+    morfologicGS(image, DILATION, M);
+    morfologicGS(image, EROSION, M);
+}
+
+void gradientGS(ImageGS * image, std::vector<std::vector<int>> & M){
+    vector<vector<int>> data = image->getData(); // guarda uma cópia da imagem original
+    ImageGS * copyImage = new ImageGS(data, 255); // guarda uma cópia da image original para usar na operação de erosão
+    vector<vector<int>> erosion; // guarda a referencia para a imagem após a erosão
+    vector<vector<int>> dilation; // guarda a referencia para a imagem após a dilatação
+
+    morfologicGS(image, DILATION, M); // operação de dilatação
+    dilation = image->getData(); // variavel dilation guarda a imagem dilatada
+
+    morfologicGS(copyImage, EROSION, M); // operação de erosão
+    erosion = copyImage->getData(); // variavel erosion guarda a imagem erodida
+
+
+    for (int i = 0; i < data.size(); i++){
+        for (int j = 0; j < data[i].size(); j++){
+            image->setPixel(i, j, dilation[i][j] && !erosion[i][j]); // é feito a operação da (imagem dilatada - imagem erodida)
+        }
+    }
+}
+
+void topHat(ImageGS * image, std::vector<std::vector<int>> & M){
+    vector<vector<int>> data = image->getData(); // guarda uma cópia da imagem original
+    vector<vector<int>> data2; // guarda a matriz da imagem após a abertura
+
+    openingGS(image, M); // abertura da imagem original
+    data2 = image->getData(); // variavel recebe a imagem original após a abertura
+
+    for (int i = 0; i < data.size(); i++) {
+        for (int j = 0; j < data[i].size(); j++) {
+            image->setPixel(i, j, data[i][j] && !data2[i][j]); // é feito a operação da (imagem orignal - a abertura da imagem)
+        }
+    }
+}
+
+void bottomHat(ImageGS * image, std::vector<std::vector<int>> & M){
+    vector<vector<int>> data = image->getData(); // guarda uma cópia da imagem original
+    vector<vector<int>> data2; // guarda a matriz da imagem após o fechamento
+
+    closureGS(image, M); // fechamento da imagem original
+    data2 = image->getData(); // variavel recebe a imagem original após o fechamento
+
+    for (int i = 0; i < data.size(); i++) {
+        for (int j = 0; j < data[i].size(); j++) {
+            image->setPixel(i, j, data2[i][j] && !data[i][j]); // é feito a operação da (fechamento da imagem - imagem original)
+        }
+    }
+}
