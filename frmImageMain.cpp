@@ -270,3 +270,59 @@ void __fastcall TformImageMain::actGradientExecute(TObject *Sender){
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TformImageMain::actNegativeExecute(TObject *Sender){
+	if (loadOriginalImage()){
+
+		imgTransformed->negative();
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actDynamicRangeExecute(TObject *Sender){
+	if (loadOriginalImage()){
+
+		imgTransformed->setColorDepth(8);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actLogTransfExecute(TObject *Sender){
+	int param = 10;
+
+	if (edtParam->Text != "") {
+		param = max(10, StrToInt(edtParam->Text));
+	}
+	if (loadOriginalImage()){
+		imgTransformed->itfLog(param);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actSigmoidExecute(TObject *Sender){
+	int param = 10;
+
+	if (edtParam->Text != "") {
+		param = max(10, StrToInt(edtParam->Text));
+	}
+
+	if (edtParam->Text != "") {
+		param = StrToInt(edtParam->Text);
+	}
+	if (loadOriginalImage()){
+		imgTransformed->itfSigmoid(param);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+

@@ -8,6 +8,7 @@
 
 #include "graphics.h"
 #include <fstream>
+#include <math.h>
 
 bool Image::isValid(int i, int j){
     if (i < 0 || i >= getHeight()) return false;
@@ -28,7 +29,6 @@ ImageGS::ImageGS(String filePath) : Image(vector<vector<int>>()){
 	file >> format;             //  ASCII ou binário
 	file >> height >> width;    //  Tamanho da imagem
 	file >> this->colorDepth; 	//  Níves de cinza
-
 	//  Leitura dos pixels da imagem
 	for (int X = 0; X < height; X++){
 		this->data.push_back(vector<int>());
@@ -44,6 +44,7 @@ ImageGS::ImageGS(String filePath) : Image(vector<vector<int>>()){
 
 ImageBW::ImageBW(String filePath) : Image(vector<vector<int>>()){
 	ifstream file(filePath.c_str());
+	this->colorDepth = 1;
 
 	string format;
 	int height, width;
@@ -59,7 +60,7 @@ ImageBW::ImageBW(String filePath) : Image(vector<vector<int>>()){
 		int pixelValue;
 		for (int Y = 0; Y < width; Y++){
 			file >> pixelValue;
-			this->data[X].push_back(pixelValue < limiar/2);
+			this->data[X].push_back(pixelValue <= limiar/2);
 		}
 	}
 
@@ -153,15 +154,59 @@ void ImageGS::equalizeHistogram(){
     }
 }
 
-int ImageGS::getColorDepth(){
+int Image::getColorDepth(){
     return this->colorDepth;
 }
 
-void ImageGS::setColorDepth(int colorDepth){
+void Image::itfLog(double a){
+	vector<vector<double>> _data;
+
+	for (int i = 0; i < this->getHeight(); i++) {
+		_data.push_back(vector<double>());
+
+		for (int j = 0; j < this->getWidth(); j++) {
+            _data[i].push_back(a*log(data[i][j] + 1));
+        }
+    }
+
+	for (int i = 0; i < this->getHeight(); i++)
+		for (int j = 0; j < this->getWidth(); j++)
+			data[i][j] = (int)(round(_data[i][j]));
+	
+}
+
+void Image::itfSigmoid(double sigma){
+	double w = colorDepth/2;
+	
+	for (int i = 0; i < this->getHeight(); i++){
+		for (int j = 0; j < this->getWidth(); j++){
+			double r = data[i][j];
+			data[i][j] = (int)(round(255 * 1.0/(1 + pow(M_E, - (r - w)/sigma))));
+		}
+	}
+}
+
+/**
+ * Transformação de faixa dinâmica
+ */ 
+void Image::setDynamicRange(int fmin, int fmax, int target){
+	for (int i = 0; i < this->getHeight(); i++) {
+		for (int j = 0; j < this->getWidth(); j++) {
+            data[i][j] = (int)round((double)(target)*(data[i][j]-fmin)/(fmax-fmin));
+        }
+    }
+}
+
+void Image::setColorDepth(int colorDepth){
+	setDynamicRange(0, this->colorDepth, colorDepth);
+	setDynamicRange(0, colorDepth, 255);
+
     this->colorDepth = colorDepth;
 }
 
-ImageBW::ImageBW(vector<vector<int> > data) : Image(data){}
+ImageBW::ImageBW(vector<vector<int> > data) : Image(data){
+	this->colorDepth = 1;
+}
 
 void ImageGS::draw(HDC hdc, int X, int Y){
     drawImageGS(hdc, X, Y, this->data);
@@ -169,4 +214,12 @@ void ImageGS::draw(HDC hdc, int X, int Y){
 
 void ImageBW::draw(HDC hdc, int X, int Y){
     drawImageBW(hdc, X, Y, this->data);
+}
+
+void Image::negative(){
+	for (int i = 0; i < this->getHeight(); i++) {
+		for (int j = 0; j < this->getWidth(); j++) {
+            data[i][j] = colorDepth - data[i][j];
+        }
+    }
 }

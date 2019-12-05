@@ -64,6 +64,11 @@ __published:	// IDE-managed Components
 	TAction *actInnerBorder;
 	TAction *actExternalBorder;
 	TAction *actGradient;
+	TAction *actNegative;
+	TAction *actDynamicRange;
+	TAction *actLogTransf;
+	TAction *actSigmoid;
+	TEdit *edtParam;
 	void __fastcall actHistEqualizeExecute(TObject *Sender);
 	void __fastcall originalImgCanvasMouseEnter(TObject *Sender);
 	void __fastcall originalImgCanvasMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
@@ -84,6 +89,10 @@ __published:	// IDE-managed Components
 	void __fastcall actInnerBorderExecute(TObject *Sender);
 	void __fastcall actExternalBorderExecute(TObject *Sender);
 	void __fastcall actGradientExecute(TObject *Sender);
+	void __fastcall actNegativeExecute(TObject *Sender);
+	void __fastcall actDynamicRangeExecute(TObject *Sender);
+	void __fastcall actLogTransfExecute(TObject *Sender);
+	void __fastcall actSigmoidExecute(TObject *Sender);
 
 
 private:	// User declarations
