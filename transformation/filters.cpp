@@ -263,3 +263,49 @@ void SobelFilter(ImageGS * image){
 
     image->setData(data);
 }
+
+ImageGS * opAND(ImageGS *image1, ImageGS *image2){
+    vector<vector<int>> data = image1->getData();
+    vector<vector<int>> data2 = image2->getData();
+    
+    vector<vector<int>> result = image1->getData();
+
+    for (int i = 0; i < data.size(); i++){
+        for (int j = 0; j < data[i].size(); j++){
+            result[i][j] = (data[i][j] & data2[i][j]);
+        }
+    }
+    
+    return new ImageGS(result);
+
+}
+
+ImageGS * opOR(ImageGS *image1, ImageGS *image2){
+    vector<vector<int>> data = image1->getData();
+    vector<vector<int>> data2 = image2->getData();
+    
+    vector<vector<int>> result = image1->getData();
+
+    for (int i = 0; i < data.size(); i++){
+        for (int j = 0; j < data[i].size(); j++){
+            result[i][j] = (data[i][j] | data2[i][j]);
+        }
+    }
+    
+    return new ImageGS(result);
+}
+
+ImageGS * opXOR(ImageGS *image1, ImageGS *image2){
+    vector<vector<int>> data = image1->getData();
+    vector<vector<int>> data2 = image2->getData();
+    
+    vector<vector<int>> result = image1->getData();
+
+    for (int i = 0; i < data.size(); i++){
+        for (int j = 0; j < data[i].size(); j++){
+            result[i][j] = (data[i][j] ^ data2[i][j]);
+        }
+    }
+    
+    return new ImageGS(result);    
+}
