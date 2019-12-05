@@ -24,6 +24,9 @@
 #include <iostream>
 #include <fstream>
 
+vector<vector<int>> M[] ={ 	{{1,1,1},{1,1,1},{1,1,1}},
+							{{0,1,0},{1,1,1},{0,1,0}} };
+
 class TformImageMain : public TForm
 {
 __published:	// IDE-managed Components
@@ -74,11 +77,19 @@ __published:	// IDE-managed Components
 	void __fastcall actSobelFilterExecute(TObject *Sender);
 	void __fastcall actPrewittExecute(TObject *Sender);
 	void __fastcall actArnoldsCatTransformExecute(TObject *Sender);
+	void __fastcall actDilationExecute(TObject *Sender);
+	void __fastcall actErosionExecute(TObject *Sender);
+	void __fastcall actOpeningExecute(TObject *Sender);
+	void __fastcall actClosureExecute(TObject *Sender);
+	void __fastcall actInnerBorderExecute(TObject *Sender);
+	void __fastcall actExternalBorderExecute(TObject *Sender);
+	void __fastcall actGradientExecute(TObject *Sender);
 
 
 private:	// User declarations
 	void showHistogram(ImageGS * image, TPanel * panel);
 	bool loadOriginalImage();
+    bool loadOriginalImageBW();
 	bool canUpdateGrid;
 	Image * imgOriginal;
     Image * imgTransformed;

@@ -44,6 +44,7 @@ public:
 
 class ImageBW : public Image{
 public:
+    ImageBW(String filePath);
     ImageBW(vector<vector<int> > data);
     void draw(HDC hdc, int X, int Y);
 };

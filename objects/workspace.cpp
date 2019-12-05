@@ -91,8 +91,15 @@ Point2D * WorkSpace::CoordScrToUser(Point2D * p){
 	Matrix * coordNorm = getWinVPMatrix(-1, 1, 1, -1, 0, canvasH, 0, canvasV);
 	//	Coordenadas de usuário
 	Matrix * coordUser = getWinVPMatrix(-userH/2, userH/2, userV/2, -userV/2, -1, 1, 1, -1);
+	Matrix * pointAsMatrix = p->asMatrix();
+	Point2D * user = ((*coordUser)*(*coordNorm)*(*pointAsMatrix)).asPoint2D();
 
-	return ((*coordUser)*(*coordNorm)*(*p->asMatrix())).asPoint2D();
+	delete p;
+	delete coordNorm;
+	delete coordUser;
+	delete pointAsMatrix;
+
+	return user;
 }
 
 /**
@@ -104,8 +111,15 @@ Point2D * WorkSpace::CoordUserToScr(Point2D * p){
 	Matrix * coordNorm = getWinVPMatrix(-1, 1, 1, -1, -userH/2, userH/2, userV/2, -userV/2);
 	//	Coordenadas de tela
 	Matrix * coordUser = getWinVPMatrix(0, canvasH, 0, canvasV, -1, 1, 1, -1);
+	Matrix * pointAsMatrix = p->asMatrix();
+	Point2D * scr = ((*coordUser)*(*coordNorm)*(*pointAsMatrix)).asPoint2D();
+	
+	delete p;
+	delete coordNorm;
+	delete coordUser;
+	delete pointAsMatrix;
 
-	return ((*coordUser)*(*coordNorm)*(*p->asMatrix())).asPoint2D();
+	return scr;
 }
 
 /**

@@ -6,7 +6,6 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-#include "workspace.h"
 #include "graphics.h"
 #include <fstream>
 
@@ -37,6 +36,30 @@ ImageGS::ImageGS(String filePath) : Image(vector<vector<int>>()){
 		for (int Y = 0; Y < width; Y++){
 			file >> pixelValue;
 			this->data[X].push_back(pixelValue);
+		}
+	}
+
+    file.close();
+}
+
+ImageBW::ImageBW(String filePath) : Image(vector<vector<int>>()){
+	ifstream file(filePath.c_str());
+
+	string format;
+	int height, width;
+    int limiar;
+
+	file >> format;             //  ASCII ou binário
+	file >> height >> width;    //  Tamanho da imagem
+	file >> limiar; 	//  Níves de cinza
+
+	//  Leitura dos pixels da imagem
+	for (int X = 0; X < height; X++){
+		this->data.push_back(vector<int>());
+		int pixelValue;
+		for (int Y = 0; Y < width; Y++){
+			file >> pixelValue;
+			this->data[X].push_back(pixelValue < limiar/2);
 		}
 	}
 

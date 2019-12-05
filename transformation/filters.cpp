@@ -51,7 +51,8 @@ void meanFilter(ImageGS * image){
     for (int i = 0; i < data.size(); i++)  {
         for (int j = 0; j < data[i].size(); j++) {
             double mean = image->correlation(i, j, M)/9;
-            data[i][j] = getTruncatedValue(mean);
+			data[i][j] = getTruncatedValue(mean);
+            image->setPixel(i, j, getTruncatedValue(mean));
         }
     }
 

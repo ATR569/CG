@@ -353,30 +353,37 @@ object formImageMain: TformImageMain
     object actDilation: TAction
       Category = 'Morfologia Matem'#225'tica'
       Caption = 'Dilata'#231#227'o'
+      OnExecute = actDilationExecute
     end
     object actErosion: TAction
       Category = 'Morfologia Matem'#225'tica'
       Caption = 'Eros'#227'o'
+      OnExecute = actErosionExecute
     end
     object actOpening: TAction
       Category = 'Morfologia Matem'#225'tica'
       Caption = 'Abertura'
+      OnExecute = actOpeningExecute
     end
     object actClosure: TAction
       Category = 'Morfologia Matem'#225'tica'
       Caption = 'Fechamento'
+      OnExecute = actClosureExecute
     end
     object actInnerBorder: TAction
       Category = 'Morfologia Matem'#225'tica'
       Caption = 'Borda Interna'
+      OnExecute = actInnerBorderExecute
     end
     object actExternalBorder: TAction
       Category = 'Morfologia Matem'#225'tica'
       Caption = 'Borda Externa'
+      OnExecute = actExternalBorderExecute
     end
     object actGradient: TAction
       Category = 'Morfologia Matem'#225'tica'
       Caption = 'Gradiente Morfol'#243'gico'
+      OnExecute = actGradientExecute
     end
   end
   object openDialog: TOpenDialog

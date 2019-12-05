@@ -816,8 +816,6 @@ object formMain: TformMain
       OnMouseDown = desktopMouseDown
       OnMouseMove = desktopMouseMove
       OnResize = desktopResize
-      ExplicitLeft = 37
-      ExplicitTop = 39
     end
   end
   object statusbar: TStatusBar
@@ -872,14 +870,14 @@ object formMain: TformMain
         Control = Panel3
         ImageIndex = -1
         MinHeight = 39
-        Width = 218
+        Width = 222
       end
       item
         Break = False
         Control = Panel4
         ImageIndex = -1
         MinHeight = 39
-        Width = 183
+        Width = 179
       end>
     Vertical = True
     object Panel2: TPanel
@@ -943,7 +941,7 @@ object formMain: TformMain
       Left = 0
       Top = 171
       Width = 39
-      Height = 205
+      Height = 209
       BevelEdges = []
       BevelOuter = bvNone
       Padding.Left = 2
@@ -955,7 +953,7 @@ object formMain: TformMain
         Left = 2
         Top = 2
         Width = 35
-        Height = 201
+        Height = 205
         Align = alClient
         AutoSize = True
         BorderWidth = 1
@@ -1006,7 +1004,7 @@ object formMain: TformMain
     end
     object Panel4: TPanel
       Left = 0
-      Top = 393
+      Top = 397
       Width = 39
       Height = 107
       AutoSize = True

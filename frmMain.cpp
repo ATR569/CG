@@ -131,6 +131,8 @@ void __fastcall TformMain::desktopMouseMove(TObject *Sender, TShiftState Shift, 
 	lblUserY->Caption = s2;
 
 	desktop->Hint = s1 + "\n" + s2;
+
+    delete p;
 }
 //---------------------------------------------------------------------------
 
@@ -560,6 +562,4 @@ void __fastcall TformMain::actAnimate3DExecute(TObject *Sender){
     }
 }
 //---------------------------------------------------------------------------
-
-
 

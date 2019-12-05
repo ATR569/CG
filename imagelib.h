@@ -4,6 +4,6 @@
 #include "objects/image.h"
 #include "transformation/filters.h"
 #include "exercicios/arnolds_cat.h"
-//#include "transformation/morfologic.h"
+#include "transformation/morfologic.h"
 
 #endif

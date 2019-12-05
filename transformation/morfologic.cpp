@@ -1,4 +1,14 @@
+﻿//---------------------------------------------------------------------------
+
+#pragma hdrstop
+
 #include "morfologic.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+#include "../objects/image.h"
+
+using namespace std;
 
 // Morfologia em imagens binárias
 // ----------------------------------------------------------------------------------------------------------------
@@ -18,14 +28,16 @@ void morfologicBW(ImageBW * image, MorfOperation mo, vector<vector<int>> & M){
             //  Iterando no elemento estruturante
             for (int k = -1; k <= 1; k++) {
                 for (int l = -1; l <= 1; l++) {
-                    int value = image->getPixel(i,j);
-                    int value2 = image->isValid(i+k, j+l) ? (data[i+k][j+l] && M[k+1][l+1]) : 0; 
+                    //  Se for ativo no elemento estruturante
+                    if (M[k+1][l+1]){
+                        int value = image->getPixel(i,j);
+                        int value2 = image->isValid(i+k, j+l) ? (data[i+k][j+l] && M[k+1][l+1]) : 0;
 
-                    if (mo == DILATION)
-                        image->setPixel(i, j, value || value2); 
-                    else
-                        image->setPixel(i, j, value && value2); 
-                    
+                        if (mo == DILATION)
+                            image->setPixel(i, j, value || value2);
+                        else
+                            image->setPixel(i, j, value && value2);
+                    }
                 }
             }
         }
@@ -50,7 +62,7 @@ void closureBW(ImageBW * image, vector<vector<int>> & M){
     morfologicBW(image, EROSION, M);
 }
 
-/** A função realiza as operações necessárias para extrações de fronteira, seja 
+/** A função realiza as operações necessárias para extrações de fronteira, seja
  *  ela interna ou externa
  *
  * @image ImageBW - imagem binária que terá elementos extraidos
@@ -113,7 +125,7 @@ void hitMiss(ImageBW * image, vector<vector<int>> & M, vector<vector<int>> & M2)
             imageC->setPixel(i, j, !data[i][j]);
         }
     }
-    
+
     morfologicBW(imageCopy, EROSION, M);
     morfologicBW(imageC, EROSION, M2);
 

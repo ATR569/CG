@@ -362,6 +362,6 @@ void drawImageGS(HDC & hdc, int X, int Y, std::vector< std::vector<int> > & data
 void drawImageBW(HDC & hdc, int X, int Y, std::vector< std::vector<int> > & data){
 	for (int i = 0; i < data.size(); i++)
 		for (int j = 0; j < data[i].size(); j++){
-			SetPixel(hdc, X+i, Y+j, data[i][j] ? RGB(255,255,255) : 0);
+			SetPixel(hdc, Y+j, X+i, data[i][j] ? 0 : RGB(255,255,255));
 		}
 }

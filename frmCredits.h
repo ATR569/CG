@@ -16,6 +16,10 @@ __published:	// IDE-managed Components
 	TImage *Image1;
 	TPanel *Panel1;
 	TTimer *Timer1;
+	TLabel *Label1;
+	TLabel *Label2;
+	TLabel *Label3;
+	TLabel *Label4;
 	void __fastcall Timer1Timer(TObject *Sender);
 	void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
 private:	// User declarations

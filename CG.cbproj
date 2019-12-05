@@ -220,6 +220,10 @@
             <DependentOn>transformation\filters.h</DependentOn>
             <BuildOrder>20</BuildOrder>
         </CppCompile>
+        <CppCompile Include="transformation\morfologic.cpp">
+            <DependentOn>transformation\morfologic.h</DependentOn>
+            <BuildOrder>23</BuildOrder>
+        </CppCompile>
         <CppCompile Include="transformation\transform2D.cpp">
             <DependentOn>transformation\transform2D.h</DependentOn>
             <BuildOrder>9</BuildOrder>
@@ -228,13 +232,13 @@
             <DependentOn>transformation\transform3D.h</DependentOn>
             <BuildOrder>15</BuildOrder>
         </CppCompile>
-        <FormResources Include="frmMain.dfm"/>
-        <FormResources Include="frmImageMain.dfm"/>
         <FormResources Include="frmCompose.dfm"/>
-        <FormResources Include="frmViewPort3D.dfm"/>
-        <FormResources Include="frmProperties.dfm"/>
-        <FormResources Include="frmParam.dfm"/>
         <FormResources Include="frmCredits.dfm"/>
+        <FormResources Include="frmProperties.dfm"/>
+        <FormResources Include="frmViewPort3D.dfm"/>
+        <FormResources Include="frmImageMain.dfm"/>
+        <FormResources Include="frmMain.dfm"/>
+        <FormResources Include="frmParam.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

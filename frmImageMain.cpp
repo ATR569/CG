@@ -14,7 +14,7 @@ __fastcall TformImageMain::TformImageMain(TComponent* Owner)
 {
 	rdgElemento->Items->Add("|1 1 1|\n|1 1 1|\n|1 1 1|");
 	rdgElemento->Items->Add("|0 1 0|\n|1 1 1|\n|0 1 0|");
-    rdgElemento->ItemIndex = 0;
+	rdgElemento->ItemIndex = 0;
 }
 //---------------------------------------------------------------------------
 
@@ -26,6 +26,20 @@ bool TformImageMain::loadOriginalImage(){
 
 		imgTransformed = new ImageGS(imgOriginal->getData(), ((ImageGS*)imgOriginal)->getColorDepth());
 
+		return true;
+	}else{
+		return false;
+	}
+}
+//---------------------------------------------------------------------------
+bool TformImageMain::loadOriginalImageBW(){
+	if (openDialog->Execute()){
+		imgOriginal = new ImageBW(openDialog->FileName);
+		imgOriginal->draw(GetDC(originalImgCanvas->Handle), 0,0);
+		originalHistCanvas->Repaint();
+
+		imgTransformed = new ImageBW(imgOriginal->getData());
+		transformHistCanvas->Repaint();
 		return true;
 	}else{
 		return false;
@@ -181,7 +195,77 @@ void __fastcall TformImageMain::actArnoldsCatTransformExecute(TObject *Sender){
 		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
 		int iter = arnoldsCatTransform(GetDC(transformImgCanvas->Handle), 0, 0, (ImageGS*)imgTransformed);
 
-        ShowMessage("Transformada do Gato de Arnold: " + IntToStr(iter) + " iterações.");
+		ShowMessage("Transformada do Gato de Arnold: " + IntToStr(iter) + " iterações.");
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actDilationExecute(TObject *Sender){
+	if (loadOriginalImageBW()){
+
+		morfologicBW((ImageBW*)imgTransformed, DILATION, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actErosionExecute(TObject *Sender){
+	if (loadOriginalImageBW()){
+
+		morfologicBW((ImageBW*)imgTransformed, EROSION, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actOpeningExecute(TObject *Sender){
+	if (loadOriginalImageBW()){
+
+		openingBW((ImageBW*)imgTransformed, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actClosureExecute(TObject *Sender){
+	if (loadOriginalImageBW()){
+
+		closureBW((ImageBW*)imgTransformed, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actInnerBorderExecute(TObject *Sender){
+	if (loadOriginalImageBW()){
+
+		extractionBordersBW((ImageBW*)imgTransformed, INNER ,M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actExternalBorderExecute(TObject *Sender){
+	if (loadOriginalImageBW()){
+
+		extractionBordersBW((ImageBW*)imgTransformed, EXTERNAL ,M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actGradientExecute(TObject *Sender){
+	if (loadOriginalImageBW()){
+
+		gradientBW((ImageBW*)imgTransformed, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
 	}
 }
 //---------------------------------------------------------------------------
