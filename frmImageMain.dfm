@@ -202,9 +202,9 @@ object formImageMain: TformImageMain
     object CategoryButtons1: TCategoryButtons
       AlignWithMargins = True
       Left = 4
-      Top = 87
+      Top = 114
       Width = 177
-      Height = 549
+      Height = 522
       Align = alClient
       BorderStyle = bsNone
       ButtonFlow = cbfVertical
@@ -272,6 +272,24 @@ object formImageMain: TformImageMain
             end>
         end
         item
+          Caption = 'Transforma'#231#245'es'
+          Color = 15395839
+          Collapsed = False
+          Items = <
+            item
+              Action = actNegative
+            end
+            item
+              Action = actDynamicRange
+            end
+            item
+              Action = actLogTransf
+            end
+            item
+              Action = actSigmoid
+            end>
+        end
+        item
           Caption = 'Exerc'#237'cios'
           Color = 15395839
           Collapsed = True
@@ -282,7 +300,10 @@ object formImageMain: TformImageMain
         end>
       RegularButtonColor = clWhite
       SelectedButtonColor = 15132390
+      ShowHint = True
       TabOrder = 0
+      ExplicitTop = 87
+      ExplicitHeight = 549
     end
     object rdgElemento: TRadioGroup
       AlignWithMargins = True
@@ -294,6 +315,20 @@ object formImageMain: TformImageMain
       Caption = 'Elemento Estruturante '
       Columns = 2
       TabOrder = 1
+    end
+    object edtParam: TEdit
+      AlignWithMargins = True
+      Left = 4
+      Top = 87
+      Width = 177
+      Height = 21
+      Align = alTop
+      MaxLength = 2
+      NumbersOnly = True
+      TabOrder = 2
+      ExplicitLeft = 32
+      ExplicitTop = 392
+      ExplicitWidth = 121
     end
   end
   object acttions: TActionManager
@@ -384,6 +419,27 @@ object formImageMain: TformImageMain
       Category = 'Morfologia Matem'#225'tica'
       Caption = 'Gradiente Morfol'#243'gico'
       OnExecute = actGradientExecute
+    end
+    object actNegative: TAction
+      Category = 'Transforma'#231#245'es'
+      Caption = 'Negativo'
+      OnExecute = actNegativeExecute
+    end
+    object actDynamicRange: TAction
+      Category = 'Transforma'#231#245'es'
+      Caption = 'Transf. 8 tons de cinza'
+      Hint = 'Transforma a imagem em 8 tons de cinza usando faixas din'#226'micas'
+      OnExecute = actDynamicRangeExecute
+    end
+    object actLogTransf: TAction
+      Category = 'Transforma'#231#245'es'
+      Caption = 'Transforma'#231#227'o Logar'#237'timica'
+      OnExecute = actLogTransfExecute
+    end
+    object actSigmoid: TAction
+      Category = 'Transforma'#231#245'es'
+      Caption = 'Transforma'#231#227'o Sigmoid'
+      OnExecute = actSigmoidExecute
     end
   end
   object openDialog: TOpenDialog
