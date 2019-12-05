@@ -816,6 +816,8 @@ object formMain: TformMain
       OnMouseDown = desktopMouseDown
       OnMouseMove = desktopMouseMove
       OnResize = desktopResize
+      ExplicitLeft = 37
+      ExplicitTop = 39
     end
   end
   object statusbar: TStatusBar
@@ -870,14 +872,14 @@ object formMain: TformMain
         Control = Panel3
         ImageIndex = -1
         MinHeight = 39
-        Width = 222
+        Width = 224
       end
       item
         Break = False
         Control = Panel4
         ImageIndex = -1
         MinHeight = 39
-        Width = 179
+        Width = 177
       end>
     Vertical = True
     object Panel2: TPanel
@@ -941,7 +943,7 @@ object formMain: TformMain
       Left = 0
       Top = 171
       Width = 39
-      Height = 209
+      Height = 211
       BevelEdges = []
       BevelOuter = bvNone
       Padding.Left = 2
@@ -953,7 +955,7 @@ object formMain: TformMain
         Left = 2
         Top = 2
         Width = 35
-        Height = 205
+        Height = 207
         Align = alClient
         AutoSize = True
         BorderWidth = 1
@@ -1004,7 +1006,7 @@ object formMain: TformMain
     end
     object Panel4: TPanel
       Left = 0
-      Top = 397
+      Top = 399
       Width = 39
       Height = 107
       AutoSize = True
@@ -7326,8 +7328,7 @@ object formMain: TformMain
                 Caption = '&Animar objeto 3D'
               end
               item
-                Action = actArnoldTransf
-                Caption = '&Transforma'#231#227'o do Gato de Arnold'
+                Action = actHeartBeat
               end>
             Caption = '&Exerc'#237'cios'
           end>
@@ -7533,9 +7534,10 @@ object formMain: TformMain
       Caption = 'Animar objeto 3D'
       OnExecute = actAnimate3DExecute
     end
-    object actArnoldTransf: TAction
+    object actHeartBeat: TAction
       Category = 'Exerc'#237'cios'
-      Caption = 'Transforma'#231#227'o do Gato de Arnold'
+      Caption = 'Batimento Card'#237'aco'
+      OnExecute = actHeartBeatExecute
     end
   end
   object imagelist16: TImageList
@@ -17847,5 +17849,10 @@ object formMain: TformMain
     OnTimer = Timer1Timer
     Left = 596
     Top = 362
+  end
+  object heartBeatTimer: TTimer
+    Enabled = False
+    Left = 596
+    Top = 426
   end
 end

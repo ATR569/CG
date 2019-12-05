@@ -8,11 +8,11 @@
 #include <Vcl.Themes.hpp>
 USEFORM("frmCompose.cpp", formCompose);
 USEFORM("frmCredits.cpp", formCredits);
-USEFORM("frmProperties.cpp", formProperties);
-USEFORM("frmViewPort3D.cpp", formViewPort3D);
 USEFORM("frmImageMain.cpp", formImageMain);
+USEFORM("frmViewPort3D.cpp", formViewPort3D);
 USEFORM("frmMain.cpp", formMain);
 USEFORM("frmParam.cpp", formParam);
+USEFORM("frmProperties.cpp", formProperties);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {

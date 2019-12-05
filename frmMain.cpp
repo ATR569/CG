@@ -563,3 +563,15 @@ void __fastcall TformMain::actAnimate3DExecute(TObject *Sender){
 }
 //---------------------------------------------------------------------------
 
+
+void __fastcall TformMain::actHeartBeatExecute(TObject *Sender) {
+	for (int i = 0; i < 5; i++) {
+		desktop->Repaint();
+		executarBatimentos(this->work);
+	}
+    desktop->Repaint();
+	work->update();
+}
+//---------------------------------------------------------------------------
+
+

@@ -175,6 +175,27 @@ void Image::itfLog(double a){
 	
 }
 
+void Image::linearTransform(double a, double b){
+	vector<vector<double>> _data;
+
+	double MAX_PIXEL = 0;
+	for (int i = 0; i < this->getHeight(); i++) {
+		_data.push_back(vector<double>());
+
+		for (int j = 0; j < this->getWidth(); j++) {
+            _data[i].push_back(a*data[i][j] + b);
+			MAX_PIXEL = max(MAX_PIXEL, a*data[i][j] + b);
+        }
+    }
+
+	for (int i = 0; i < this->getHeight(); i++)
+		for (int j = 0; j < this->getWidth(); j++){
+			data[i][j] = (int)(round(_data[i][j]));
+			data[i][j] = max(0, min(255, data[i][j]));
+		}
+	
+}
+
 void Image::itfSigmoid(double sigma){
 	double w = colorDepth/2;
 	

@@ -18,6 +18,8 @@ public:
     void setDynamicRange(int fmin, int fmax, int target);
     void itfSigmoid(double sigma);
     void itfLog(double a);
+    void linearTransform(double a, double b);
+
     Image(vector<vector<int> > data);
     
     virtual void negative();

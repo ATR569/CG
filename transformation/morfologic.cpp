@@ -134,7 +134,7 @@ void hitMiss(ImageBW * image, vector<vector<int>> & M, vector<vector<int>> & M2)
 
     for (int i = 0; i < data.size(); i++){
         for (int j = 0; j < data[i].size(); j++) {
-            image->setPixel(i, j, imageCop[i][j] && imageComp[i][j]);
+            image->setPixel(i, j, !imageCop[i][j] && !imageComp[i][j]);
         }
     }
 }
@@ -173,9 +173,9 @@ void morfologicGS(ImageGS * image, MorfOperation mo, std::vector<std::vector<int
             }
 
             if(mo == DILATION){
-                image->setPixel(i, j, data[getTruncatedValue(i+value)][getTruncatedValue(j+value)]);
+                image->setPixel(i, j, getTruncatedValue(value + 1));
             }else{
-                image->setPixel(i, j, data[getTruncatedValue(i-value)][getTruncatedValue(j-value)]);
+                image->setPixel(i, j, getTruncatedValue(value - 1));
             }
         }
     }
@@ -206,7 +206,7 @@ void gradientGS(ImageGS * image, std::vector<std::vector<int>> & M){
 
     for (int i = 0; i < data.size(); i++){
         for (int j = 0; j < data[i].size(); j++){
-            image->setPixel(i, j, dilation[i][j] && !erosion[i][j]); // é feito a operação da (imagem dilatada - imagem erodida)
+            image->setPixel(i, j, dilation[i][j] - erosion[i][j]); // é feito a operação da (imagem dilatada - imagem erodida)
         }
     }
 }
@@ -220,7 +220,7 @@ void topHat(ImageGS * image, std::vector<std::vector<int>> & M){
 
     for (int i = 0; i < data.size(); i++) {
         for (int j = 0; j < data[i].size(); j++) {
-            image->setPixel(i, j, data[i][j] && !data2[i][j]); // é feito a operação da (imagem orignal - a abertura da imagem)
+            image->setPixel(i, j, getTruncatedValue(data[i][j] - data2[i][j])); // é feito a operação da (imagem orignal - a abertura da imagem)
         }
     }
 }
@@ -234,7 +234,7 @@ void bottomHat(ImageGS * image, std::vector<std::vector<int>> & M){
 
     for (int i = 0; i < data.size(); i++) {
         for (int j = 0; j < data[i].size(); j++) {
-            image->setPixel(i, j, data2[i][j] && !data[i][j]); // é feito a operação da (fechamento da imagem - imagem original)
+            image->setPixel(i, j, getTruncatedValue(data2[i][j] - data[i][j])); // é feito a operação da (fechamento da imagem - imagem original)
         }
     }
 }

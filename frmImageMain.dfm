@@ -202,9 +202,9 @@ object formImageMain: TformImageMain
     object CategoryButtons1: TCategoryButtons
       AlignWithMargins = True
       Left = 4
-      Top = 114
+      Top = 87
       Width = 177
-      Height = 522
+      Height = 549
       Align = alClient
       BorderStyle = bsNone
       ButtonFlow = cbfVertical
@@ -242,6 +242,15 @@ object formImageMain: TformImageMain
             end
             item
               Action = actSobelFilter
+            end
+            item
+              Action = actAnd
+            end
+            item
+              Action = actOr
+            end
+            item
+              Action = actXor
             end>
         end
         item
@@ -269,12 +278,42 @@ object formImageMain: TformImageMain
             end
             item
               Action = actGradient
+            end
+            item
+              Action = actHitMiss
+            end>
+        end
+        item
+          Caption = 'Morfologia Escala de Cinza'
+          Color = 16777194
+          Collapsed = True
+          Items = <
+            item
+              Action = actDilateGS
+            end
+            item
+              Action = actErosionGS
+            end
+            item
+              Action = actOpeningGS
+            end
+            item
+              Action = actClosureGS
+            end
+            item
+              Action = actGradientGS
+            end
+            item
+              Action = actTopHat
+            end
+            item
+              Action = actBottomHat
             end>
         end
         item
           Caption = 'Transforma'#231#245'es'
           Color = 15395839
-          Collapsed = False
+          Collapsed = True
           Items = <
             item
               Action = actNegative
@@ -287,6 +326,9 @@ object formImageMain: TformImageMain
             end
             item
               Action = actSigmoid
+            end
+            item
+              Action = actLinearTransform
             end>
         end
         item
@@ -302,8 +344,8 @@ object formImageMain: TformImageMain
       SelectedButtonColor = 15132390
       ShowHint = True
       TabOrder = 0
-      ExplicitTop = 87
-      ExplicitHeight = 549
+      ExplicitTop = 114
+      ExplicitHeight = 522
     end
     object rdgElemento: TRadioGroup
       AlignWithMargins = True
@@ -315,20 +357,6 @@ object formImageMain: TformImageMain
       Caption = 'Elemento Estruturante '
       Columns = 2
       TabOrder = 1
-    end
-    object edtParam: TEdit
-      AlignWithMargins = True
-      Left = 4
-      Top = 87
-      Width = 177
-      Height = 21
-      Align = alTop
-      MaxLength = 2
-      NumbersOnly = True
-      TabOrder = 2
-      ExplicitLeft = 32
-      ExplicitTop = 392
-      ExplicitWidth = 121
     end
   end
   object acttions: TActionManager
@@ -440,6 +468,66 @@ object formImageMain: TformImageMain
       Category = 'Transforma'#231#245'es'
       Caption = 'Transforma'#231#227'o Sigmoid'
       OnExecute = actSigmoidExecute
+    end
+    object actAnd: TAction
+      Category = 'Filtros'
+      Caption = 'And'
+      OnExecute = actAndExecute
+    end
+    object actOr: TAction
+      Category = 'Filtros'
+      Caption = 'Or'
+      OnExecute = actOrExecute
+    end
+    object actXor: TAction
+      Category = 'Filtros'
+      Caption = 'Xor'
+      OnExecute = actXorExecute
+    end
+    object actDilateGS: TAction
+      Category = 'Morfologia Escala de Cinza'
+      Caption = 'Dilata'#231#227'o'
+      OnExecute = actDilateGSExecute
+    end
+    object actErosionGS: TAction
+      Category = 'Morfologia Escala de Cinza'
+      Caption = 'Eros'#227'o'
+      OnExecute = actErosionGSExecute
+    end
+    object actOpeningGS: TAction
+      Category = 'Morfologia Escala de Cinza'
+      Caption = 'Abertura'
+      OnExecute = actOpeningGSExecute
+    end
+    object actClosureGS: TAction
+      Category = 'Morfologia Escala de Cinza'
+      Caption = 'Fechamento'
+      OnExecute = actClosureGSExecute
+    end
+    object actGradientGS: TAction
+      Category = 'Morfologia Escala de Cinza'
+      Caption = 'Gradiente'
+      OnExecute = actGradientGSExecute
+    end
+    object actHitMiss: TAction
+      Category = 'Morfologia Matem'#225'tica'
+      Caption = 'Hit or Miss'
+      OnExecute = actHitMissExecute
+    end
+    object actTopHat: TAction
+      Category = 'Morfologia Escala de Cinza'
+      Caption = 'Top Hat'
+      OnExecute = actTopHatExecute
+    end
+    object actBottomHat: TAction
+      Category = 'Morfologia Escala de Cinza'
+      Caption = 'Bottom Hat'
+      OnExecute = actBottomHatExecute
+    end
+    object actLinearTransform: TAction
+      Category = 'Transforma'#231#245'es'
+      Caption = 'Transforma'#231#227'o Linear'
+      OnExecute = actLinearTransformExecute
     end
   end
   object openDialog: TOpenDialog

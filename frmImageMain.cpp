@@ -15,6 +15,10 @@ __fastcall TformImageMain::TformImageMain(TComponent* Owner)
 	rdgElemento->Items->Add("|1 1 1|\n|1 1 1|\n|1 1 1|");
 	rdgElemento->Items->Add("|0 1 0|\n|1 1 1|\n|0 1 0|");
 	rdgElemento->ItemIndex = 0;
+
+	M[0] = {{1,1,1},{1,1,1},{1,1,1}};
+//	M[0] = {{0,0,0},{0,1,1},{0,1,1}};
+	M[1] = {{0,1,0},{1,1,1},{0,1,0}};
 }
 //---------------------------------------------------------------------------
 
@@ -293,13 +297,52 @@ void __fastcall TformImageMain::actDynamicRangeExecute(TObject *Sender){
 //---------------------------------------------------------------------------
 
 void __fastcall TformImageMain::actLogTransfExecute(TObject *Sender){
-	int param = 10;
-
-	if (edtParam->Text != "") {
-		param = max(10, StrToInt(edtParam->Text));
-	}
 	if (loadOriginalImage()){
-		imgTransformed->itfLog(param);
+
+
+		TformParam * par = new TformParam(this, NULL, ptTranslate);
+
+		par->edtParamX->EditLabel->Caption = "Parâmetro A: ";
+		par->edtParamY->Visible = false;
+		par->edtParamZ->Visible = false;
+
+		if (par->ShowModal() == mrOk){
+			double a = StrToFloat(par->edtParamX->Text);
+
+			imgTransformed->itfLog(a);
+
+			imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+			showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actSigmoidExecute(TObject *Sender){
+	if (loadOriginalImage()){
+		TformParam * par = new TformParam(this, NULL, ptTranslate);
+
+		par->edtParamX->EditLabel->Caption = "Parâmetro A: ";
+		par->edtParamY->Visible = false;
+		par->edtParamZ->Visible = false;
+
+		if (par->ShowModal() == mrOk){
+			double a = StrToFloat(par->edtParamX->Text);
+
+			imgTransformed->itfSigmoid(a);
+
+			imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+			showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TformImageMain::actDilateGSExecute(TObject *Sender){
+	if (loadOriginalImage()){
+
+		morfologicGS((ImageGS*)imgTransformed, DILATION, M[rdgElemento->ItemIndex]);
 
 		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
 		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
@@ -307,21 +350,166 @@ void __fastcall TformImageMain::actLogTransfExecute(TObject *Sender){
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TformImageMain::actSigmoidExecute(TObject *Sender){
-	int param = 10;
-
-	if (edtParam->Text != "") {
-		param = max(10, StrToInt(edtParam->Text));
-	}
-
-	if (edtParam->Text != "") {
-		param = StrToInt(edtParam->Text);
-	}
+void __fastcall TformImageMain::actErosionGSExecute(TObject *Sender){
 	if (loadOriginalImage()){
-		imgTransformed->itfSigmoid(param);
+
+		morfologicGS((ImageGS*)imgTransformed, EROSION, M[rdgElemento->ItemIndex]);
 
 		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
 		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actGradientGSExecute(TObject *Sender){
+	if (loadOriginalImage()){
+
+		gradientGS((ImageGS*)imgTransformed, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actHitMissExecute(TObject *Sender){
+	if (loadOriginalImageBW()){
+
+		hitMiss((ImageBW*)imgTransformed, M[0],M[1]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0, 0);
+	}
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TformImageMain::actOpeningGSExecute(TObject *Sender){
+	if (loadOriginalImage()){
+
+		openingGS((ImageGS*)imgTransformed, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actClosureGSExecute(TObject *Sender){
+	if (loadOriginalImage()){
+
+		closureGS((ImageGS*)imgTransformed, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actTopHatExecute(TObject *Sender) {
+	if (loadOriginalImage()){
+
+		topHat((ImageGS*)imgTransformed, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actBottomHatExecute(TObject *Sender){
+	if (loadOriginalImage()){
+
+		bottomHat((ImageGS*)imgTransformed, M[rdgElemento->ItemIndex]);
+
+		imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actAndExecute(TObject *Sender){
+
+	if (openDialog->Execute()){
+		imgOriginal = new ImageGS(openDialog->FileName);
+		imgOriginal->draw(GetDC(originalImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgOriginal, originalHistCanvas);
+
+		if (openDialog->Execute()){
+			imgTransformed = new ImageGS(openDialog->FileName);
+			imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+			showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+
+			ShowMessage("Aplicando operação AND!");
+
+			ImageGS * result = opAND((ImageGS*)imgOriginal, (ImageGS*)imgTransformed);
+			result->draw(GetDC(transformImgCanvas->Handle), 0,0);
+			showHistogram((ImageGS*)result, transformHistCanvas);
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actOrExecute(TObject *Sender){
+	if (openDialog->Execute()){
+		imgOriginal = new ImageGS(openDialog->FileName);
+		imgOriginal->draw(GetDC(originalImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgOriginal, originalHistCanvas);
+
+		if (openDialog->Execute()){
+			imgTransformed = new ImageGS(openDialog->FileName);
+			imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+			showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+
+			ShowMessage("Aplicando operação OR!");
+
+			ImageGS * result = opOR((ImageGS*)imgOriginal, (ImageGS*)imgTransformed);
+			result->draw(GetDC(transformImgCanvas->Handle), 0,0);
+			showHistogram((ImageGS*)result, transformHistCanvas);
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actXorExecute(TObject *Sender){
+	if (openDialog->Execute()){
+		imgOriginal = new ImageGS(openDialog->FileName);
+		imgOriginal->draw(GetDC(originalImgCanvas->Handle), 0,0);
+		showHistogram((ImageGS*)imgOriginal, originalHistCanvas);
+
+		if (openDialog->Execute()){
+			imgTransformed = new ImageGS(openDialog->FileName);
+			imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+			showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+
+			ShowMessage("Aplicando operação XOR!");
+
+			ImageGS * result = opXOR((ImageGS*)imgOriginal, (ImageGS*)imgTransformed);
+			result->draw(GetDC(transformImgCanvas->Handle), 0,0);
+			showHistogram((ImageGS*)result, transformHistCanvas);
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TformImageMain::actLinearTransformExecute(TObject *Sender){
+
+	if (loadOriginalImage()){
+		TformParam * par = new TformParam(this, NULL, ptTranslate);
+
+		par->edtParamX->EditLabel->Caption = "Parâmetro A: ";
+		par->edtParamY->EditLabel->Caption = "Parâmetro B: ";
+		par->edtParamZ->Visible = false;
+
+		if (par->ShowModal() == mrOk){
+			double a = StrToFloat(par->edtParamX->Text);
+			double b = StrToFloat(par->edtParamY->Text);
+
+			imgTransformed->linearTransform(a, b);
+
+			imgTransformed->draw(GetDC(transformImgCanvas->Handle), 0,0);
+			showHistogram((ImageGS*)imgTransformed, transformHistCanvas);
+		}
+		par->Release();
 	}
 }
 //---------------------------------------------------------------------------

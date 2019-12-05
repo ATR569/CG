@@ -21,11 +21,9 @@
 #include <Vcl.PlatformDefaultStyleActnCtrls.hpp>
 #include <Vcl.Dialogs.hpp>
 #include <Vcl.ExtDlgs.hpp>
+#include "frmParam.h"
 #include <iostream>
 #include <fstream>
-
-vector<vector<int>> M[] ={ 	{{1,1,1},{1,1,1},{1,1,1}},
-							{{0,1,0},{1,1,1},{0,1,0}} };
 
 class TformImageMain : public TForm
 {
@@ -68,7 +66,18 @@ __published:	// IDE-managed Components
 	TAction *actDynamicRange;
 	TAction *actLogTransf;
 	TAction *actSigmoid;
-	TEdit *edtParam;
+	TAction *actAnd;
+	TAction *actOr;
+	TAction *actXor;
+	TAction *actDilateGS;
+	TAction *actErosionGS;
+	TAction *actOpeningGS;
+	TAction *actClosureGS;
+	TAction *actGradientGS;
+	TAction *actHitMiss;
+	TAction *actTopHat;
+	TAction *actBottomHat;
+	TAction *actLinearTransform;
 	void __fastcall actHistEqualizeExecute(TObject *Sender);
 	void __fastcall originalImgCanvasMouseEnter(TObject *Sender);
 	void __fastcall originalImgCanvasMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
@@ -93,6 +102,18 @@ __published:	// IDE-managed Components
 	void __fastcall actDynamicRangeExecute(TObject *Sender);
 	void __fastcall actLogTransfExecute(TObject *Sender);
 	void __fastcall actSigmoidExecute(TObject *Sender);
+	void __fastcall actDilateGSExecute(TObject *Sender);
+	void __fastcall actErosionGSExecute(TObject *Sender);
+	void __fastcall actGradientGSExecute(TObject *Sender);
+	void __fastcall actHitMissExecute(TObject *Sender);
+	void __fastcall actOpeningGSExecute(TObject *Sender);
+	void __fastcall actClosureGSExecute(TObject *Sender);
+	void __fastcall actTopHatExecute(TObject *Sender);
+	void __fastcall actBottomHatExecute(TObject *Sender);
+	void __fastcall actAndExecute(TObject *Sender);
+	void __fastcall actOrExecute(TObject *Sender);
+	void __fastcall actXorExecute(TObject *Sender);
+	void __fastcall actLinearTransformExecute(TObject *Sender);
 
 
 private:	// User declarations
@@ -101,7 +122,9 @@ private:	// User declarations
     bool loadOriginalImageBW();
 	bool canUpdateGrid;
 	Image * imgOriginal;
-    Image * imgTransformed;
+	Image * imgTransformed;
+	vector<vector<int>> M[2];
+
 public:		// User declarations
 	__fastcall TformImageMain(TComponent* Owner);
 };

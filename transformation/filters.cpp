@@ -276,7 +276,7 @@ ImageGS * opAND(ImageGS *image1, ImageGS *image2){
         }
     }
     
-    return new ImageGS(result);
+	return new ImageGS(result, image1->getColorDepth());
 
 }
 
@@ -292,7 +292,7 @@ ImageGS * opOR(ImageGS *image1, ImageGS *image2){
         }
     }
     
-    return new ImageGS(result);
+	return new ImageGS(result, image1->getColorDepth());
 }
 
 ImageGS * opXOR(ImageGS *image1, ImageGS *image2){
@@ -307,5 +307,5 @@ ImageGS * opXOR(ImageGS *image1, ImageGS *image2){
         }
     }
     
-    return new ImageGS(result);    
+    return new ImageGS(result, image1->getColorDepth());
 }

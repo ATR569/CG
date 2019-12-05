@@ -103,7 +103,7 @@ TformParam::TformParam(TComponent* Owner, WorkSpace * work, ParamType paramType)
 		break;
 	}
 
-	if (work->getMode() == MODE_2D) {
+	if (work == NULL || work->getMode() == MODE_2D) {
 		edtParamZ->Visible = false;
 		edtZ->Visible = false;
 		edtX->Left += 35;

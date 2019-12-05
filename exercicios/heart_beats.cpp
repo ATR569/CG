@@ -8,6 +8,7 @@
 
 #include "../cglib.h"
 #include <cstdlib>
+#include <windows.h>
 
 void executarBatimentos(WorkSpace * work){
     Point2D * p[2];
@@ -21,7 +22,8 @@ void executarBatimentos(WorkSpace * work){
 
 	double newX = 0, newY = 0, posCurrentY;
 
-	for(int i = 10; i < sizeCanvasH; i+=5){
+    for(int i = 10; i < sizeCanvasH; i+=5){
+        Sleep(10);
         drawLineBresenhan(work->hdc, p[!current], p[current], CL_BLACK);
         int r = rand() % 81 + 20; // 20 até 100
         int r2 = rand() % 2 + 0; // 0 ou 1
@@ -39,7 +41,7 @@ void executarBatimentos(WorkSpace * work){
             newY += (r * r2);
         }else{
             newY += (r * r4);
-		}
+        }
 
         p[!current]->X = newX;
         p[!current]->Y = newY;

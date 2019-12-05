@@ -30,6 +30,7 @@
 #include "frmImageMain.h"
 #include "frmViewPort3D.h"
 #include "frmCredits.h"
+#include "heart_beats.h"
 
 class TformMain : public TForm {
 __published:	// IDE-managed Components
@@ -108,7 +109,8 @@ __published:	// IDE-managed Components
 	TToolButton *btnPyramid;
 	TToolButton *btnPrism;
 	TAction *actAnimate3D;
-	TAction *actArnoldTransf;
+	TAction *actHeartBeat;
+	TTimer *heartBeatTimer;
 	void __fastcall actPolygonExecute(TObject *Sender);
 	void __fastcall actMoveExecute(TObject *Sender);
 	void __fastcall actScaleExecute(TObject *Sender);
@@ -143,6 +145,7 @@ __published:	// IDE-managed Components
 	void __fastcall actPrismExecute(TObject *Sender);
 	void __fastcall actPyramidExecute(TObject *Sender);
 	void __fastcall actAnimate3DExecute(TObject *Sender);
+	void __fastcall actHeartBeatExecute(TObject *Sender);
 
 private:	// User declarations
 	StateMachine * machine;
